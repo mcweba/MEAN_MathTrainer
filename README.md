@@ -1,0 +1,3 @@
+This is the MathTrainer app...
+
+start local by entering "gulp" to the command line
