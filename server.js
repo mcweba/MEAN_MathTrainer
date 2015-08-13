@@ -29,5 +29,6 @@ app.get('*', function(req, res) {
 	res.sendFile(path.join(__dirname + '/public/app/views/index.html'));
 });
 
-app.listen(config.port);
-console.log('Starting server on port ' + config.port);
+app.listen(config.port, config.ipaddress, function(){
+	console.log('%s: Node server started on %s:%d', Date(Date.now() ), config.ipaddress, config.port);
+});

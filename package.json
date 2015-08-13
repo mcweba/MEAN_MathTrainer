@@ -1,5 +1,8 @@
 {
   "name": "MathTrainer",
+  "scripts": {
+    "start": "node server.js"
+  },
   "main": "server.js",
   "dependencies": {
     "body-parser": "~1.9.3",
