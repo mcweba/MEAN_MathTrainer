@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8" />
+</head>
+<body>
+        <div class="jumbotron text-center">
+            <h1>Rechnung erstellen</h1>
+        </div>
+
+        <section>
+            <div class="form-group">
+                <label>Anzahl Rechnungen</label>
+                <input type="number" class="form-control">
+            </div>
+            <div class="form-group">
+                <label>Wertebereich 1. Zahl Min</label>
+                <input type="range" class="form-control">
+            </div>
+            <div class="form-group">
+                <label>Wertebereich 1. Zahl Max</label>
+                <input type="range" class="form-control">
+            </div>
+            <div class="form-group">
+                <label>Operator</label>
+                <select class="form-control">
+                    <option>+</option>
+                    <option>-</option>
+                    <option>*</option>
+                    <option>/</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Wertebereich 2. Zahl Min</label>
+                <input type="range" class="form-control">
+            </div>
+            <div class="form-group">
+                <label>Wertebereich 2. Zahl Max</label>
+                <input type="range" class="form-control">
+            </div>
+            <button type="button" class="btn btn-default">Generieren</button>
+            <div class="form-group">
+                <label>Rechnung</label>
+                <textarea class="form-control" rows="5" placeholder="2+3; 4*5;"></textarea>
+            </div>
+            <button type="button" class="btn btn-default">Hinzufügen</button>
+
+        </section>
+        <section>
+            <div class="form-group">
+                <label>Schwierigkeit</label>
+                <select class="form-control">
+                    <option>Einfach</option>
+                    <option>Mittel</option>
+                    <option>Schwer</option>
+                    <option>Unlösbar</option>
+                </select>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <!--   Rechnungen -->
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            Rechnungen
+                        </div>
+                        <div class="panel-body">
+                            <div class="table-responsive">
+                                <table class="table table-striped table-bordered table-hover">
+                                    <thead>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>2 + 3 = 5</td>
+                                        <td>
+                                            <button type="button" class="btn btn-default">Bearbeiten</button>
+                                            <button type="button" class="btn btn-default">Löschen</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>2</td>
+                                        <td>4 - 2 = 2</td>
+                                        <td>
+                                            <button type="button" class="btn btn-default">Bearbeiten</button>
+                                            <button type="button" class="btn btn-default">Löschen</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>3</td>
+                                        <td>5 * 4  = 20</td>
+                                        <td>
+                                            <button type="button" class="btn btn-default">Bearbeiten</button>
+                                            <button type="button" class="btn btn-default">Löschen</button>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End  Rechnungen -->
+                </div>
+
+            </div>
+            <button type="submit" class="btn btn-default">Speichern</button>
+        </section>
+
+</body>
