@@ -9,6 +9,12 @@ angular.module('app.routes', ['ui.router'])
 		    url: "/",
 		    templateUrl: "app/views/pages/home.html"
 		});
+
+	$stateProvider
+		.state('createcalc', {
+			url: "/createcalc",
+			templateUrl: "app/views/pages/createcalc.html"
+		});
 		
 	$locationProvider.html5Mode(true);
 
