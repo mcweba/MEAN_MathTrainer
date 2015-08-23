@@ -1,21 +1,28 @@
 angular.module('app.routes', ['ui.router'])
 
-.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
+	.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
 
-	$urlRouterProvider.otherwise("/");
+		// For unmatched routes
+		$urlRouterProvider.otherwise('/');
 
-	$stateProvider
-		.state('home', {
-		    url: "/",
-		    templateUrl: "app/views/pages/home.html"
+		// Application routes
+		$stateProvider
+			.state('overview', {
+				url: '/',
+				templateUrl: 'app/views/pages/overview.html'
+			})
+			.state('create', {
+				url: '/create',
+				templateUrl: "app/views/pages/createcalc.html"
+			})
+			.state('stats', {
+				url: '/stats',
+				templateUrl: 'app/views/pages/statistics.html'
+			});
+
+		$locationProvider.html5Mode({
+			enabled: true,
+			requireBase: false
 		});
 
-	$stateProvider
-		.state('createcalc', {
-			url: "/createcalc",
-			templateUrl: "app/views/pages/createcalc.html"
-		});
-		
-	$locationProvider.html5Mode(true);
-
-});
+	});

@@ -1,11 +1,8 @@
 # MathTrainer
 This is the MathTrainer app... 
 
-npm install
-
-
-
 ## Development
+npm install
 start local by entering "gulp" to the command line
 
 ## OpenShift
