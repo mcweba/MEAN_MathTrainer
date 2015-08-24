@@ -11,6 +11,10 @@ angular.module('app.routes', ['ui.router'])
 				url: '/',
 				templateUrl: 'app/views/pages/overview.html'
 			})
+			.state('login', {
+				url: '/login',
+				templateUrl: 'app/views/pages/login.html'
+			})
 			.state('create', {
 				url: '/create',
 				templateUrl: "app/views/pages/createcalc.html"
