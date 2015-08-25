@@ -4,4 +4,6 @@ angular.module('createCtrl', [])
 
         var vm = this;
 
+        vm.test = 888;
+
     }]);
