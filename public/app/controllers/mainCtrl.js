@@ -1,6 +1,6 @@
 angular.module('mainCtrl', [])
 
-.controller('mainController', function($rootScope, $location, Auth) {
+.controller('mainController', ['$rootScope', '$location', 'Auth', function($rootScope, $location, Auth) {
 
 	var vm = this;
 
@@ -29,11 +29,11 @@ angular.module('mainCtrl', [])
 			.success(function(data) {
 				vm.processing = false;			
 
-				// if a user successfully logs in, redirect to users page
-				if (data.success)			
-					$location.path('/users');
-				else 
+				if (data.success) {
+					$location.path('/overview');
+				} else {
 					vm.error = data.message;
+				}
 				
 			});
 	};
@@ -50,4 +50,4 @@ angular.module('mainCtrl', [])
 		Auth.createSampleUser();
 	};
 
-});
+}]);

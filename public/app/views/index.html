@@ -50,14 +50,14 @@
 				<a href="/" class="navbar-brand">Math Trainer</a>
 		</div>	
 		<ul class="nav navbar-nav">
-			<li><a href="/users"><span class="glyphicon glyphicon-user"></span> Users</a></li>
 			<li><a href="/overview"><span class="glyphicon glyphicon-list"></span> Übersicht</a></li>
 			<li><a href="/create"><span class="glyphicon glyphicon-plus"></span> Erstellen</a></li>
 			<li><a href="/stats"><span class="glyphicon glyphicon-stats" aria-hidden="true"></span> Statistiken</a></li>
+			<li><a href="/users"><span class="glyphicon glyphicon-user"></span> Benutzer</a></li>
 		</ul>
 		<ul class="nav navbar-nav navbar-right">
 			<li ng-if="!main.loggedIn"><a href="/login">Login</a></li>
-			<li ng-if="main.loggedIn" class="navbar-text">Hello {{ main.user.username }}!</li>
+			<li ng-if="main.loggedIn" class="navbar-text">Hallo {{ main.user.name }}!</li>
 			<li ng-if="main.loggedIn"><a href="#" ng-click="main.doLogout()">Logout</a></li>
 		</ul>
 	</div>
