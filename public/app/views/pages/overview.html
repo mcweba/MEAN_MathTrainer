@@ -1,6 +1,6 @@
 <div class="page-header">
     <h1>Übersicht</h1>
 </div>
-<div  ng-controller="MainController" >
-    <div id="grid1" ui-grid="gridOptions" class="myGrid"></div>
+<div  ng-controller="overviewCtrl as oc" >
+    <div id="grid1" ui-grid="oc.gridOptions" class="myGrid"></div>
 </div>

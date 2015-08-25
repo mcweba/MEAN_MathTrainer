@@ -9,7 +9,8 @@ angular.module('app.routes', ['ui.router'])
 		$stateProvider
 			.state('overview', {
 				url: '/',
-				templateUrl: 'app/views/pages/overview.html'
+				templateUrl: 'app/views/pages/overview.html',
+				controller: 'overviewCtrl'
 			})
 			.state('login', {
 				url: '/login',
