@@ -23,6 +23,12 @@ app.use(function(req, res, next) {
 // log requests to the console 
 app.use(morgan('dev'));
 
+if(process.env.OPENSHIFT_NODEJS_IP){
+	console.log('*** we are on openshift ***');
+} else {
+	console.log('*** we are local ***');
+}
+
 // connect to our database (hosted on modulus.io)
 mongoose.connect(config.database);
 
