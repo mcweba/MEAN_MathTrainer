@@ -1,11 +1,8 @@
 angular.module('overviewCtrl', ['ngTouch', 'ui.grid'])
 
     .controller('overviewController', [function() {
-
         var vm = this;
-
         vm.test = 888;
-
         vm.mySelections = [];
 
         var data = [
@@ -38,6 +35,10 @@ angular.module('overviewCtrl', ['ngTouch', 'ui.grid'])
             }
         ];
 
+        vm.editRow = function (grid, row) {
+            var t = row;
+        };
+
         var def = [
             { field: 'UID', displayName: 'UID', visible: false },
             { field: 'creater'},
@@ -46,15 +47,11 @@ angular.module('overviewCtrl', ['ngTouch', 'ui.grid'])
             { field: 'myScore'},
             { field: 'myTime'},
             { field: 'myLastExecution'},
-            {name: 'delete', displayName: 'Delete', cellTemplate: '<button id="deleteBtn" type="button" class="btn-small" ng-click="vm.copyLink(row.entity)" >Delete</button> '}
+            {name:' ',cellTemplate:'<div><button class="btn pull-right btn-default" ng-click="grid.appScope.overview.editRow(grid, row)">Copy Link</button></div>'}
         ];
 
         vm.gridOptions = {
             data: data,
             columnDefs :  def
-        };
-
-        vm.copyLink = function (row) {
-
         };
     }]);
