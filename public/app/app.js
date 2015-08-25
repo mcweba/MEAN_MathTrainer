@@ -1,9 +1,6 @@
 angular.module('userApp', ['ngAnimate', 'app.routes', 'authService', 'mainCtrl', 'userCtrl', 'userService', 'createCtrl', 'overviewCtrl', 'statisticsCtrl'])
 
-// application configuration to integrate token into requests
 .config(function($httpProvider) {
-
-	// attach our auth interceptor to the http requests
+	// attach auth interceptor to http requests
 	$httpProvider.interceptors.push('AuthInterceptor');
-
 });
