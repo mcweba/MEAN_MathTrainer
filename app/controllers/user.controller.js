@@ -75,7 +75,7 @@ exports.authenticate = function(req, res) {
         if (!user) {
             res.json({
                 success: false,
-                message: 'Authentication failed. User not found.'
+                message: 'Anmeldung fehlgeschlagen. Benutzername nicht bekannt.'
             });
         } else if (user) {
 
@@ -83,7 +83,7 @@ exports.authenticate = function(req, res) {
             if (!validPassword) {
                 res.json({
                     success: false,
-                    message: 'Authentication failed. Wrong password.'
+                    message: 'Anmeldung fehlgeschlagen. Passwort falsch.'
                 });
             } else {
                 var token = jwt.sign({
@@ -123,6 +123,10 @@ exports.verifyToken = function(req, res, next) {
             message: 'No token provided.'
         });
     }
+};
+
+exports.currentUserInfo = function(req, res) {
+    res.send(req.decoded);
 };
 
 exports.sample = function(req, res) {

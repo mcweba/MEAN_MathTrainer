@@ -1,6 +1,6 @@
 angular.module('mainCtrl', [])
 
-.controller('mainController', function($rootScope, $location, Auth) {
+.controller('mainController', ['$rootScope', '$location', 'Auth', function($rootScope, $location, Auth) {
 
 	var vm = this;
 
@@ -50,4 +50,4 @@ angular.module('mainCtrl', [])
 		Auth.createSampleUser();
 	};
 
-});
+}]);

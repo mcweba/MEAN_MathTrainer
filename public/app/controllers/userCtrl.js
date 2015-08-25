@@ -1,6 +1,6 @@
 angular.module('userCtrl', ['userService'])
 
-.controller('userController', function(User) {
+.controller('userController', ['User', function(User) {
 
 	var vm = this;
 
@@ -37,10 +37,10 @@ angular.module('userCtrl', ['userService'])
 			});
 	};
 
-})
+}])
 
 // controller applied to user creation page
-.controller('userCreateController', function(User) {
+.controller('userCreateController', ['User', function(User) {
 	
 	var vm = this;
 
@@ -63,10 +63,10 @@ angular.module('userCtrl', ['userService'])
 			
 	};	
 
-})
+}])
 
 // controller applied to user edit page
-.controller('userEditController', function($routeParams, User) {
+.controller('userEditController', ['$routeParams', 'User', function($routeParams, User) {
 
 	var vm = this;
 
@@ -99,4 +99,4 @@ angular.module('userCtrl', ['userService'])
 			});
 	};
 
-});
+}]);

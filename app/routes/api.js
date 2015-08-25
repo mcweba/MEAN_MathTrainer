@@ -18,5 +18,7 @@ module.exports = function(app, express) {
 		.put(userCtrl.update)
 		.delete(userCtrl.delete);
 
+	apiRouter.get('/currentUserInfo', userCtrl.currentUserInfo);
+
 	return apiRouter;
 };
