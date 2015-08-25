@@ -46,7 +46,7 @@ angular.module('overviewCtrl', ['ngTouch', 'ui.grid'])
             { field: 'myScore'},
             { field: 'myTime'},
             { field: 'myLastExecution'},
-            //{ name: 'CopyLink', cellTemplate: 'CopyLink.html'}
+            {name: 'delete', displayName: 'Delete', cellTemplate: '<button id="deleteBtn" type="button" class="btn-small" ng-click="vm.copyLink(row.entity)" >Delete</button> '}
         ];
 
         vm.gridOptions = {
@@ -54,9 +54,7 @@ angular.module('overviewCtrl', ['ngTouch', 'ui.grid'])
             columnDefs :  def
         };
 
+        vm.copyLink = function (row) {
 
-        //vm.copyLink = function (address) {
-        //    var param = address.street + ",+" + address.city + ",+" + address.state;
-        //    window.open('https://www.google.com/maps/search/' + param);
-        //};
+        };
     }]);
