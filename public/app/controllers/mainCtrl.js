@@ -29,11 +29,11 @@ angular.module('mainCtrl', [])
 			.success(function(data) {
 				vm.processing = false;			
 
-				// if a user successfully logs in, redirect to users page
-				if (data.success)			
-					$location.path('/users');
-				else 
+				if (data.success) {
+					$location.path('/overview');
+				} else {
 					vm.error = data.message;
+				}
 				
 			});
 	};
