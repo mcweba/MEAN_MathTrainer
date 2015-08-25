@@ -1,7 +1,12 @@
-var express    = require('express');
-var app        = express();
-var bodyParser = require('body-parser');
-var morgan     = require('morgan');
+// BASE SETUP
+// ======================================
+
+// CALL THE PACKAGES --------------------
+var express    = require('express');		// call express
+var app        = express(); 				// define our app using express
+var bodyParser = require('body-parser'); 	// get body-parser
+var morgan     = require('morgan'); 		// used to see requests
+var mongoose   = require('mongoose');
 var config 	   = require('./config');
 var path 	   = require('path');
 
@@ -18,7 +23,11 @@ app.use(function(req, res, next) {
 // log requests to the console 
 app.use(morgan('dev'));
 
-// static files location (used for the frontend)
+// connect to our database (hosted on modulus.io)
+mongoose.connect(config.database);
+
+// set static files location
+// used for requests that our frontend will make
 app.use(express.static(__dirname + '/public'));
 
 // API ROUTES ------------------------

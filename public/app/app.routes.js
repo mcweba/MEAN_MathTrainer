@@ -1,33 +1,61 @@
-angular.module('app.routes', ['ui.router'])
+angular.module('app.routes', ['ngRoute'])
 
-	.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
+.config(function($routeProvider, $locationProvider) {
 
-		// For unmatched routes
-		$urlRouterProvider.otherwise('/');
+	$routeProvider
 
-		// Application routes
-		$stateProvider
-			.state('overview', {
-				url: '/',
-				templateUrl: 'app/views/pages/overview.html',
-				controller: 'overviewCtrl'
-			})
-			.state('login', {
-				url: '/login',
-				templateUrl: 'app/views/pages/login.html'
-			})
-			.state('create', {
-				url: '/create',
-				templateUrl: "app/views/pages/createcalc.html"
-			})
-			.state('stats', {
-				url: '/stats',
-				templateUrl: 'app/views/pages/statistics.html'
-			});
+		// route for the home page
+		.when('/', {
+			templateUrl : 'app/views/pages/home.html'
+		})
+		
+		// login page
+		.when('/login', {
+			templateUrl : 'app/views/pages/login.html',
+   			controller  : 'mainController',
+    			controllerAs: 'login'
+		})
 
-		$locationProvider.html5Mode({
-			enabled: true,
-			requireBase: false
+		.when('/create', {
+			templateUrl : 'app/views/pages/createcalc.html',
+			controller  : 'createController',
+			controllerAs: 'create'
+		})
+
+		.when('/overview', {
+			templateUrl : 'app/views/pages/overview.html',
+			controller  : 'overviewController',
+			controllerAs: 'overview'
+		})
+
+		.when('/stats', {
+			templateUrl : 'app/views/pages/statistics.html',
+			controller  : 'statisticsController',
+			controllerAs: 'stats'
+		})
+		
+		// show all users
+		.when('/users', {
+			templateUrl: 'app/views/pages/users/all.html',
+			controller: 'userController',
+			controllerAs: 'user'
+		})
+
+		// form to create a new user
+		// same view as edit page
+		.when('/users/create', {
+			templateUrl: 'app/views/pages/users/single.html',
+			controller: 'userCreateController',
+			controllerAs: 'user'
+		})
+
+		// page to edit a user
+		.when('/users/:user_id', {
+			templateUrl: 'app/views/pages/users/single.html',
+			controller: 'userEditController',
+			controllerAs: 'user'
 		});
 
-	});
+	$locationProvider.html5Mode(true);
+
+});

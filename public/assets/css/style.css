@@ -1,23 +1,42 @@
-body {
-    padding-top: 70px; /* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
+main 					{
+	padding-top:30px;	
 }
 
-.hero-spacer {
-    margin-top: 50px;
+/* HEADER 
+===================== */
+header .navbar 		{ 
+	border-radius:0;
 }
 
-.hero-feature {
-    margin-bottom: 30px;
+/* NGANIMATE
+====================== */
+
+/* show and hide */
+.show-hide-message.ng-hide-remove {
+	-webkit-animation:zoomIn 0.3s both ease;
+	-moz-animation:zoomIn 0.3s both ease;
+	animation:zoomIn 0.3s both ease;
 }
 
-footer {
-    margin: 50px 0;
+/* ANIMATIONS
+====================== */
+.spinner {
+	-webkit-animation:spin 1s infinite;
+	-moz-animation:spin 1s infinite;
+	animation:spin 1s infinite;
 }
 
-.modal-footer {   border-top: 0px; }
+@keyframes spin {
+	from 	{ transform:rotate(0deg); }
+	to 	{ transform:rotate(360deg); }
+}
 
-.myGrid {
-    width: auto;
-    height: auto;
-    background-color: white;
+@-webkit-keyframes spin {
+	from 	{ -webkit-transform:rotate(0deg); }
+	to 	{ -webkit-transform:rotate(360deg); }
+}
+
+@-moz-keyframes spin {
+	from 	{ -moz-transform:rotate(0deg); }	
+	to 	{ -moz-transform:rotate(360deg); }
 }
