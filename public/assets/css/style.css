@@ -2,6 +2,10 @@ main 					{
 	padding-top:30px;	
 }
 
+.centered {
+	text-align: center;
+}
+
 /* HEADER 
 ===================== */
 header .navbar 		{ 
