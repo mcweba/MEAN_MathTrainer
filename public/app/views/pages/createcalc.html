@@ -1,12 +1,12 @@
 <div class="page-header">
-    <h2>Erstellen {{create.test}}</h2>
+    <h2>Erstellen</h2>
 </div>
 <div class="col-xs-12 col-md-6">
     <div class="panel panel-default">
         <div class="panel-body">
             <div class="form-group">
                 <label>Anzahl Rechnungen</label>
-                <input type="number" class="form-control">
+                <input ng-model="create.quantity" ng-change="create.quantityChanged()" type="number" min="0" class="form-control" value="{{create.quantity}}">
             </div>
             <label>Wertebereich 1. Zahl</label>
             <div class="panel panel-default">
@@ -15,13 +15,13 @@
                     <div class="col-md-6">
                         <div class="input-group">
                             <span class="input-group-addon" id="sizing-addon1">Min</span>
-                            <input type="number" class="form-control" aria-describedby="sizing-addon2">
+                            <input ng-model="create.number1Min" ng-change="create.number1MinChanged()" type="number" min="0" class="form-control" aria-describedby="sizing-addon2" value="{{create.number1Min}}">
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="input-group" >
                             <span class="input-group-addon" id="sizing-addon2">Max</span>
-                            <input type="number" class="form-control" aria-describedby="sizing-addon2">
+                            <input ng-model="create.number1Max" ng-change="create.number1MaxChanged()" type="number" min="0" class="form-control" aria-describedby="sizing-addon2" value="{{create.number1Max}}">
                         </div>
                     </div>
                 </div>
@@ -29,11 +29,7 @@
 
             <div class="form-group">
                 <label>Operator</label>
-                <select class="form-control">
-                    <option>+</option>
-                    <option>-</option>
-                    <option>*</option>
-                    <option>/</option>
+                <select ng-model="create.selectedOption" ng-options="option.name for option in create.options" class="form-control">
                 </select>
             </div>
 
@@ -43,25 +39,25 @@
                     <div class="col-md-6">
                         <div class="input-group">
                             <span class="input-group-addon" id="sizing-addon3">Min</span>
-                            <input type="number" class="form-control" aria-describedby="sizing-addon2">
+                            <input ng-model="create.number2Min" ng-change="create.number2MinChanged()" type="number" min="0" class="form-control" aria-describedby="sizing-addon2" value="{{create.number2Min}}">
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="input-group" >
                             <span class="input-group-addon" id="sizing-addon4">Max</span>
-                            <input type="number" class="form-control" aria-describedby="sizing-addon2">
+                            <input ng-model="create.number2Max" ng-change="create.number2MaxChanged()" type="number" min="0" class="form-control" aria-describedby="sizing-addon2" value="{{create.number2Max}}">
                         </div>
                     </div>
                 </div>
             </div>
-            <button type="button" class="btn pull-right btn-default">Generieren</button>
+            <button type="button" class="btn pull-right btn-default" ng-click="create.generate()">Generieren</button>
         </div>
     </div>
     <div class="panel panel-default">
         <div class="panel-body">
             <div class="form-group">
                 <label>Rechnung</label>
-                <textarea class="form-control" rows="5" placeholder="2+3; 4*5;"></textarea>
+                <textarea ng-model="create.preCalculations" value="{{create.preCalculations}}" class="form-control" rows="5" placeholder="2+3; 4*5;"></textarea>
             </div>
             <button type="button" class="btn pull-right btn-default" >Hinzufügen</button>
         </div>
