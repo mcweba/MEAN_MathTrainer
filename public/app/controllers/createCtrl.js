@@ -26,6 +26,10 @@ angular.module('createCtrl', [])
             {name:'/'}
         ];
 
+        vm.calculations =[
+           // example {calc:'1+6'}
+        ];
+
         vm.selectedOption = vm.options[0];
 
         vm.preCalculations = "";
@@ -76,5 +80,33 @@ angular.module('createCtrl', [])
                 result += number1 + vm.selectedOption.name + number2 + separator;
             }
             vm.preCalculations += result;
+        };
+
+        vm.addCalculation = function(){
+            var prePosition = 0;
+            for(var i=0;i<vm.preCalculations.length;i++) {
+                var e = vm.preCalculations[i];
+                if(e === separator){
+                    var pattern = vm.preCalculations.substring(prePosition,i);
+                   // console.log(pattern);
+                    var number1 = parseInt(pattern);
+                    var number2 = parseInt(pattern.substring(number1.toString().length + 1, pattern.length));
+                    var operator = pattern.substring(number1.toString().length, number1.toString().length + 1);
+                    if(operator === "+"){
+                        vm.calculations.push({calc: pattern, total: number1 + number2});
+                    }
+                    if(operator === "-"){
+                        vm.calculations.push({calc: pattern, total: number1 - number2});
+                    }
+                    if(operator === "*"){
+                        vm.calculations.push({calc: pattern, total: number1 * number2});
+                    }
+                    if(operator === "/"){
+                        vm.calculations.push({calc: pattern, total: number1 / number2});
+                    }
+                    prePosition = i+1;
+            }            }
+           // console.log(vm.preCalculations);
+            console.log(vm.calculations);
         };
     }]);
