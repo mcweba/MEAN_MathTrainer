@@ -36,7 +36,7 @@ angular.module('overviewCtrl', ['ngTouch', 'ui.grid'])
         ];
 
         vm.editRow = function (grid, row) {
-            var t = row;
+
         };
 
         var def = [
@@ -47,7 +47,7 @@ angular.module('overviewCtrl', ['ngTouch', 'ui.grid'])
             { field: 'myScore'},
             { field: 'myTime'},
             { field: 'myLastExecution'},
-            {name:' ',cellTemplate:'<div><button class="btn pull-right btn-default" ng-click="grid.appScope.overview.editRow(grid, row)">Copy Link</button></div>'}
+            {name:'Link ',cellTemplate:'<div style="margin: 0px" ><button class="glyphicon glyphicon-plus" ng-click="grid.appScope.overview.editRow(grid, row)"></button></div>'}
         ];
 
         vm.gridOptions = {
