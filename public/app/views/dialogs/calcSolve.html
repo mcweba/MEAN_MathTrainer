@@ -2,15 +2,22 @@
     <h3 class="modal-title">Aufgaben lösen {{vm.calcId}}</h3>
 </div>
 <div class="modal-body">
-    <form name="form" class="css-form calc" novalidate>
+    <form name="form" class="css-form calc" novalidate ng-show="vm.started">
         <div>
             8 + 6 = <input type="text" name="solution" maxlength="4" size="4" style="text-align:center;" placeholder="?">
         </div>
     </form>
+    <div class="panel panel-default" ng-hide="vm.started">
+        <div class="panel-body">
+            Klicke auf 'Beginnen' um die erste Rechnung anzuzeigen. Sobald die erste Rechnung sichtbar ist, beginnt die Zeitmessung.
+            Nach der Eingabe des Resultats klicke 'Enter' um die nächste Rechnung anzuzeigen. Viel Spass!
+        </div>
+        <p style="text-align: center"><a class="btn btn-success" ng-click="vm.startCalc()" role="button">Beginnen</a></p>
+    </div>
 </div>
-<div class="modal-footer modal-footer-custom">
-    <span class="col-xs-9 col-sm-9" style="padding-top: 7px;">
-        <progressbar max="20" value="15"><span style="color:white; white-space:nowrap;">15 / 20</span></progressbar>
+<div class="modal-footer modal-footer-custom" ng-show="vm.started">
+    <span class="col-xs-9 col-sm-9 modal-footer-progressbar">
+        <progressbar max="vm.calcCount" value="vm.currentCalcIndex"><span style="color:white; white-space:nowrap;">{{vm.currentCalcIndex}} / {{vm.calcCount}}</span></progressbar>
     </span>
     <button class="btn btn-default" ng-click="vm.cancel()">Cancel</button>
     <button class="btn btn-primary" ng-click="vm.ok()">OK</button>

@@ -10,8 +10,6 @@ angular.module('mathApp.calcService', [])
 
 		console.log('called CalcService')
 
-		var calcset = [];
-
 		var content = {
 			calcs: [
 				{id:1, n1: 2, op: '+', n2: 4, res:6},
@@ -20,11 +18,9 @@ angular.module('mathApp.calcService', [])
 			]
 		};
 
-		calcset.push(content)
+		currentCalcSet = content;
 
-		currentCalcSet = calcset;
-
-		return calcset;
+		return content;
 	};
 
 	calcService.getCurrentCalcSet = function() {

@@ -9,7 +9,7 @@ angular.module('mathApp.solve', ['ui.bootstrap'])
             size: 'md',
             backdrop : 'static',
             keyboard: false,
-            controller: ['$modalInstance', '$routeParams', 'CalcService', SolveDialogController],
+            controller: ['$modalInstance', 'CalcService', SolveDialogController],
             controllerAs: 'vm'
         });
 
@@ -17,10 +17,19 @@ angular.module('mathApp.solve', ['ui.bootstrap'])
             console.log('dialog done');
         });
 
-        function SolveDialogController($modalInstance, $routeParams, CalcService){
+        function SolveDialogController($modalInstance, CalcService){
             var vm = this;
 
             vm.currentCalcSet = CalcService.getCurrentCalcSet();
+
+            vm.started = false;
+
+            vm.calcCount = vm.currentCalcSet.calcs.length;
+            vm.currentCalcIndex = 0;
+
+            vm.startCalc = function(){
+              vm.started = true;
+            };
 
             vm.ok = function () {
                 $modalInstance.close();
