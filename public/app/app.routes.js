@@ -33,6 +33,11 @@ angular.module('mathApp.routes', ['ngRoute'])
 			controller  : 'statisticsController',
 			controllerAs: 'stats'
 		})
+
+		.when('/solve/:calcset_id', {
+			templateUrl : 'modalContainer',
+			controller : 'solveController'
+		})
 		
 		// show all users
 		.when('/users', {
