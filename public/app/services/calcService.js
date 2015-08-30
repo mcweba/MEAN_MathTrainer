@@ -2,11 +2,11 @@ angular.module('mathApp.calcService', [])
 
 .factory('CalcService', function($http) {
 
-	// create a new object
 	var calcService = {};
 
-	// get a single user
-	calcService.loadCalcSet = function(calcset_id) {
+	var currentCalcSet;
+
+	calcService.fetchCalcSet = function(calcset_id) {
 
 		console.log('called CalcService')
 
@@ -22,7 +22,13 @@ angular.module('mathApp.calcService', [])
 
 		calcset.push(content)
 
+		currentCalcSet = calcset;
+
 		return calcset;
+	};
+
+	calcService.getCurrentCalcSet = function() {
+		return currentCalcSet;
 	};
 
 

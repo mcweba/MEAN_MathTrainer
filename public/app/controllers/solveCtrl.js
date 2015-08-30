@@ -1,21 +1,15 @@
 angular.module('mathApp.solve', ['ui.bootstrap'])
 
-    .controller('solveController', ['$modal', '$location', '$routeParams', 'data', function($modal, $location, $routeParams, data) {
+    .controller('solveController', ['$modal', '$location', function($modal, $location) {
 
         var vm = this;
-
-        vm.inputData = data;
-
-        vm.calcId = $routeParams.calcset_id;
-
-        console.log('data: ' + JSON.stringify(data));
 
         var modalInstance = $modal.open({
             templateUrl: 'app/views/dialogs/calcSolve.html',
             size: 'md',
             backdrop : 'static',
             keyboard: false,
-            controller: ['$modalInstance', '$routeParams', SolveDialogController],
+            controller: ['$modalInstance', '$routeParams', 'CalcService', SolveDialogController],
             controllerAs: 'vm'
         });
 
@@ -23,10 +17,10 @@ angular.module('mathApp.solve', ['ui.bootstrap'])
             console.log('dialog done');
         });
 
-        function SolveDialogController($modalInstance, $routeParams){
+        function SolveDialogController($modalInstance, $routeParams, CalcService){
             var vm = this;
 
-            vm.calcId = $routeParams.calcset_id;
+            vm.currentCalcSet = CalcService.getCurrentCalcSet();
 
             vm.ok = function () {
                 $modalInstance.close();

@@ -38,8 +38,8 @@ angular.module('mathApp.routes', ['ngRoute'])
 			templateUrl : 'modalContainer',
 			controller : 'solveController',
 			resolve: {
-				data: ['CalcService', function (CalcService) {
-					return CalcService.loadCalcSet(2);
+				data: ['CalcService', '$route', function (CalcService, $route) {
+					return CalcService.fetchCalcSet($route.current.params.calcset_id);
 				}]
 			}
 		})
