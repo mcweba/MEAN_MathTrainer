@@ -36,7 +36,12 @@ angular.module('mathApp.routes', ['ngRoute'])
 
 		.when('/solve/:calcset_id', {
 			templateUrl : 'modalContainer',
-			controller : 'solveController'
+			controller : 'solveController',
+			resolve: {
+				data: ['CalcService', function (CalcService) {
+					return CalcService.loadCalcSet(2);
+				}]
+			}
 		})
 		
 		// show all users

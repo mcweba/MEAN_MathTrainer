@@ -6,6 +6,7 @@ angular.module('mathApp', [
 	'mathApp.overview',
 	'mathApp.stats',
 	'mathApp.solve',
+	'mathApp.calcService',
 	'ngAnimate',
 	'authService',
 	'userService'])

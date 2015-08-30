@@ -1,8 +1,14 @@
 angular.module('mathApp.solve', ['ui.bootstrap'])
 
-    .controller('solveController', ['$modal', '$location', function($modal, $location) {
+    .controller('solveController', ['$modal', '$location', '$routeParams', 'data', function($modal, $location, $routeParams, data) {
 
         var vm = this;
+
+        vm.inputData = data;
+
+        vm.calcId = $routeParams.calcset_id;
+
+        console.log('data: ' + JSON.stringify(data));
 
         var modalInstance = $modal.open({
             templateUrl: 'app/views/dialogs/calcSolve.html',
