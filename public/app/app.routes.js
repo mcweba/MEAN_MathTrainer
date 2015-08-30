@@ -1,4 +1,4 @@
-angular.module('app.routes', ['ngRoute'])
+angular.module('mathApp.routes', ['ngRoute'])
 
 .config(function($routeProvider, $locationProvider) {
 

@@ -1,4 +1,4 @@
-angular.module('createCtrl', [])
+angular.module('mathApp.create', [])
 
     .controller('createController', [function() {
 

@@ -1,4 +1,4 @@
-angular.module('mainCtrl', [])
+angular.module('mathApp.main', [])
 
 .controller('mainController', ['$rootScope', '$location', 'Auth', function($rootScope, $location, Auth) {
 

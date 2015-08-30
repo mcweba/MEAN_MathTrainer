@@ -1,4 +1,4 @@
-angular.module('overviewCtrl', ['ngTouch', 'ui.grid'])
+angular.module('mathApp.overview', ['ngTouch', 'ui.grid'])
 
     .controller('overviewController', [function() {
         var vm = this;

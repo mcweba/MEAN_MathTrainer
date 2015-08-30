@@ -1,4 +1,4 @@
-angular.module('userCtrl', ['userService'])
+angular.module('mathApp.user', ['userService'])
 
 .controller('userController', ['User', function(User) {
 

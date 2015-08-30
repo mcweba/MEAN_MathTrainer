@@ -1,0 +1,11 @@
+<div class="modal-header">
+    <h3 class="modal-title">Aufgaben lösen</h3>
+</div>
+<div class="modal-body">
+
+    <progress><bar ng-repeat="bar in vm.progress track by $index" value="bar.value" type="{{bar.type}}" max="vm.confirmed"><span ng-hide="bar.value < 5">{{bar.value}} %</span></bar></progress>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-default" ng-click="vm.cancel()">Cancel</button>
+    <button class="btn btn-primary" ng-click="vm.ok()">OK</button>
+</div>
