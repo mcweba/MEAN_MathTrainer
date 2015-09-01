@@ -1,29 +1,22 @@
 angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard','ngAnimate', 'ui.bootstrap'])
 
-    .controller('overviewController', ['$modal',function ( $modal, $log) {
+    .controller('overviewController', ['$modal',function ( $modal) {
         var vm = this;
         vm.test = 888;
         vm.mySelections = [];
 
-        vm.open1 = function (size) {
+        vm.open1 = function (size, linkForCopy) {
 
             var modalInstance = $modal.open({
                 animation: vm.animationsEnabled,
                 templateUrl: 'myModalContent.html',
                 controller: 'ModalInstanceCtrl',
+                controllerAs : 'modalInst',
                 size: size,
-                resolve: {
-                    items: function () {
-                        return vm.items;
-                    }
-                }
+                resolve: []
             });
 
-            modalInstance.result.then(function (selectedItem) {
-                vm.selected = selectedItem;
-            }, function () {
-                $log.info('Modal dismissed at: ' + new Date());
-            });
+            modalInstance.linkForCopy = linkForCopy;
         };
 
         vm.toggleAnimation = function () {
@@ -63,7 +56,9 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard','n
         vm.copyLink = function (grid, row) {
             vm.textToCopy = 'I can copy by clicking!';
             var selectedUID = row.entity.UID;
-            vm.open1('lg');
+            var linkForCopy = 'locahost:xx' + selectedUID;
+
+            vm.open1('lg', linkForCopy);
 
         };
 
@@ -78,12 +73,7 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard','n
         vm.startTraining = function (grid, row) {
         };
 
-
-        vm.items = ['item1', 'item2', 'item3'];
-
         vm.animationsEnabled = true;
-
-
 
         var def = [
                 {field: 'UID', displayName: 'UID', visible: false, enableHiding: false},
@@ -124,18 +114,10 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard','n
         }
         ])        ;
 
-angular.module('mathApp.overview').controller('ModalInstanceCtrl', function ($scope, $modalInstance, items) {
-
-    $scope.items = items;
-    $scope.selected = {
-        item: $scope.items[0]
-    };
-
-    $scope.ok = function () {
-        $modalInstance.close($scope.selected.item);
-    };
-
-    $scope.cancel = function () {
-        $modalInstance.dismiss('cancel');
+angular.module('mathApp.overview').controller('ModalInstanceCtrl', function ( $modalInstance) {
+    var vm = this;
+    vm.linkForCopy = $modalInstance.linkForCopy;
+    vm.ok = function () {
+        $modalInstance.close();
     };
 });
