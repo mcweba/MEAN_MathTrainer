@@ -35,9 +35,10 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard'])
             }
         ];
 
-        vm.editRow = function (grid, row) {
+        vm.copyLink = function (grid, row) {
             vm.textToCopy = 'I can copy by clicking!';
             var selectedUID = row.entity.UID;
+
         };
 
         vm.success = function () {
@@ -66,7 +67,7 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard'])
                 enableSorting: false,
                 enableFiltering: false,
                 name: 'Link ',
-                cellTemplate: '<div class="text-center" style="margin: 0px" ><button clipboard on-copied="grid.appScope.overview.success()" on-error="grid.appScope.overview.fail(err)" class="glyphicon glyphicon-plus" ng-click="grid.appScope.overview.editRow(grid, row)"></button></div>',
+                cellTemplate: '<div class="text-center" style="margin: 0px" ><button clipboard on-copied="grid.appScope.overview.success()" on-error="grid.appScope.overview.fail(err)" class="glyphicon glyphicon-plus" ng-click="grid.appScope.overview.copyLink(grid, row)"></button></div>',
                 enableHiding: false
             },
             {
