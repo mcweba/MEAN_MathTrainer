@@ -1,9 +1,35 @@
-angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard'])
+angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard','ngAnimate', 'ui.bootstrap'])
 
-    .controller('overviewController', [function () {
+    .controller('overviewController', [function ( $modal, $log) {
         var vm = this;
         vm.test = 888;
         vm.mySelections = [];
+
+
+        vm.open1 = function (size) {
+
+            var modalInstance = $modal.open({
+                animation: vm.animationsEnabled,
+                templateUrl: 'myModalContent.html',
+                controller: 'ModalInstanceCtrl',
+                size: size,
+                resolve: {
+                    items: function () {
+                        return vm.items;
+                    }
+                }
+            });
+
+            modalInstance.result.then(function (selectedItem) {
+                vm.selected = selectedItem;
+            }, function () {
+                $log.info('Modal dismissed at: ' + new Date());
+            });
+        };
+
+        vm.toggleAnimation = function () {
+            vm.animationsEnabled = !vm.animationsEnabled;
+        };
 
         var data = [
             {
@@ -38,6 +64,7 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard'])
         vm.copyLink = function (grid, row) {
             vm.textToCopy = 'I can copy by clicking!';
             var selectedUID = row.entity.UID;
+            vm.open1('lg');
 
         };
 
@@ -52,40 +79,64 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard'])
         vm.startTraining = function (grid, row) {
         };
 
-        var def = [
-            {field: 'UID', displayName: 'UID', visible: false, enableHiding: false},
-            {displayName: 'Erzeuger', field: 'creater', enableHiding: false},
-            {displayName: 'Erzeugungsdatum', field: 'createDate', enableHiding: false},
-            {displayName: 'Schwierigkeitsgrad', field: 'difficulty', enableHiding: false},
-            {displayName: 'Meine erreichte Punktzahl', field: 'myScore', enableHiding: false},
-            {displayName: 'Dauer', field: 'myTime', enableHiding: false},
-            {displayName: 'Zuletzt am', field: 'myLastExecution', enableHiding: false},
-            {
-                displayName: 'Link kopieren',
-                enableColumnMenu: false,
-                sortable: false,
-                enableSorting: false,
-                enableFiltering: false,
-                name: 'Link ',
-                cellTemplate: '<div class="text-center" style="margin: 0px" ><button clipboard on-copied="grid.appScope.overview.success()" on-error="grid.appScope.overview.fail(err)" class="glyphicon glyphicon-plus" ng-click="grid.appScope.overview.copyLink(grid, row)"></button></div>',
-                enableHiding: false
-            },
-            {
-                displayName: 'Starten',
-                enableColumnMenu: false,
-                sortable: false,
-                enableSorting: false,
-                enableFiltering: false,
-                name: 'Loesen ',
-                cellTemplate: '<div  class="text-center" style="margin: 0px" ><button class="glyphicon glyphicon-hourglass" ng-click="grid.appScope.overview.editRow(grid, row)"></button></div>',
-                enableHiding: false
-            }
-        ];
 
-        vm.gridOptions = {
-            enableHiding: false,
-            enableFiltering: true,
-            data: data,
-            columnDefs: def
-        };
-    }]);
+        vm.items = ['item1', 'item2', 'item3'];
+
+        vm.animationsEnabled = true;
+
+
+
+        var def = [
+                {field: 'UID', displayName: 'UID', visible: false, enableHiding: false},
+                {displayName: 'Erzeuger', field: 'creater', enableHiding: false},
+                {displayName: 'Erzeugungsdatum', field: 'createDate', enableHiding: false},
+                {displayName: 'Schwierigkeitsgrad', field: 'difficulty', enableHiding: false},
+                {displayName: 'Meine erreichte Punktzahl', field: 'myScore', enableHiding: false},
+                {displayName: 'Dauer', field: 'myTime', enableHiding: false},
+                {displayName: 'Zuletzt am', field: 'myLastExecution', enableHiding: false},
+                {
+                    displayName: 'Link kopieren',
+                    enableColumnMenu: false,
+                    sortable: false,
+                    enableSorting: false,
+                    enableFiltering: false,
+                    name: 'Link ',
+                    cellTemplate: '<div class="text-center" style="margin: 0px" ><button clipboard on-copied="grid.appScope.overview.success()" on-error="grid.appScope.overview.fail(err)" class="glyphicon glyphicon-plus" ng-click="grid.appScope.overview.copyLink(grid, row)"></button></div>',
+                    enableHiding: false
+                },
+                {
+                    displayName: 'Starten',
+                    enableColumnMenu: false,
+                    sortable: false,
+                    enableSorting: false,
+                    enableFiltering: false,
+                    name: 'Loesen ',
+                    cellTemplate: '<div  class="text-center" style="margin: 0px" ><button class="glyphicon glyphicon-hourglass" ng-click="grid.appScope.overview.editRow(grid, row)"></button></div>',
+                    enableHiding: false
+                }
+            ];
+
+            vm.gridOptions = {
+                enableHiding: false,
+                enableFiltering: true,
+                data: data,
+                columnDefs: def
+            };
+        }
+        ])        ;
+
+angular.module('mathApp.overview').controller('ModalInstanceCtrl', function ($scope, $modalInstance, items) {
+
+    $scope.items = items;
+    $scope.selected = {
+        item: $scope.items[0]
+    };
+
+    $scope.ok = function () {
+        $modalInstance.close($scope.selected.item);
+    };
+
+    $scope.cancel = function () {
+        $modalInstance.dismiss('cancel');
+    };
+});
