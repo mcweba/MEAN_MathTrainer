@@ -92,7 +92,7 @@ angular.module('mathApp.create', [])
                         if(number2 < 1){
                             number2 = 1;
                         }
-                        var res = number1 / number2
+                        var res = number1 / number2;
                         res = Math.ceil(res);
                         number1 = res * number2;
                         result += number1 + vm.selectedOption.name + number2 + separator;
