@@ -1,6 +1,6 @@
 angular.module('mathApp.create', [])
 
-    .controller('createController', [function() {
+    .controller('createController', ['CalcService', function(CalcService) {
 
         var vm = this;
         var quantity = 0;
@@ -17,7 +17,6 @@ angular.module('mathApp.create', [])
 
         number1Max = vm.number1Max;
         number2Max = vm.number2Max;
-        quantity
 
         vm.options = [
             {name:'+'},
@@ -163,7 +162,13 @@ angular.module('mathApp.create', [])
                 diff_level: vm.difficultLevels.indexOf(vm.selectedDifficultLevel) + 1,
                 calculations: vm.calculations
             };
-            console.log(result);
+
+            // call Service
+            CalcService.submitCalcSet(result)
+                .success(function(data) {
+                    vm.calculations = [];
+                    console.log(data);
+            });
         };
 
     }]);
