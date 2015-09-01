@@ -93,6 +93,10 @@ angular.module('mathApp.create', [])
         vm.addCalculation = function(){
             var invalidCalcs = "";
             var prePosition = 0;
+            var lastChar = vm.preCalculations.substring(vm.preCalculations.length-1,vm.preCalculations.length);
+            if(vm.preCalculations.length > 0 & lastChar != separator){
+                vm.preCalculations += separator;
+            }
             for(var i=0;i<vm.preCalculations.length;i++) {
                 var e = vm.preCalculations[i];
                 if(e === separator){
@@ -101,7 +105,7 @@ angular.module('mathApp.create', [])
                     var number2 = parseInt(pattern.substring(number1.toString().length + 1, pattern.length));
                     var operator = pattern.substring(number1.toString().length, number1.toString().length + 1);
 
-                    // Validierung
+                    // validation
                     var patrLength = pattern.length;
                     var patr2Length = 0;
                     patr2Length += number1.toString().length;
@@ -121,7 +125,11 @@ angular.module('mathApp.create', [])
                             vm.calculations.push({n1: number1, op:'*', n2: number2, res: number1 * number2});
                         }
                         if(operator === "/"){
-                            vm.calculations.push({n1: number1, op:'/', n2: number2, res: number1 / number2});
+                            if(number2 > 0) {
+                                vm.calculations.push({n1: number1, op: '/', n2: number2, res: number1 / number2});
+                            }else{
+                                invalidCalcs += pattern + separator;
+                            }
                         }
                         prePosition = i+1;
                     }else{
