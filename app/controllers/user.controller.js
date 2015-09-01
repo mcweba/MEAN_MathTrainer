@@ -129,21 +129,16 @@ exports.currentUserInfo = function(req, res) {
     res.send(req.decoded);
 };
 
-exports.sample = function(req, res) {
-    User.findOne({ 'username': 'chris' }, function(err, user) {
-
+exports.createAdmin = function() {
+    User.findOne({ 'username': 'admin' }, function(err, user) {
         if (!user) {
-            var sampleUser = new User();
-
-            sampleUser.name = 'Chris';
-            sampleUser.username = 'chris';
-            sampleUser.password = 'supersecret';
-
-            sampleUser.save();
+            var adminUser = new User();
+            adminUser.name = 'Administrator';
+            adminUser.username = 'admin';
+            adminUser.password = 'admin';
+            adminUser.save();
         } else {
-            console.log(user);
-
-            user.password = 'supersecret';
+            user.password = 'admin';
             user.save();
         }
     });

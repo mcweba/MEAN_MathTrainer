@@ -4,7 +4,6 @@ module.exports = function(app, express) {
 
 	var apiRouter = express.Router();
 
-	apiRouter.post('/sample', userCtrl.sample);
 	apiRouter.post('/authenticate', userCtrl.authenticate);
 
 	apiRouter.use(userCtrl.verifyToken);

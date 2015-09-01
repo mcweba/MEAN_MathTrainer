@@ -48,13 +48,7 @@ angular.module('authService', [])
 			return $q.reject({ message: 'User has no token.' });		
 	};
 
-	authFactory.createSampleUser = function() {
-		$http.post('/api/sample');
-	};
-
-	// return auth factory object
 	return authFactory;
-
 }])
 
 // ===================================================
@@ -81,7 +75,6 @@ angular.module('authService', [])
 	};
 
 	return authTokenFactory;
-
 }])
 
 // ===================================================
@@ -91,10 +84,10 @@ angular.module('authService', [])
 
 	var interceptorFactory = {};
 
-	// this will happen on all HTTP requests
+	// happens on all http requests
 	interceptorFactory.request = function(config) {
 
-		// grab the token
+		// get the token
 		var token = AuthToken.getToken();
 
 		// if the token exists, add it to the header as x-access-token
@@ -104,19 +97,15 @@ angular.module('authService', [])
 		return config;
 	};
 
-	// happens on response errors
 	interceptorFactory.responseError = function(response) {
 
-		// if our server returns a 403 forbidden response
 		if (response.status == 403) {
 			AuthToken.setToken();
 			$location.path('/login');
 		}
 
-		// return the errors from the server as a promise
 		return $q.reject(response);
 	};
 
 	return interceptorFactory;
-	
 }]);

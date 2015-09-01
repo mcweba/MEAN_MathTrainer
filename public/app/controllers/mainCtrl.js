@@ -46,8 +46,4 @@ angular.module('mathApp.main', [])
 		$location.path('/login');
 	};
 
-	vm.createSample = function() {
-		Auth.createSampleUser();
-	};
-
 }]);

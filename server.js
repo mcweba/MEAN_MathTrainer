@@ -5,6 +5,7 @@ var morgan     = require('morgan');
 var mongoose   = require('mongoose');
 var config 	   = require('./config');
 var path 	   = require('path');
+var userCtrl = require('./app/controllers/user.controller');
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -24,6 +25,8 @@ if(process.env.OPENSHIFT_NODEJS_IP){
 } else {
 	mongoose.connect(config.database);
 }
+
+userCtrl.createAdmin();
 
 app.use(express.static(__dirname + '/public'));
 
