@@ -16,7 +16,7 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
                 animation: vm.animationsEnabled,
                 templateUrl: 'myModalContent.html',
                 controller: 'ModalInstanceCtrl',
-                controllerAs: 'modalInst',
+                controllerAs: 'modalController',
                 size: size,
                 resolve: []
             });
