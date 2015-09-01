@@ -2,21 +2,15 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
 
     .controller('overviewController', ['$modal', 'CalcService', function ($modal, CalcService) {
         var vm = this;
-        vm.test = 888;
         vm.mySelections = [];
 
-        // grab all the users at page load
         CalcService.all()
             .success(function (data) {
-
-                // when all the users come back, remove the processing variable
                 vm.processing = false;
-
-                // bind the users that come back to vm.users
                 vm.gridOptions.data = data;
             });
 
-        vm.open1 = function (size, linkForCopy) {
+        vm.open = function (size, linkForCopy) {
 
             var modalInstance = $modal.open({
                 animation: vm.animationsEnabled,
@@ -34,44 +28,12 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
             vm.animationsEnabled = !vm.animationsEnabled;
         };
 
-
-        //var data = [
-        //    {
-        //        "UID": "8D568A36-D583-42E7-A441-EE4F05592741",
-        //        "creater": "Peter",
-        //        "createDate": "12.05.2015",
-        //        "difficulty": 4,
-        //        "myScore": 3,
-        //        "myTime": "00:12:34",
-        //        "myLastExecution": "12.05.2015"
-        //    },
-        //    {
-        //        "UID": "8D568A36-D583-42E7-A441-EE4F05592741",
-        //        "creater": "Paul",
-        //        "createDate": "11.07.2014",
-        //        "difficulty": 2,
-        //        "myScore": 1,
-        //        "myTime": "01:12:34",
-        //        "myLastExecution": "12.07.2015"
-        //    },
-        //    {
-        //        "UID": "8D568A36-D583-42E7-A441-EE4F05592741",
-        //        "creater": "Marry",
-        //        "createDate": "02.08.2005",
-        //        "difficulty": 9,
-        //        "myScore": 8,
-        //        "myTime": "10:12:34",
-        //        "myLastExecution": "12.05.2015"
-        //    }
-        //];
-
         vm.copyLink = function (grid, row) {
             vm.textToCopy = 'I can copy by clicking!';
             var selectedUID = row.entity.UID;
             var linkForCopy = 'locahost:xx' + selectedUID;
 
-            vm.open1('lg', linkForCopy);
-
+            vm.open('lg', linkForCopy);
         };
 
         vm.success = function () {
@@ -122,8 +84,6 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
             enableFiltering: true,
             columnDefs: def
         };
-
-
     }
     ]);
 
