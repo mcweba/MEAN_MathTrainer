@@ -1,4 +1,5 @@
 var userCtrl = require('../../app/controllers/user.controller');
+var calcCtrl = require('../../app/controllers/calc.controller');
 
 module.exports = function(app, express) {
 
@@ -18,6 +19,10 @@ module.exports = function(app, express) {
 		.delete(userCtrl.delete);
 
 	apiRouter.get('/currentUserInfo', userCtrl.currentUserInfo);
+
+	apiRouter.route('/calcsets')
+		.post(calcCtrl.create)
+		.get(calcCtrl.get);
 
 	return apiRouter;
 };

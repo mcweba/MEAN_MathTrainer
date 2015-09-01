@@ -1,15 +1,12 @@
 angular.module('mathApp.calcService', [])
 
-.factory('CalcService', function($http) {
+.factory('CalcService', ['$http', function($http) {
 
 	var calcService = {};
 
 	var currentCalcSet;
 
 	calcService.fetchCalcSet = function(calcset_id) {
-
-		console.log('called CalcService')
-
 		var content = {
 			calcs: [
 				{id:1, n1: 2, op: '+', n2: 4, res:6},
@@ -19,7 +16,6 @@ angular.module('mathApp.calcService', [])
 		};
 
 		currentCalcSet = content;
-
 		return content;
 	};
 
@@ -27,8 +23,13 @@ angular.module('mathApp.calcService', [])
 		return currentCalcSet;
 	};
 
+	calcService.submitCalcSet = function(calcset) {
+		return $http.post('/api/calcsets/', calcset);
+	};
 
-	// return our entire userFactory object
+	calcService.all = function() {
+		return $http.get('/api/calcsets/');
+	};
+
 	return calcService;
-
-});
+}]);
