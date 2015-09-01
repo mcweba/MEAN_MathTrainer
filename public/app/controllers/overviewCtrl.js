@@ -32,7 +32,6 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
             vm.textToCopy = 'I can copy by clicking!';
             var selectedUID = row.entity.UID;
             var linkForCopy = 'locahost:xx' + selectedUID;
-
             vm.open('lg', linkForCopy);
         };
 
