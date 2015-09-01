@@ -120,7 +120,6 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
         vm.gridOptions = {
             enableHiding: false,
             enableFiltering: true,
-            //data: data,
             columnDefs: def
         };
 
