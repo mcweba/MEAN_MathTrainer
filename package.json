@@ -5,6 +5,8 @@
   },
   "main": "server.js",
   "dependencies": {
+    "angular": "^1.4.5",
+    "angular-clipboard": "^1.0.1",
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "~1.9.3",
     "express": "~4.10.3",

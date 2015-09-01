@@ -26,11 +26,19 @@ angular.module('mathApp.create', [])
             {name:'/'}
         ];
 
-        vm.calculations =[
-           // example {calc:'1+6'}
+        vm.difficultLevels =[
+            {name: 'Einfach'},
+            {name: 'Mittel'},
+            {name: 'Schwer'}
         ];
 
         vm.selectedOption = vm.options[0];
+
+        vm.selectedDifficultLevel = vm.difficultLevels[0];
+
+        vm.calculations =[
+            // example  {n1: 4, op: '*', n2: 3, res: 12}
+            ];
 
         vm.preCalculations = "";
 
@@ -73,6 +81,7 @@ angular.module('mathApp.create', [])
         };
 
         vm.generate = function(){
+            vm.preCalculations = "";
             var result = "";
             for(var i=0;i<vm.quantity;i++) {
                  var number1 = Math.floor(Math.random() * (vm.number1Max+1 - vm.number1Min) + vm.number1Min);
@@ -83,30 +92,78 @@ angular.module('mathApp.create', [])
         };
 
         vm.addCalculation = function(){
+            var invalidCalcs = "";
             var prePosition = 0;
             for(var i=0;i<vm.preCalculations.length;i++) {
                 var e = vm.preCalculations[i];
                 if(e === separator){
                     var pattern = vm.preCalculations.substring(prePosition,i);
-                   // console.log(pattern);
                     var number1 = parseInt(pattern);
                     var number2 = parseInt(pattern.substring(number1.toString().length + 1, pattern.length));
                     var operator = pattern.substring(number1.toString().length, number1.toString().length + 1);
-                    if(operator === "+"){
-                        vm.calculations.push({calc: pattern, total: number1 + number2});
+
+                    // Validierung
+                    var patrLength = pattern.length;
+                    var patr2Length = 0;
+                    patr2Length += number1.toString().length;
+                    patr2Length += number2.toString().length;
+                    if(operator === "+" || operator === "-" || operator === "*" || operator === "/"){
+                        patr2Length +=1;
                     }
-                    if(operator === "-"){
-                        vm.calculations.push({calc: pattern, total: number1 - number2});
+
+                    if(patrLength === patr2Length){
+                        if(operator === "+"){
+                            vm.calculations.push({n1: number1, op:'+', n2: number2, res: number1 + number2});
+                        }
+                        if(operator === "-"){
+                            vm.calculations.push({n1: number1, op:'-', n2: number2, res: number1 - number2});
+                        }
+                        if(operator === "*"){
+                            vm.calculations.push({n1: number1, op:'*', n2: number2, res: number1 * number2});
+                        }
+                        if(operator === "/"){
+                            vm.calculations.push({n1: number1, op:'/', n2: number2, res: number1 / number2});
+                        }
+                        prePosition = i+1;
+                    }else{
+                        invalidCalcs += pattern + separator;
+                        prePosition = i+1;
                     }
-                    if(operator === "*"){
-                        vm.calculations.push({calc: pattern, total: number1 * number2});
-                    }
-                    if(operator === "/"){
-                        vm.calculations.push({calc: pattern, total: number1 / number2});
-                    }
-                    prePosition = i+1;
-            }            }
+                }
+            }
+            if(invalidCalcs.length > 0){
+                var invalid = "Invalid: ";
+                if(vm.preCalculations.substring(0,invalid.length) === invalid){
+                    vm.preCalculations = invalidCalcs;
+                }else{
+                    vm.preCalculations = invalid + invalidCalcs;
+                }
+            }else
+            {
+                vm.preCalculations = "";
+            }
+
            // console.log(vm.preCalculations);
             console.log(vm.calculations);
         };
+
+        vm.deleteCalc = function(idx) {
+            vm.calculations.splice(idx, 1);
+        };
+
+        vm.submit = function() {
+            /*   {
+             diff_level: '1',
+             calculations: [
+             {n1: 4, op: '*', n2: 3, res: 12},
+             {n1: 7, op: '+', n2: 1, res: 8}
+             ]
+             }*/
+            var result ={
+                diff_level: vm.difficultLevels.indexOf(vm.selectedDifficultLevel) + 1,
+                calculations: vm.calculations
+            };
+            console.log(result);
+        };
+
     }]);
