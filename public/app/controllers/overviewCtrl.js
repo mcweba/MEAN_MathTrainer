@@ -1,9 +1,20 @@
-angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard','ngAnimate', 'ui.bootstrap'])
+angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', 'ngAnimate', 'ui.bootstrap'])
 
-    .controller('overviewController', ['$modal',function ( $modal) {
+    .controller('overviewController', ['$modal', 'CalcService', function ($modal, CalcService) {
         var vm = this;
         vm.test = 888;
         vm.mySelections = [];
+
+        // grab all the users at page load
+        CalcService.all()
+            .success(function (data) {
+
+                // when all the users come back, remove the processing variable
+                vm.processing = false;
+
+                // bind the users that come back to vm.users
+                vm.gridOptions.data = data;
+            });
 
         vm.open1 = function (size, linkForCopy) {
 
@@ -11,7 +22,7 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard','n
                 animation: vm.animationsEnabled,
                 templateUrl: 'myModalContent.html',
                 controller: 'ModalInstanceCtrl',
-                controllerAs : 'modalInst',
+                controllerAs: 'modalInst',
                 size: size,
                 resolve: []
             });
@@ -23,35 +34,36 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard','n
             vm.animationsEnabled = !vm.animationsEnabled;
         };
 
-        var data = [
-            {
-                "UID": "8D568A36-D583-42E7-A441-EE4F05592741",
-                "creater": "Peter",
-                "createDate": "12.05.2015",
-                "difficulty": 4,
-                "myScore": 3,
-                "myTime": "00:12:34",
-                "myLastExecution": "12.05.2015"
-            },
-            {
-                "UID": "8D568A36-D583-42E7-A441-EE4F05592741",
-                "creater": "Paul",
-                "createDate": "11.07.2014",
-                "difficulty": 2,
-                "myScore": 1,
-                "myTime": "01:12:34",
-                "myLastExecution": "12.07.2015"
-            },
-            {
-                "UID": "8D568A36-D583-42E7-A441-EE4F05592741",
-                "creater": "Marry",
-                "createDate": "02.08.2005",
-                "difficulty": 9,
-                "myScore": 8,
-                "myTime": "10:12:34",
-                "myLastExecution": "12.05.2015"
-            }
-        ];
+
+        //var data = [
+        //    {
+        //        "UID": "8D568A36-D583-42E7-A441-EE4F05592741",
+        //        "creater": "Peter",
+        //        "createDate": "12.05.2015",
+        //        "difficulty": 4,
+        //        "myScore": 3,
+        //        "myTime": "00:12:34",
+        //        "myLastExecution": "12.05.2015"
+        //    },
+        //    {
+        //        "UID": "8D568A36-D583-42E7-A441-EE4F05592741",
+        //        "creater": "Paul",
+        //        "createDate": "11.07.2014",
+        //        "difficulty": 2,
+        //        "myScore": 1,
+        //        "myTime": "01:12:34",
+        //        "myLastExecution": "12.07.2015"
+        //    },
+        //    {
+        //        "UID": "8D568A36-D583-42E7-A441-EE4F05592741",
+        //        "creater": "Marry",
+        //        "createDate": "02.08.2005",
+        //        "difficulty": 9,
+        //        "myScore": 8,
+        //        "myTime": "10:12:34",
+        //        "myLastExecution": "12.05.2015"
+        //    }
+        //];
 
         vm.copyLink = function (grid, row) {
             vm.textToCopy = 'I can copy by clicking!';
@@ -76,45 +88,47 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard','n
         vm.animationsEnabled = true;
 
         var def = [
-                {field: 'UID', displayName: 'UID', visible: false, enableHiding: false},
-                {displayName: 'Erzeuger', field: 'creater', enableHiding: false},
-                {displayName: 'Erzeugungsdatum', field: 'createDate', enableHiding: false},
-                {displayName: 'Schwierigkeitsgrad', field: 'difficulty', enableHiding: false},
-                {displayName: 'Meine erreichte Punktzahl', field: 'myScore', enableHiding: false},
-                {displayName: 'Dauer', field: 'myTime', enableHiding: false},
-                {displayName: 'Zuletzt am', field: 'myLastExecution', enableHiding: false},
-                {
-                    displayName: 'Link kopieren',
-                    enableColumnMenu: false,
-                    sortable: false,
-                    enableSorting: false,
-                    enableFiltering: false,
-                    name: 'Link ',
-                    cellTemplate: '<div class="text-center" style="margin: 0px" ><button clipboard on-copied="grid.appScope.overview.success()" on-error="grid.appScope.overview.fail(err)" class="glyphicon glyphicon-plus" ng-click="grid.appScope.overview.copyLink(grid, row)"></button></div>',
-                    enableHiding: false
-                },
-                {
-                    displayName: 'Starten',
-                    enableColumnMenu: false,
-                    sortable: false,
-                    enableSorting: false,
-                    enableFiltering: false,
-                    name: 'Loesen ',
-                    cellTemplate: '<div  class="text-center" style="margin: 0px" ><button class="glyphicon glyphicon-hourglass" ng-click="grid.appScope.overview.editRow(grid, row)"></button></div>',
-                    enableHiding: false
-                }
-            ];
+            {field: 'UID', displayName: 'UID', visible: false, enableHiding: false},
+            {displayName: 'Erzeuger', field: 'creator', enableHiding: false},
+            {displayName: 'Erzeugungsdatum', field: 'created', enableHiding: false},
+            {displayName: 'Schwierigkeitsgrad', field: 'diff_level', enableHiding: false},
+            {displayName: 'Meine erreichte Punktzahl', field: 'score', enableHiding: false},
+            {displayName: 'Dauer', field: 'duration', enableHiding: false},
+            {displayName: 'Zuletzt am', field: 'lastExec', enableHiding: false},
+            {
+                displayName: 'Link kopieren',
+                enableColumnMenu: false,
+                sortable: false,
+                enableSorting: false,
+                enableFiltering: false,
+                name: 'Link ',
+                cellTemplate: '<div class="text-center" style="margin: 0px" ><button clipboard on-copied="grid.appScope.overview.success()" on-error="grid.appScope.overview.fail(err)" class="glyphicon glyphicon-plus" ng-click="grid.appScope.overview.copyLink(grid, row)"></button></div>',
+                enableHiding: false
+            },
+            {
+                displayName: 'Starten',
+                enableColumnMenu: false,
+                sortable: false,
+                enableSorting: false,
+                enableFiltering: false,
+                name: 'Loesen ',
+                cellTemplate: '<div  class="text-center" style="margin: 0px" ><button class="glyphicon glyphicon-hourglass" ng-click="grid.appScope.overview.editRow(grid, row)"></button></div>',
+                enableHiding: false
+            }
+        ];
 
-            vm.gridOptions = {
-                enableHiding: false,
-                enableFiltering: true,
-                data: data,
-                columnDefs: def
-            };
-        }
-        ])        ;
+        vm.gridOptions = {
+            enableHiding: false,
+            enableFiltering: true,
+            //data: data,
+            columnDefs: def
+        };
 
-angular.module('mathApp.overview').controller('ModalInstanceCtrl', function ( $modalInstance) {
+
+    }
+    ]);
+
+angular.module('mathApp.overview').controller('ModalInstanceCtrl', function ($modalInstance) {
     var vm = this;
     vm.linkForCopy = $modalInstance.linkForCopy;
     vm.ok = function () {
