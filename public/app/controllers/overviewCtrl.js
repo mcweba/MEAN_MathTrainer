@@ -1,10 +1,9 @@
 angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard','ngAnimate', 'ui.bootstrap'])
 
-    .controller('overviewController', [function ( $modal, $log) {
+    .controller('overviewController', ['$modal',function ( $modal, $log) {
         var vm = this;
         vm.test = 888;
         vm.mySelections = [];
-
 
         vm.open1 = function (size) {
 
