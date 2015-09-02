@@ -1,6 +1,11 @@
 var gulp      = require('gulp');
 var jshint    = require('gulp-jshint');
 var nodemon    = require('gulp-nodemon');
+var qunit = require('node-qunit-phantomjs');
+
+gulp.task('test', function() {
+  qunit('./public/unittest/createcalctest.html');
+});
 
 gulp.task('js', function() {
   return gulp.src(['server.js', 'public/app/*.js', 'public/app/**/*.js'])
@@ -17,6 +22,7 @@ gulp.task('nodemon', function() {
     script: 'server.js',
     ext: 'js html'
   })
+    .on('start', ['test'])
     .on('start', ['watch'])
     .on('change', ['watch'])
     .on('restart', function() {

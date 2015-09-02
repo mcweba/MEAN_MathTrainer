@@ -21,6 +21,7 @@
     "gulp-jshint": "~1.9.0",
     "gulp-nodemon": "~1.0.4",
     "gulp-watch": "~3.0.0",
-    "jshint-stylish": "~1.0.0"
+    "jshint-stylish": "~1.0.0",
+    "node-qunit-phantomjs": "^1.2.1"
   }
 }
