@@ -88,7 +88,8 @@ exports.authenticate = function(req, res) {
             } else {
                 var token = jwt.sign({
                     name: user.name,
-                    username: user.username
+                    username: user.username,
+                    userId: user._id
                 }, secretKey, {
                     expiresInMinutes: 1440 // expires in 24 hours
                 });
