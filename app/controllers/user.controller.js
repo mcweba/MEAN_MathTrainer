@@ -25,6 +25,7 @@ exports.create = function(req, res) {
     user.name = req.body.name;
     user.username = req.body.username;
     user.password = req.body.password;
+    user.role = req.body.role;
 
     user.save(function(err) {
         if (err) {
@@ -56,6 +57,7 @@ exports.update = function(req, res) {
         if (req.body.name) user.name = req.body.name;
         if (req.body.username) user.username = req.body.username;
         if (req.body.password) user.password = req.body.password;
+        if (req.body.role) user.role = req.body.role;
 
         user.save(function(err) {
             if (err) res.send(err);
@@ -137,9 +139,11 @@ exports.createAdmin = function() {
             adminUser.name = 'Administrator';
             adminUser.username = 'admin';
             adminUser.password = 'admin';
+            adminUser.role = 'admin';
             adminUser.save();
         } else {
             user.password = 'admin';
+            user.role = 'admin';
             user.save();
         }
     });
