@@ -1,31 +1,24 @@
 angular.module('mathApp.main', [])
 
-.controller('mainController', ['$rootScope', '$location', 'Auth', function($rootScope, $location, Auth) {
-
+.controller('mainController', ['$rootScope', '$location', 'AuthService', function($rootScope, $location, AuthService) {
 	var vm = this;
+	vm.loggedIn = AuthService.isLoggedIn();
 
-	// get info if a person is logged in
-	vm.loggedIn = Auth.isLoggedIn();
-
-	// check to see if a user is logged in on every request
+	// check if a user is logged in on every request
 	$rootScope.$on('$routeChangeStart', function() {
-		vm.loggedIn = Auth.isLoggedIn();	
+		vm.loggedIn = AuthService.isLoggedIn();
 
-		// get user information on page load
-		Auth.getUser()
+		AuthService.getUser()
 			.then(function(data) {
 				vm.user = data.data;
 			});	
 	});	
 
-	// function to handle login form
 	vm.doLogin = function() {
 		vm.processing = true;
-
-		// clear the error
 		vm.error = '';
 
-		Auth.login(vm.loginData.username, vm.loginData.password)
+		AuthService.login(vm.loginData.username, vm.loginData.password)
 			.success(function(data) {
 				vm.processing = false;			
 
@@ -38,11 +31,9 @@ angular.module('mathApp.main', [])
 			});
 	};
 
-	// function to handle logging out
 	vm.doLogout = function() {
-		Auth.logout();
+		AuthService.logout();
 		vm.user = '';
-		
 		$location.path('/login');
 	};
 

@@ -1,6 +1,6 @@
 angular.module('mathApp.user', ['userService'])
 
-.controller('userController', ['User', function(User) {
+.controller('userController', ['UserService', function(UserService) {
 
 	var vm = this;
 
@@ -8,7 +8,7 @@ angular.module('mathApp.user', ['userService'])
 	vm.processing = true;
 
 	// grab all the users at page load
-	User.all()
+	UserService.all()
 		.success(function(data) {
 
 			// when all the users come back, remove the processing variable
@@ -22,13 +22,13 @@ angular.module('mathApp.user', ['userService'])
 	vm.deleteUser = function(id) {
 		vm.processing = true;
 
-		User.delete(id)
+		UserService.delete(id)
 			.success(function(data) {
 
 				// get all users to update the table
 				// you can also set up your api 
 				// to return the list of users with the delete call
-				User.all()
+				UserService.all()
 					.success(function(data) {
 						vm.processing = false;
 						vm.users = data;
@@ -40,7 +40,7 @@ angular.module('mathApp.user', ['userService'])
 }])
 
 // controller applied to user creation page
-.controller('userCreateController', ['User', function(User) {
+.controller('userCreateController', ['UserService', function(UserService) {
 	
 	var vm = this;
 
@@ -54,7 +54,7 @@ angular.module('mathApp.user', ['userService'])
 		vm.message = '';
 
 		// use the create function in the userService
-		User.create(vm.userData)
+		UserService.create(vm.userData)
 			.success(function(data) {
 				vm.processing = false;
 				vm.userData = {};
@@ -66,7 +66,7 @@ angular.module('mathApp.user', ['userService'])
 }])
 
 // controller applied to user edit page
-.controller('userEditController', ['$routeParams', 'User', function($routeParams, User) {
+.controller('userEditController', ['$routeParams', 'UserService', function($routeParams, UserService) {
 
 	var vm = this;
 
@@ -76,7 +76,7 @@ angular.module('mathApp.user', ['userService'])
 
 	// get the user data for the user you want to edit
 	// $routeParams is the way we grab data from the URL
-	User.get($routeParams.user_id)
+	UserService.get($routeParams.user_id)
 		.success(function(data) {
 			vm.userData = data;
 		});
@@ -87,7 +87,7 @@ angular.module('mathApp.user', ['userService'])
 		vm.message = '';
 
 		// call the userService function to update 
-		User.update($routeParams.user_id, vm.userData)
+		UserService.update($routeParams.user_id, vm.userData)
 			.success(function(data) {
 				vm.processing = false;
 
