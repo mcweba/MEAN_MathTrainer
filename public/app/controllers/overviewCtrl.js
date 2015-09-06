@@ -35,6 +35,15 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
             vm.open('lg', linkForCopy);
         };
 
+        vm.start = function (grid, row) {
+
+        };
+
+        vm.delete = function (grid, row) {
+
+        };
+
+
         vm.success = function () {
             console.log('Copied!');
         };
@@ -62,7 +71,7 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
                 sortable: false,
                 enableSorting: false,
                 enableFiltering: false,
-                name: 'Link ',
+                name: 'link ',
                 cellTemplate: '<div class="text-center" style="margin: 0px" ><button clipboard on-copied="grid.appScope.overview.success()" on-error="grid.appScope.overview.fail(err)" class="glyphicon glyphicon-plus" ng-click="grid.appScope.overview.copyLink(grid, row)"></button></div>',
                 enableHiding: false
             },
@@ -72,8 +81,18 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
                 sortable: false,
                 enableSorting: false,
                 enableFiltering: false,
-                name: 'Loesen ',
-                cellTemplate: '<div  class="text-center" style="margin: 0px" ><button class="glyphicon glyphicon-hourglass" ng-click="grid.appScope.overview.editRow(grid, row)"></button></div>',
+                name: 'start ',
+                cellTemplate: '<div  class="text-center" style="margin: 0px" ><button class="glyphicon glyphicon-hourglass" ng-click="grid.appScope.overview.start(grid, row)"></button></div>',
+                enableHiding: false
+            },
+            {
+                displayName: 'Löschen',
+                enableColumnMenu: false,
+                sortable: false,
+                enableSorting: false,
+                enableFiltering: false,
+                name: 'delete ',
+                cellTemplate: '<div  class="text-center" style="margin: 0px" ><button class="glyphicon glyphicon-remove" ng-click="grid.appScope.overview.delete(grid, row)"></button></div>',
                 enableHiding: false
             }
         ];
