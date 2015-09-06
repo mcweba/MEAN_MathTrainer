@@ -7,16 +7,10 @@ angular.module('mathApp.calcService', [])
 	var currentCalcSet;
 
 	calcService.fetchCalcSet = function(calcset_id) {
-		var content = {
-			calcs: [
-				{id:1, n1: 2, op: '+', n2: 4, res:6},
-				{id:2, n1: 5, op: '-', n2: 1, res:4},
-				{id:3, n1: 8, op: '*', n2: 5, res:40}
-			]
-		};
-
-		currentCalcSet = content;
-		return content;
+		return $http.get('/api/calcsets/' + calcset_id).then(function(response){
+			currentCalcSet = response.data;
+			return currentCalcSet;
+		});
 	};
 
 	calcService.getCurrentCalcSet = function() {

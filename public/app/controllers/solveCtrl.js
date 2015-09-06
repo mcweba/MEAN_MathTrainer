@@ -24,8 +24,8 @@ angular.module('mathApp.solve', ['ui.bootstrap'])
 
             vm.started = false;
 
-            vm.calcCount = vm.currentCalcSet.calcs.length;
-            vm.currentCalcIndex = 0;
+            vm.calcCount = vm.currentCalcSet.calculations.length;
+            vm.currentCalcIndex = 1;
 
             vm.startCalc = function(){
               vm.started = true;

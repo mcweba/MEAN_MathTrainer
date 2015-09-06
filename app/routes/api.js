@@ -22,6 +22,9 @@ module.exports = function(app, express) {
 
 	apiRouter.route('/calcsets')
 		.post(calcCtrl.create)
+		.get(calcCtrl.list);
+
+	apiRouter.route('/calcsets/:calcset_id')
 		.get(calcCtrl.get);
 
 	return apiRouter;
