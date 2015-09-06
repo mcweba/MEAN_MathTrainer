@@ -70,7 +70,7 @@ exports.update = function(req, res) {
 exports.authenticate = function(req, res) {
     User.findOne({
         username: req.body.username
-    }).select('name username password').exec(function(err, user) {
+    }).select('name username password role').exec(function(err, user) {
 
         if (err) throw err;
 
@@ -90,8 +90,8 @@ exports.authenticate = function(req, res) {
             } else {
                 var token = jwt.sign({
                     name: user.name,
-                    username: user.username,
-                    userId: user._id
+                    userId: user._id,
+                    role: user.role
                 }, secretKey, {
                     expiresInMinutes: 1440 // expires in 24 hours
                 });

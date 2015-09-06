@@ -25,7 +25,17 @@ exports.create = function(req, res) {
 
 };
 
-exports.get = function(req, res) {    
+exports.get = function(req, res){
+    CalculationSet.findById(req.params.calcset_id).populate({path: 'calculations'}).exec(function(err, calcset) {
+        if (err){
+            var error = new Error(err);
+            res.status(400).send({message: error.message});
+        }
+        res.json(calcset);
+    });
+}
+
+exports.list = function(req, res) {
     var data = [];
     data.push({id: 1234, creator: 'Fritz', created: new Date(), diff_level: 1, score: 99, duration: 240, lastExec: new Date()});
     data.push({id: 1235, creator: 'Hans', created: new Date(), diff_level: 3, score: 55, duration: 600, lastExec: new Date()});
