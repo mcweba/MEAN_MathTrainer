@@ -23,12 +23,37 @@ angular.module('mathApp.solve', ['ui.bootstrap'])
             vm.currentCalcSet = CalcService.getCurrentCalcSet();
 
             vm.started = false;
+            vm.currentResult = '';
 
             vm.calcCount = vm.currentCalcSet.calculations.length;
             vm.currentCalcIndex = 1;
 
             vm.startCalc = function(){
               vm.started = true;
+            };
+
+            vm.currentNb1 = function(){
+                return vm.currentCalcSet.calculations[vm.currentCalcIndex-1].number1;
+            };
+
+            vm.currentNb2 = function(){
+                return vm.currentCalcSet.calculations[vm.currentCalcIndex-1].number1;
+            };
+
+            vm.currentOp = function(){
+                return vm.currentCalcSet.calculations[vm.currentCalcIndex-1].operator;
+            };
+
+            vm.nextCalc = function(keyEvent){
+                if (keyEvent.which === 13) {
+                    if (vm.currentCalcIndex < vm.calcCount) {
+                        vm.currentCalcIndex += 1;
+                        console.log('Result: ' +  vm.currentResult);
+                        vm.currentResult = '';
+                    } else {
+                        vm.ok();
+                    }
+                }
             };
 
             vm.ok = function () {
