@@ -1,5 +1,6 @@
 var Calculation = require('../models/calculation');
 var CalculationSet = require('../models/calculationset');
+var CalculationSetSolve = require('../models/calculationsetsolve');
 var _ = require('lodash');
 var Q = require('q');
 
@@ -30,8 +31,50 @@ exports.get = function(req, res){
         if (err){
             var error = new Error(err);
             res.status(400).send({message: error.message});
+            return;
         }
         res.json(calcset);
+    });
+};
+
+exports.delete = function(req, res){
+    CalculationSet.findById(req.params.calcset_id).exec(function(err, calcset) {
+        if (err){
+            var error = new Error(err);
+            res.status(400).send({message: error.message});
+            return;
+        }
+
+        if(!calcset){
+            res.status(404).send({message: 'CalculationSet with id ' + req.params.calcset_id + ' could not been found'});
+            return;
+        }
+
+        if(req.decoded.userId != calcset.creator){
+            res.status(403).send({message: 'Only the creator of the CalculationSet has the permission to delete'});
+            return;
+        }
+
+        CalculationSetSolve.find({calculationset: calcset}).limit(1).exec(function(err, calcsetsolve){
+            if (err){
+                var error = new Error(err);
+                res.status(400).send({message: error.message});
+                return;
+            }
+
+            if(!_.isEmpty(calcsetsolve)){
+                res.status(403).send({message: 'Only CalculationSets which never have been solved can be deleted'});
+                return;
+            }
+
+            CalculationSet.findByIdAndRemove({_id: calcset._id}, function(err){
+                if(err){
+                    res.status(400).send({message: error.message});
+                } else {
+                    res.json({ message: 'CalculationSet successfully removed'});
+                }
+            });
+        });
     });
 };
 
@@ -50,6 +93,7 @@ var saveCalculationSet = function(creatorId, diff_level, calculations){
     calculationSet.creator = creatorId;
     calculationSet.diff_level = diff_level;
     calculationSet.calculations = calculations;
+    calculationSet.active = true;
         
     calculationSet.save(function(err){
         if(err){

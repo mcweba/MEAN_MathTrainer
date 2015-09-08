@@ -14,6 +14,10 @@ var CalculationSetSchema  = new Schema({
         type: Number,
         required: 'diff level is required'
     },
+	active: {
+		type: Boolean,
+		required: 'Active is required'
+	},
     calculations: [{type: mongoose.Schema.Types.ObjectId, ref: 'Calculation'}]
 });
 

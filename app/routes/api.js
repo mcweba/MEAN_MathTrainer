@@ -26,7 +26,8 @@ module.exports = function(app, express) {
 		.get(calcCtrl.list);
 
 	apiRouter.route('/calcsets/:calcset_id')
-		.get(calcCtrl.get);
+		.get(calcCtrl.get)
+		.delete(calcCtrl.delete);
 
 	apiRouter.route('/calcsets/solve')
 		.post(calcSolveCtrl.solve);
