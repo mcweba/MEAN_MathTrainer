@@ -1,8 +1,7 @@
 angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', 'ngAnimate', 'ui.bootstrap'])
-
-    .controller('overviewController', ['$modal', 'CalcService', '$location', function ($modal, CalcService, $location) {
+        .controller('overviewController', ['$modal', 'CalcService', '$location','dateTimeSourceFormat','dateTimeTargetFormat','dateTargetFormat', function ($modal, CalcService, $location,dateTimeSourceFormat,dateTimeTargetFormat,dateTargetFormat) {
         var vm = this;
-
+        var test = 'test';
         vm.mySelections = [];
 
         CalcService.all()
@@ -47,7 +46,6 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
 
         };
 
-
         vm.success = function () {
             console.log('Copied!');
         };
@@ -64,41 +62,34 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
             if (!value) {
                 return true;
             } else {
-                if (!moment(value, 'YYYY-MM-DD HH:mm:ss.SSS').isValid()) {
+                if (!moment(value, dateTimeSourceFormat).isValid()) {
                     return true;
                 }
 
-                var momentAsString = moment(value, 'YYYY-MM-DD HH:mm:ss.SSS').format('DD.MM.YYYY HH:mm');
-                termNice = term;
-
-                var index = termNice.indexOf("\\");
-                while (index >= 0) {
-                    termNice = termNice.replace("\\", "");
-                    index = termNice.indexOf("\\");
-                }
-                var isMathing = momentAsString.indexOf(termNice) > -1;
-                return isMathing;
+                var momentAsString = moment(value, dateTimeSourceFormat ).format(dateTimeTargetFormat);
+                return isStringContainingTerm(momentAsString,term);
             }
+        }
+
+        var isStringContainingTerm = function (momentAsString,term){
+            var index = term.indexOf("\\");
+            while (index >= 0) {
+                term = term.replace("\\", "");
+                index = term.indexOf("\\");
+            }
+            return momentAsString.indexOf(term) > -1;
         }
 
         vm.dateFilter = function (term, value, row, column) {
             if (!value) {
                 return true;
             } else {
-                if (!moment(value, 'YYYY-MM-DD HH:mm:ss.SSS').isValid()) {
+                if (!moment(value, dateTimeSourceFormat).isValid()) {
                     return true;
                 }
 
-                var momentAsString = moment(value, 'YYYY-MM-DD HH:mm:ss.SSS').format('DD.MM.YYYY');
-                termNice = term;
-
-                var index = termNice.indexOf("\\");
-                while (index >= 0) {
-                    termNice = termNice.replace("\\", "");
-                    index = termNice.indexOf("\\");
-                }
-                var isMathing = momentAsString.indexOf(termNice) > -1;
-                return isMathing;
+                var momentAsString = moment(value, dateTimeSourceFormat).format(dateTargetFormat);
+                return isStringContainingTerm(momentAsString,term);
             }
         }
 
@@ -170,32 +161,30 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
         };
     }
     ])
-
-    .filter('dateTimeFormaterCreated', function () {
+    .filter('dateTimeFormaterCreated', function (dateTimeSourceFormat,dateTargetFormat) {
         return function (input) {
             if (!input) {
                 return '';
             } else {
-                if (!moment(input, 'YYYY-MM-DD HH:mm:ss.SSS').isValid()) {
+                if (!moment(input, dateTimeSourceFormat).isValid()) {
                     return input;
                 }
-                return moment(input, 'YYYY-MM-DD HH:mm:ss.SSS').format('DD.MM.YYYY');
+                return moment(input, dateTimeSourceFormat).format(dateTargetFormat);
             }
         };
     })
-    .filter('dateTimeFormaterLastExec', function () {
+    .filter('dateTimeFormaterLastExec', function (dateTimeSourceFormat,dateTimeTargetFormat) {
         return function (input) {
             if (!input) {
                 return '';
             } else {
-                if (!moment(input, 'YYYY-MM-DD HH:mm:ss.SSS').isValid()) {
+                if (!moment(input, dateTimeSourceFormat).isValid()) {
                     return input;
                 }
-                return moment(input, 'YYYY-MM-DD HH:mm:ss.SSS').format('DD.MM.YYYY HH:mm');
+                return moment(input, dateTimeSourceFormat).format(dateTimeTargetFormat);
             }
         };
     });
-
 
 angular.module('mathApp.overview').controller('ModalInstanceCtrl', function ($modalInstance) {
     var vm = this;
