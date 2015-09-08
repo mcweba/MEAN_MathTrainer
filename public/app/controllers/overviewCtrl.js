@@ -59,20 +59,78 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
         vm.startTraining = function (grid, row) {
         };
 
+        vm.dateTimeFilter = function (term, value, row, column) {
+
+            if (!value) {
+                return true;
+            } else {
+                if (!moment(value, 'YYYY-MM-DD HH:mm:ss.SSS').isValid()) {
+                    return true;
+                }
+
+                var momentAsString = moment(value, 'YYYY-MM-DD HH:mm:ss.SSS').format('DD.MM.YYYY HH:mm');
+                termNice = term;
+
+                var index = termNice.indexOf("\\");
+                while (index >= 0) {
+                    termNice = termNice.replace("\\", "");
+                    index = termNice.indexOf("\\");
+                }
+                var isMathing = momentAsString.indexOf(termNice) > -1;
+                return isMathing;
+            }
+        }
+
+        vm.dateFilter = function (term, value, row, column) {
+            if (!value) {
+                return true;
+            } else {
+                if (!moment(value, 'YYYY-MM-DD HH:mm:ss.SSS').isValid()) {
+                    return true;
+                }
+
+                var momentAsString = moment(value, 'YYYY-MM-DD HH:mm:ss.SSS').format('DD.MM.YYYY');
+                termNice = term;
+
+                var index = termNice.indexOf("\\");
+                while (index >= 0) {
+                    termNice = termNice.replace("\\", "");
+                    index = termNice.indexOf("\\");
+                }
+                var isMathing = momentAsString.indexOf(termNice) > -1;
+                return isMathing;
+            }
+        }
+
         vm.animationsEnabled = true;
 
         var def = [
-            {field: 'UID', displayName: 'UID', visible: false, enableHiding: false},
-            {displayName: 'Erzeuger', field: 'creator', enableHiding: false},
-
-            {displayName: 'Erzeugungsdatum', field: 'created', enableHiding: false, cellFilter: 'dateTimeFormaterCreated', filterCellFiltered:true},
-            {displayName: 'Schwierigkeitsgrad', field: 'diff_level', enableHiding: false},
-            {displayName: 'Meine erreichte Punktzahl', field: 'score', enableHiding: false},
-            {displayName: 'Dauer[s]', field: 'duration', enableHiding: false},
-            {displayName: 'Zuletzt am', field: 'lastExec', enableHiding: false, cellFilter: 'dateTimeFormaterLastExec', filterCellFiltered:false },
+            {field: 'UID', displayName: 'UID', visible: false, enableColumnMenu: false, enableHiding: false},
+            {displayName: 'Erzeuger', field: 'creator',enableColumnMenu: false, enableHiding: false},
+            {
+                displayName: 'Erzeugungsdatum',
+                field: 'created',
+                enableHiding: false,
+                enableColumnMenu: false,
+                filter: {condition: vm.dateFilter},
+                cellFilter: 'dateTimeFormaterCreated',
+                filterCellFiltered: true
+            },
+            {displayName: 'Schwierigkeitsgrad', field: 'diff_level', enableColumnMenu: false, enableHiding: false},
+            {displayName: 'Meine erreichte Punktzahl', field: 'score', enableColumnMenu: false, enableHiding: false},
+            {displayName: 'Dauer[s]', field: 'duration', enableColumnMenu: false, enableHiding: false},
+            {
+                displayName: 'Zuletzt am',
+                field: 'lastExec',
+                enableHiding: false,
+                enableColumnMenu: false,
+                filter: {condition: vm.dateTimeFilter},
+                cellFilter: 'dateTimeFormaterLastExec',
+                filterCellFiltered: false
+            },
             {
                 displayName: '',
-                width : '40',
+                width: '40',
                 enableColumnMenu: false,
                 sortable: false,
                 enableSorting: false,
@@ -83,7 +141,7 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
             },
             {
                 displayName: '',
-                width : '40',
+                width: '40',
                 enableColumnMenu: false,
                 sortable: false,
                 enableSorting: false,
@@ -94,7 +152,7 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
             },
             {
                 displayName: '',
-                width : '40',
+                width: '40',
                 enableColumnMenu: false,
                 sortable: false,
                 enableSorting: false,
@@ -105,7 +163,7 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
             }
         ];
 
-            vm.gridOptions = {
+        vm.gridOptions = {
             enableHiding: false,
             enableFiltering: true,
             columnDefs: def
@@ -113,31 +171,30 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
     }
     ])
 
-    .filter('dateTimeFormaterCreated', function() {
-        return function(input) {
-            if (!input){
+    .filter('dateTimeFormaterCreated', function () {
+        return function (input) {
+            if (!input) {
                 return '';
             } else {
-                if (!moment(input,'YYYY-MM-DD HH:mm:ss.SSS').isValid()) {
-                    return  input;
+                if (!moment(input, 'YYYY-MM-DD HH:mm:ss.SSS').isValid()) {
+                    return input;
                 }
-                return moment(input,'YYYY-MM-DD HH:mm:ss.SSS').format('DD.MM.YYYY') ;
+                return moment(input, 'YYYY-MM-DD HH:mm:ss.SSS').format('DD.MM.YYYY');
             }
         };
     })
-    .filter('dateTimeFormaterLastExec', function() {
-            return function(input) {
-            if (!input){
+    .filter('dateTimeFormaterLastExec', function () {
+        return function (input) {
+            if (!input) {
                 return '';
             } else {
-                if (!moment(input,'YYYY-MM-DD HH:mm:ss.SSS').isValid()) {
-                   return  input;
+                if (!moment(input, 'YYYY-MM-DD HH:mm:ss.SSS').isValid()) {
+                    return input;
                 }
-                return moment(input,'YYYY-MM-DD HH:mm:ss.SSS').format('DD.MM.YYYY HH:mm') ;
+                return moment(input, 'YYYY-MM-DD HH:mm:ss.SSS').format('DD.MM.YYYY HH:mm');
             }
         };
     });
-
 
 
 angular.module('mathApp.overview').controller('ModalInstanceCtrl', function ($modalInstance) {
