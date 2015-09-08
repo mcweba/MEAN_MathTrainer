@@ -15,7 +15,7 @@ exports.create = function(req, res) {
     // wait for all promises to resolve or reject
     Q.all(promises).then(function(calculations){
         saveCalculationSet(req.decoded.userId, req.body.diff_level, calculations).then(function(){
-            res.json({ message: 'calculationset successfully created'});    
+            res.json({ message: 'CalculationSet successfully created'});
         }).catch(function(error){
             res.status(400).send({message: error.message});
         });
@@ -33,7 +33,7 @@ exports.get = function(req, res){
         }
         res.json(calcset);
     });
-}
+};
 
 exports.list = function(req, res) {
     var data = [];
