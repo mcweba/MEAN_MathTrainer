@@ -22,7 +22,7 @@ QUnit.test('generate method', function(assert) {
     ctrl.generate();
     ctrl.addCalculation();
 
-    assert.strictEqual(ctrl.quantity,ctrl.calculations.length,"Test generate and add calculation");
+    assert.strictEqual(ctrl.quantity,ctrl.calculations.length,'Test generate and add calculation');
 });
 
 QUnit.test('Test Addition', function(assert) {
@@ -36,7 +36,7 @@ QUnit.test('Test Addition', function(assert) {
     ctrl.generate();
     ctrl.addCalculation();
 
-    assert.strictEqual(ctrl.quantity,ctrl.calculations.length,"Test Addition");
+    assert.strictEqual(ctrl.quantity,ctrl.calculations.length,'Test Addition');
 });
 
 QUnit.test('Test Minus', function(assert) {
@@ -50,7 +50,7 @@ QUnit.test('Test Minus', function(assert) {
     ctrl.generate();
     ctrl.addCalculation();
 
-    assert.strictEqual(ctrl.quantity,ctrl.calculations.length,"Test Minus");
+    assert.strictEqual(ctrl.quantity,ctrl.calculations.length,'Test Minus');
 });
 
 QUnit.test('Test Multiplication', function(assert) {
@@ -64,7 +64,7 @@ QUnit.test('Test Multiplication', function(assert) {
     ctrl.generate();
     ctrl.addCalculation();
 
-    assert.strictEqual(ctrl.quantity,ctrl.calculations.length,"Test Multiplication");
+    assert.strictEqual(ctrl.quantity,ctrl.calculations.length,'Test Multiplication');
 });
 
 QUnit.test('Test Division', function(assert) {
@@ -78,7 +78,7 @@ QUnit.test('Test Division', function(assert) {
     ctrl.generate();
     ctrl.addCalculation();
 
-    assert.strictEqual(ctrl.quantity,ctrl.calculations.length,"Test Division");
+    assert.strictEqual(ctrl.quantity,ctrl.calculations.length,'Test Division');
 });
 
 
@@ -93,7 +93,7 @@ QUnit.test('Division by Zero', function(assert) {
     ctrl.generate();
     ctrl.addCalculation();
 
-    assert.strictEqual(0,ctrl.calculations.length,"Division by Zero");
+    assert.strictEqual(0,ctrl.calculations.length,'Division by Zero');
 });
 
 QUnit.test('Delete calc', function(assert) {
@@ -111,5 +111,5 @@ QUnit.test('Delete calc', function(assert) {
     ctrl.deleteCalc(0);
 
     // after delete we have quantity -1 calculations
-    assert.strictEqual(ctrl.quantity-1,ctrl.calculations.length,"Test delete a calculation");
+    assert.strictEqual(ctrl.quantity-1,ctrl.calculations.length,'Test delete a calculation');
 });
