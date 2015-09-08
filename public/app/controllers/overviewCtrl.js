@@ -2,6 +2,7 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
 
     .controller('overviewController', ['$modal', 'CalcService', function ($modal, CalcService) {
         var vm = this;
+
         vm.mySelections = [];
 
         CalcService.all()
@@ -60,13 +61,15 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
         var def = [
             {field: 'UID', displayName: 'UID', visible: false, enableHiding: false},
             {displayName: 'Erzeuger', field: 'creator', enableHiding: false},
-            {displayName: 'Erzeugungsdatum', field: 'created', enableHiding: false},
+
+            {displayName: 'Erzeugungsdatum', field: 'created', enableHiding: false, cellFilter: 'dateTimeFormaterCreated', filterCellFiltered:true},
             {displayName: 'Schwierigkeitsgrad', field: 'diff_level', enableHiding: false},
             {displayName: 'Meine erreichte Punktzahl', field: 'score', enableHiding: false},
-            {displayName: 'Dauer', field: 'duration', enableHiding: false},
-            {displayName: 'Zuletzt am', field: 'lastExec', enableHiding: false},
+            {displayName: 'Dauer[s]', field: 'duration', enableHiding: false},
+            {displayName: 'Zuletzt am', field: 'lastExec', enableHiding: false, cellFilter: 'dateTimeFormaterLastExec', filterCellFiltered:false },
             {
-                displayName: 'Link kopieren',
+                displayName: '',
+                width : '40',
                 enableColumnMenu: false,
                 sortable: false,
                 enableSorting: false,
@@ -76,7 +79,8 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
                 enableHiding: false
             },
             {
-                displayName: 'Starten',
+                displayName: '',
+                width : '40',
                 enableColumnMenu: false,
                 sortable: false,
                 enableSorting: false,
@@ -86,7 +90,8 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
                 enableHiding: false
             },
             {
-                displayName: 'Löschen',
+                displayName: '',
+                width : '40',
                 enableColumnMenu: false,
                 sortable: false,
                 enableSorting: false,
@@ -97,13 +102,40 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
             }
         ];
 
-        vm.gridOptions = {
+            vm.gridOptions = {
             enableHiding: false,
             enableFiltering: true,
             columnDefs: def
         };
     }
-    ]);
+    ])
+
+    .filter('dateTimeFormaterCreated', function() {
+        return function(input) {
+            if (!input){
+                return '';
+            } else {
+                if (!moment(input,'YYYY-MM-DD HH:mm:ss.SSS').isValid()) {
+                    return  input;
+                }
+                return moment(input,'YYYY-MM-DD HH:mm:ss.SSS').format('DD.MM.YYYY') ;
+            }
+        };
+    })
+    .filter('dateTimeFormaterLastExec', function() {
+            return function(input) {
+            if (!input){
+                return '';
+            } else {
+                if (!moment(input,'YYYY-MM-DD HH:mm:ss.SSS').isValid()) {
+                   return  input;
+                }
+                return moment(input,'YYYY-MM-DD HH:mm:ss.SSS').format('DD.MM.YYYY HH:mm') ;
+            }
+        };
+    });
+
+
 
 angular.module('mathApp.overview').controller('ModalInstanceCtrl', function ($modalInstance) {
     var vm = this;
