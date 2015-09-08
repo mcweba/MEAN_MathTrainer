@@ -21,6 +21,10 @@ angular.module('mathApp.calcService', [])
 		return $http.post('/api/calcsets/', calcset);
 	};
 
+	calcService.submitCalcSetSolve = function(calcsetsolve) {
+		return $http.post('/api/calcsets/solve', calcsetsolve);
+	};
+
 	calcService.all = function() {
 		return $http.get('/api/calcsets/');
 	};

@@ -4,7 +4,7 @@
 <div class="modal-body">
     <form name="form" class="css-form calc" novalidate ng-show="vm.started">
         <div>
-            8 + 6 = <input type="text" name="solution" maxlength="4" size="4" style="text-align:center;" placeholder="?">
+           {{vm.currentNb1()}} {{vm.currentOp()}} {{vm.currentNb2()}} =  <input ng-model="vm.currentResult" ng-keydown="vm.nextCalc($event)" type="text" name="solution" maxlength="4" size="4" style="text-align:center;" placeholder="?">
         </div>
     </form>
     <div class="panel panel-default" ng-hide="vm.started">
