@@ -21,6 +21,10 @@ angular.module('mathApp.calcService', [])
 		return $http.post('/api/calcsets/', calcset);
 	};
 
+	calcService.deleteCalcSet = function(calcset_id) {
+		return $http.delete('/api/calcsets/' + calcset_id);
+	};
+
 	calcService.submitCalcSetSolve = function(calcsetsolve) {
 		return $http.post('/api/calcsets/solve', calcsetsolve);
 	};
