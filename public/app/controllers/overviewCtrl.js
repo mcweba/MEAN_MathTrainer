@@ -1,6 +1,6 @@
 angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', 'ngAnimate', 'ui.bootstrap'])
 
-    .controller('overviewController', ['$modal', 'CalcService', function ($modal, CalcService) {
+    .controller('overviewController', ['$modal', 'CalcService', '$location', function ($modal, CalcService, $location) {
         var vm = this;
 
         vm.mySelections = [];
@@ -37,7 +37,10 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
         };
 
         vm.start = function (grid, row) {
-
+            //console.log('Start...' + 'row.entity.id: ' + row.entity.id);
+            // Todo fixe id ist noch zu ersetzen zurzeit nur für Testzweck
+            $location.path('/solve/' + '55ee7a40d258ad641d52598e');
+            //$location.path('/solve/' + row.entity.id);
         };
 
         vm.delete = function (grid, row) {
