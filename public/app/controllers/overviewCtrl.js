@@ -29,9 +29,7 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
         };
 
         vm.copyLink = function (grid, row) {
-            vm.textToCopy = 'I can copy by clicking!';
-            var selectedUID = row.entity.UID;
-            var linkForCopy = 'locahost:xx' + selectedUID;
+            var linkForCopy = window.location.href.replace("overview","solve")  + '/' + row.entity.id;
             vm.open('lg', linkForCopy);
         };
 
@@ -96,7 +94,7 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
         vm.animationsEnabled = true;
 
         var def = [
-            {field: 'UID', displayName: 'UID', visible: false, enableColumnMenu: false, enableHiding: false},
+            {field: 'id', displayName: 'id', visible: false, enableColumnMenu: false, enableHiding: false},
             {displayName: 'Erzeuger', field: 'creator',enableColumnMenu: false, enableHiding: false},
             {
                 displayName: 'Erzeugungsdatum',
