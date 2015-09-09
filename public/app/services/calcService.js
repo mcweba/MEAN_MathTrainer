@@ -10,6 +10,8 @@ angular.module('mathApp.calcService', [])
 		return $http.get('/api/calcsets/' + calcset_id).then(function(response){
 			currentCalcSet = response.data;
 			return currentCalcSet;
+		}, function(response) {
+			console.log('Error: ' + response.statusText + response.status );
 		});
 	};
 

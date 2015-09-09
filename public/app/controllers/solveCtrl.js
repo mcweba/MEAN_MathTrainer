@@ -21,6 +21,14 @@ angular.module('mathApp.solve', ['ui.bootstrap'])
             var vm = this;
 
             vm.currentCalcSet = CalcService.getCurrentCalcSet();
+            if(vm.currentCalcSet === undefined){
+                $modalInstance.close();
+                $location.path('/overview');
+               // return;
+            }
+
+            vm.calcCount = vm.currentCalcSet.calculations.length;
+
 
             vm.beforestart = true;
             vm.started = false;
@@ -32,7 +40,6 @@ angular.module('mathApp.solve', ['ui.bootstrap'])
             vm.durationTime = 0;
             vm.score = 0;
 
-            vm.calcCount = vm.currentCalcSet.calculations.length;
             vm.currentCalcIndex = 1;
 
             vm.startCalc = function(){
