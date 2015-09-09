@@ -52,6 +52,14 @@
             </div>
             <button type="button" class="btn pull-right btn-default" ng-click="create.generate()">Generieren</button>
         </div>
+        <div class="row show-hide-message" ng-show="create.isGenerateFeedback">
+            <div class="col-md-12">
+
+                <div class="alert alert-info">
+                    {{ create.generateFeedback }}
+                </div>
+            </div>
+        </div>
     </div>
     <div class="panel panel-default">
         <div class="panel-body">
@@ -102,6 +110,14 @@
             </div>
 
             <button ng-click="create.submit()" type="submit" class="btn pull-right btn-default">Speichern</button>
+        </div>
+        <div class="row show-hide-message" ng-show="create.isSubmitFeedback">
+            <div class="col-md-12">
+
+                <div class="alert alert-info">
+                    {{ create.submitFeedback }}
+                </div>
+            </div>
         </div>
     </div>
 </div>

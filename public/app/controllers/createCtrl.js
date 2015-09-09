@@ -14,6 +14,9 @@ angular.module('mathApp.create', [])
         vm.number2Min = 0;
         vm.number2Max = 0;
         vm.counter = 0;
+        vm.isGenerateFeedback = false;
+        vm.generateFeedback = '';
+        vm.isSubmitFeedback = false;
 
         number1Max = vm.number1Max;
         number2Max = vm.number2Max;
@@ -42,6 +45,7 @@ angular.module('mathApp.create', [])
         vm.preCalculations = "";
 
         vm.quantityChanged = function(){
+            vm.cleanSubmitFeedback();
             if(vm.quantity > 1000){
                 vm.quantity = quantity;
             }else{
@@ -50,6 +54,7 @@ angular.module('mathApp.create', [])
         };
 
         vm.number1MinChanged = function(){
+            vm.cleanSubmitFeedback();
             if(vm.number1Min >  vm.number1Max){
                 number1Max = vm.number1Min;
                 vm.number1Max = number1Max;
@@ -57,6 +62,7 @@ angular.module('mathApp.create', [])
         };
 
         vm.number1MaxChanged = function(){
+            vm.cleanSubmitFeedback();
             if(vm.number1Max < vm.number1Min){
                 vm.number1Max = number1Max;
             }else{
@@ -65,6 +71,7 @@ angular.module('mathApp.create', [])
         };
 
         vm.number2MinChanged = function(){
+            vm.cleanSubmitFeedback();
             if(vm.number2Min >  vm.number2Max){
                 number2Max = vm.number2Min;
                 vm.number2Max = number2Max;
@@ -72,6 +79,7 @@ angular.module('mathApp.create', [])
         };
 
         vm.number2MaxChanged = function(){
+            vm.cleanSubmitFeedback();
             if(vm.number2Max < vm.number2Min){
                 vm.number2Max = number2Max;
             }else{
@@ -80,8 +88,13 @@ angular.module('mathApp.create', [])
         };
 
         vm.generate = function(){
+            vm.cleanSubmitFeedback();
+            vm.isGenerateFeedback = false;
+            vm.generateFeedback = '';
             if(vm.quantity > 0 & vm.number2Max < 1 & vm.selectedOption.name === "/"){
-                vm.preCalculations = "Division durch 0 ist nicht erlaubt, bitte Wertebereich der 2. Zahl anpassen.";
+                vm.generateFeedback = "Division durch 0 ist nicht erlaubt, bitte Wertebereich der 2. Zahl anpassen.";
+                vm.preCalculations = '';
+                vm.isGenerateFeedback = true;
             }else{
                 vm.preCalculations = "";
                 var result = "";
@@ -105,6 +118,7 @@ angular.module('mathApp.create', [])
         };
 
         vm.addCalculation = function(){
+            vm.cleanSubmitFeedback();
             var invalidCalcs = "";
             var prePosition = 0;
             var lastChar = vm.preCalculations.substring(vm.preCalculations.length-1,vm.preCalculations.length);
@@ -180,17 +194,26 @@ angular.module('mathApp.create', [])
              {n1: 7, op: '+', n2: 1, res: 8}
              ]
              }*/
-            var result ={
-                diff_level: vm.difficultLevels.indexOf(vm.selectedDifficultLevel) + 1,
-                calculations: vm.calculations
-            };
+            vm.cleanSubmitFeedback();
+            if(vm.calculations.length > 0) {
+                var result = {
+                    diff_level: vm.difficultLevels.indexOf(vm.selectedDifficultLevel) + 1,
+                    calculations: vm.calculations
+                };
 
-            // call Service
-            CalcService.submitCalcSet(result)
-                .success(function(data) {
-                    vm.calculations = [];
-                    console.log(data);
-            });
+                // call Service
+                CalcService.submitCalcSet(result)
+                    .success(function (data) {
+                        vm.calculations = [];
+                        console.log(data);
+                        vm.isSubmitFeedback = true;
+                        vm.submitFeedback = 'Rechnungen wurden erfolgreich an den Server gesendet.'
+                    });
+            }
         };
 
+        vm.cleanSubmitFeedback = function(){
+            vm.isSubmitFeedback = false;
+            vm.submitFeedback = ''
+        };
     }]);
