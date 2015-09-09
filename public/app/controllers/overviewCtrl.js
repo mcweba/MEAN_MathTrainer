@@ -10,7 +10,8 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
                 vm.gridOptions.data = data;
             });
 
-        vm.open = function (size, linkForCopy) {
+
+           vm.open = function (size, linkForCopy) {
 
             var modalInstance = $modal.open({
                 animation: vm.animationsEnabled,
@@ -41,7 +42,11 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
         };
 
         vm.delete = function (grid, row) {
-
+            CalcService.deleteCalcSet( 1234)
+                .success(function (data) {
+                    vm.processing = false;
+                    vm.gridOptions.data = data;
+                });
         };
 
         vm.success = function () {
