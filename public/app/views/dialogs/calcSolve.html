@@ -24,6 +24,12 @@
             <h3>Total: {{vm.calcCount}} </h3>
         </div>
     </div>
+    <div class="panel panel-default" ng-show="vm.undefinedCalc">
+        <div class="panel-body">
+            <h4> Es wurde leider kein Rechnungset gefunden. </h4>
+        </div>
+        <p style="text-align: center"><a class="btn btn-success" ng-click="vm.ok()" role="button">OK</a></p>
+    </div>
 </div>
 <div class="modal-footer modal-footer-custom" ng-show="vm.progress">
     <span class="col-xs-9 col-sm-9 modal-footer-progressbar">
