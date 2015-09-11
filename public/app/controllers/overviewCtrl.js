@@ -30,19 +30,23 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
         };
 
         vm.copyLink = function (grid, row) {
-            var linkForCopy = window.location.href.replace("overview","solve")  + '/' + row.entity.id;
+            var linkForCopy = window.location.href.replace("overview","solve")  + '/' + row.entity._id;
             vm.open('lg', linkForCopy);
         };
 
         vm.start = function (grid, row) {
             //console.log('Start...' + 'row.entity.id: ' + row.entity.id);
             // Todo fixe id ist noch zu ersetzen zurzeit nur für Testzweck
-            $location.path('/solve/' + '55ee7a40d258ad641d52598e');
-            //$location.path('/solve/' + row.entity.id);
+           // $location.path('/solve/' + '55ee7a40d258ad641d52598e');
+            $location.path('/solve/' + row.entity._id);
         };
 
         vm.delete = function (grid, row) {
-            CalcService.deleteCalcSet( 1234)
+            var rowToDeleteId =row.entity._id;
+            //var rowToDeleteCreaterId = row.entity._id;
+            //if (currentUser.id !== rowToDeleteCreaterId)
+
+            CalcService.deleteCalcSet(rowToDeleteId)
                 .success(function (data) {
                     vm.processing = false;
                     vm.gridOptions.data = data;
@@ -99,8 +103,8 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
         vm.animationsEnabled = true;
 
         var def = [
-            {field: 'id', displayName: 'id', visible: false, enableColumnMenu: false, enableHiding: false},
-            {displayName: 'Erzeuger', field: 'creator',enableColumnMenu: false, enableHiding: false},
+            {field: '_id', displayName: 'id', visible: true, enableColumnMenu: false, enableHiding: false},
+            {displayName: 'Erzeuger', field: 'creator.name',enableColumnMenu: false, enableHiding: false},
             {
                 displayName: 'Erzeugungsdatum',
                 field: 'created',
