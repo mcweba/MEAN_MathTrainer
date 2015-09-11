@@ -79,7 +79,7 @@ exports.delete = function(req, res){
 };
 
 exports.list = function(req, res) {
-    CalculationSet.find({}).populate('creator', 'name').exec(function(err, calcsets) {
+    CalculationSet.find({}).select('-calculations').populate('creator', 'name').exec(function(err, calcsets) {
         if (err){
             var error = new Error(err);
             res.status(400).send({message: error.message});
