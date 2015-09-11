@@ -14,6 +14,10 @@ var CalculationSetInfoSchema  = new Schema({
         type: Number,
         required: 'last score is required'
     },
+    lastduration: {
+        type: Number,
+        required: 'last duration is required'
+    },    
 	lastsolve: {
 		type: Date,
 		required: 'last solve is required'
