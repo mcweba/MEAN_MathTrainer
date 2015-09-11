@@ -79,11 +79,14 @@ exports.delete = function(req, res){
 };
 
 exports.list = function(req, res) {
-    var data = [];
-    data.push({id: 1234, creator: 'Fritz', created: new Date(), diff_level: 1, score: 99, duration: 240, lastExec: new Date()});
-    data.push({id: 1235, creator: 'Hans', created: new Date(), diff_level: 3, score: 55, duration: 600, lastExec: new Date()});
-    data.push({id: 1236, creator: 'Kurt', created: new Date(), diff_level: 2, score: 66, duration: 90, lastExec: new Date()});
-    res.json(data);
+    CalculationSet.find({}).populate('creator', 'name').exec(function(err, calcsets) {
+        if (err){
+            var error = new Error(err);
+            res.status(400).send({message: error.message});
+            return;
+        }
+        res.json(calcsets);
+    });
 };
 
 var saveCalculationSet = function(creatorId, diff_level, calculations){
