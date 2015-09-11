@@ -1,5 +1,6 @@
 var CalculationSolve = require('../models/calculationsolve');
 var CalculationSetSolve = require('../models/calculationsetsolve');
+var CalculationSetInfo = require('../models/calculationsetinfo');
 var _ = require('lodash');
 var Q = require('q');
 
@@ -39,6 +40,43 @@ var saveCalculationSetSolve = function(creatorId, calculationSetId, score, durat
     });
     return deferred.promise;
 };
+
+var updateCalculationSetInfo = function(creatorId, calculationSetId, score, duration){
+    var deferred = Q.defer();
+
+    CalculationSetInfo.findOne({ 'creator': creatorId, 'calculationset': calculationSetId }, function(err, calcsetInfo) {
+        if (!calcsetInfo) {
+            var calcsetInfoNew = new CalculationSetInfo();
+            calcsetInfoNew.creator = creatorId;
+            calcsetInfoNew.calculationset = calculationSetId;
+            calcsetInfoNew.lastscore = score;
+            calcsetInfoNew.lastduration = duration;
+            calcsetInfoNew.lastsolve = new Date();
+
+            calcsetInfoNew.save(function(error, c) {
+                if (error) {
+                    deferred.reject(new Error(error));
+                } else {
+                    deferred.resolve(c._id);
+                }
+            });
+        } else {
+            //update calcsetInfo
+            calcsetInfo.lastscore = score;
+            calcsetInfo.lastduration = duration;
+            calcsetInfo.lastsolve = new Date();
+
+            calcsetInfo.save(function(error, c) {
+                if (error) {
+                    deferred.reject(new Error(error));
+                } else {
+                    deferred.resolve(c._id);
+                }
+            });
+        }
+    });
+    return deferred.promise;
+}
 
 var createCalculationSolveId = function(calcId, creatorId, providedRes, duration, correct){
     var deferred = Q.defer();
