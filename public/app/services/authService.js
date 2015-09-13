@@ -29,7 +29,7 @@ angular.module('authService', [])
 
 	authFactory.getUser = function() {
 		if (AuthToken.getToken())
-			return $http.get('/api/currentUserInfo', { cache: true });
+			return $http.get('/api/currentUserInfo', { cache: false });
 		else
 			return $q.reject({ message: 'User has no token.' });		
 	};
