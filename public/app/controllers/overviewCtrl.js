@@ -11,7 +11,7 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
             });
 
 
-        vm.open = function (size, linkForCopy) {
+        vm.open = function (size, title, message) {
 
             var modalInstance = $modal.open({
                 animation: vm.animationsEnabled,
@@ -22,7 +22,8 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
                 resolve: []
             });
 
-            modalInstance.linkForCopy = linkForCopy;
+            modalInstance.message = message;
+            modalInstance.title = title
         };
 
         vm.toggleAnimation = function () {
@@ -30,8 +31,9 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
         };
 
         vm.copyLink = function (grid, row) {
-            var linkForCopy = window.location.href.replace("overview", "solve") + '/' + row.entity._id;
-            vm.open('lg', linkForCopy);
+            var message = window.location.href.replace("overview", "solve") + '/' + row.entity._id;
+            var title = "Link zum Einladen..."
+            vm.open('lg', title, message);
         };
 
         vm.start = function (grid, row) {
@@ -40,6 +42,16 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
 
         vm.delete = function (grid, row) {
             var rowToDeleteId = row.entity._id;
+            var creatorId = row.entity.creator._id;
+
+            if (creatorId !== currentUser.userId && currentUser.role !== "Admin") {
+
+                var title = "Löschen nicht möglich"
+                var message = "Es können nur eigene, also von Ihnen erzeugte, Rechnunssets gelöscht werden";
+                vm.open('lg', title, message);
+                return
+            }
+a
             CalcService.deleteCalcSet(rowToDeleteId)
                 .success(function (data) {
                     vm.processing = false;
@@ -97,9 +109,29 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
         vm.animationsEnabled = true;
 
         var def = [
-            {field: '_id', displayName: 'id', type: 'number', visible: false, enableColumnMenu: false, enableHiding: false},
-            {field: 'creator.name',displayName: 'Ersteller', type: 'string',  enableColumnMenu: false, enableHiding: false},
-            {field: 'creator._id',displayName: 'ErstellerID', type: 'number', visible: false, enableColumnMenu: false, enableHiding: false},
+            {
+                field: '_id',
+                displayName: 'id',
+                type: 'number',
+                visible: false,
+                enableColumnMenu: false,
+                enableHiding: false
+            },
+            {
+                field: 'creator.name',
+                displayName: 'Ersteller',
+                type: 'string',
+                enableColumnMenu: false,
+                enableHiding: false
+            },
+            {
+                field: 'creator._id',
+                displayName: 'ErstellerID',
+                type: 'number',
+                visible: false,
+                enableColumnMenu: false,
+                enableHiding: false
+            },
             {
                 displayName: 'Erstellt am',
                 field: 'created',
@@ -110,9 +142,27 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
                 cellFilter: 'dateTimeFormaterCreated',
                 filterCellFiltered: true
             },
-            {displayName: 'Schwierigkeitsgrad', field: 'diff_level', type: 'string', enableColumnMenu: false, enableHiding: false},
-            {displayName: 'Meine erreichte Punktzahl', field: 'lastscore', type: 'number', enableColumnMenu: false, enableHiding: false},
-            {displayName: 'Dauer[s]', field: 'lastduration', type: 'number', enableColumnMenu: false, enableHiding: false},
+            {
+                displayName: 'Schwierigkeitsgrad',
+                field: 'diff_level',
+                type: 'string',
+                enableColumnMenu: false,
+                enableHiding: false
+            },
+            {
+                displayName: 'Meine erreichte Punktzahl',
+                field: 'lastscore',
+                type: 'number',
+                enableColumnMenu: false,
+                enableHiding: false
+            },
+            {
+                displayName: 'Dauer[s]',
+                field: 'lastduration',
+                type: 'number',
+                enableColumnMenu: false,
+                enableHiding: false
+            },
             {
                 displayName: 'Zuletzt am',
                 field: 'lastsolve',
@@ -195,7 +245,8 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
 
 angular.module('mathApp.overview').controller('ModalInstanceCtrl', function ($modalInstance) {
     var vm = this;
-    vm.linkForCopy = $modalInstance.linkForCopy;
+    vm.message = $modalInstance.message;
+    vm.title = $modalInstance.title
     vm.ok = function () {
         $modalInstance.close();
     };

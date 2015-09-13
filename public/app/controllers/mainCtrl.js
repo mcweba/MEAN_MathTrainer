@@ -1,6 +1,6 @@
 angular.module('mathApp.main', [])
 
-.controller('mainController', ['$rootScope', '$location', 'AuthService', function($rootScope, $location, AuthService) {
+.controller('mainController', ['$rootScope', '$location', 'AuthService','currentUser', function($rootScope, $location, AuthService,currentUser) {
 	var vm = this;
 	vm.loggedIn = AuthService.isLoggedIn();
 
@@ -23,6 +23,9 @@ angular.module('mathApp.main', [])
 				vm.processing = false;			
 
 				if (data.success) {
+                    currentUser.name = data
+                    currentUser.userId = data
+                    currentUser.role = data
 					$location.path('/overview');
 				} else {
 					vm.error = data.message;
