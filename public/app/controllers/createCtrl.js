@@ -207,13 +207,13 @@ angular.module('mathApp.create', [])
                         vm.calculations = [];
                         console.log(data);
                         vm.isSubmitFeedback = true;
-                        vm.submitFeedback = 'Rechnungen wurden erfolgreich an den Server gesendet.'
+                        vm.submitFeedback = 'Rechnungen wurden erfolgreich an den Server gesendet.';
                     });
             }
         };
 
         vm.cleanSubmitFeedback = function(){
             vm.isSubmitFeedback = false;
-            vm.submitFeedback = ''
+            vm.submitFeedback = '';
         };
     }]);
