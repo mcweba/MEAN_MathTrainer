@@ -1,5 +1,6 @@
 angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', 'ngAnimate', 'ui.bootstrap'])
         .controller('overviewController', ['$modal', 'CalcService', '$location','dateTimeSourceFormat','dateTimeTargetFormat','dateTargetFormat', function ($modal, CalcService, $location,dateTimeSourceFormat,dateTimeTargetFormat,dateTargetFormat) {
+    .controller('overviewController', ['$modal', 'CalcService', '$location', 'currentUser', 'dateTimeSourceFormat', 'dateTimeTargetFormat', 'dateTargetFormat', function ($modal, CalcService, $location, currentUser, dateTimeSourceFormat, dateTimeTargetFormat, dateTargetFormat) {
         var vm = this;
         var test = 'test';
         vm.mySelections = [];
@@ -11,7 +12,7 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
             });
 
 
-           vm.open = function (size, linkForCopy) {
+        vm.open = function (size, linkForCopy) {
 
             var modalInstance = $modal.open({
                 animation: vm.animationsEnabled,
