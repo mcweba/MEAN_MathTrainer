@@ -1,5 +1,6 @@
 var Calculation = require('../models/calculation');
 var CalculationSet = require('../models/calculationset');
+var CalculationSetInfo = require('../models/calculationsetinfo');
 var CalculationSetSolve = require('../models/calculationsetsolve');
 var _ = require('lodash');
 var Q = require('q');
@@ -85,19 +86,43 @@ exports.list = function(req, res) {
             res.status(400).send({message: error.message});
             return;
         }
-        res.json(calcsets);
+
+        findCalculationSetInfoByUser(req.decoded.userId).then(function(calcsetInfos){
+            var enrichedCalcsets = [];
+            _(calcsets).forEach(function(calcset){
+                var calcsetinfo = findCalculationSetInfoByCalcset(calcset._id, calcsetInfos);
+                if(calcsetinfo) {
+                    enrichedCalcsets.push({
+                        '_id': calcset._id,
+                        'active': calcset.active,
+                        'diff_level': calcset.diff_level,
+                        'creator': calcset.creator,
+                        'created': calcset.created,
+                        'lastscore': calcsetinfo.lastscore,
+                        'lastduration': calcsetinfo.lastduration,
+                        'lastsolve': calcsetinfo.lastsolve
+                    });
+                } else {
+                    enrichedCalcsets.push(calcset);
+                }
+            }).value();
+            res.json(enrichedCalcsets);
+        }).catch(function(err){
+            var error = new Error(err);
+            res.status(400).send({message: error.message});
+        });
     });
 };
 
 var saveCalculationSet = function(creatorId, diff_level, calculations){
     var deferred = Q.defer();
-    
+
     var calculationSet = new CalculationSet();
     calculationSet.creator = creatorId;
     calculationSet.diff_level = diff_level;
     calculationSet.calculations = calculations;
     calculationSet.active = true;
-        
+
     calculationSet.save(function(err){
         if(err){
             deferred.reject(new Error(error));
@@ -131,4 +156,21 @@ var createOrGetCalculationId = function(num1, op, num2, result){
         }
     });
     return deferred.promise;
+};
+
+var findCalculationSetInfoByUser = function(creatorId){
+    var deferred = Q.defer();
+    CalculationSetInfo.find({ 'creator': creatorId }, function(err, calcsetInfos) {
+        if(err){
+            deferred.reject(new Error(err));
+        }
+        deferred.resolve(calcsetInfos);
+    });
+    return deferred.promise;
+};
+
+var findCalculationSetInfoByCalcset = function(calcsetId, calcsetInfos){
+    return _.find(calcsetInfos, function(csi) {
+        return csi.calculationset.equals(calcsetId);
+    });
 };

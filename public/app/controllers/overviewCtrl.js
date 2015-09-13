@@ -70,7 +70,7 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
                 var momentAsString = moment(value, dateTimeSourceFormat).format(dateTimeTargetFormat);
                 return isStringContainingTerm(momentAsString, term);
             }
-        }
+        };
 
         var isStringContainingTerm = function (momentAsString, term) {
             var index = term.indexOf("\\");
@@ -79,7 +79,7 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
                 index = term.indexOf("\\");
             }
             return momentAsString.indexOf(term) > -1;
-        }
+        };
 
         vm.dateFilter = function (term, value, row, column) {
             if (!value) {
@@ -92,29 +92,31 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
                 var momentAsString = moment(value, dateTimeSourceFormat).format(dateTargetFormat);
                 return isStringContainingTerm(momentAsString, term);
             }
-        }
+        };
 
         vm.animationsEnabled = true;
 
         var def = [
-            {field: '_id', displayName: 'id', visible: false, enableColumnMenu: false, enableHiding: false},
-            {field: 'creator.name',displayName: 'Erzeuger',  enableColumnMenu: false, enableHiding: false},
-            {field: 'creator._id',displayName: 'Erzeuger', visible: false, enableColumnMenu: false, enableHiding: false},
+            {field: '_id', displayName: 'id', type: 'number', visible: false, enableColumnMenu: false, enableHiding: false},
+            {field: 'creator.name',displayName: 'Ersteller', type: 'string',  enableColumnMenu: false, enableHiding: false},
+            {field: 'creator._id',displayName: 'ErstellerID', type: 'number', visible: false, enableColumnMenu: false, enableHiding: false},
             {
-                displayName: 'Erzeugungsdatum',
+                displayName: 'Erstellt am',
                 field: 'created',
+                type: 'date',
                 enableHiding: false,
                 enableColumnMenu: false,
                 filter: {condition: vm.dateFilter},
                 cellFilter: 'dateTimeFormaterCreated',
                 filterCellFiltered: true
             },
-            {displayName: 'Schwierigkeitsgrad', field: 'diff_level', enableColumnMenu: false, enableHiding: false},
-            {displayName: 'Meine erreichte Punktzahl', field: 'score', enableColumnMenu: false, enableHiding: false},
-            {displayName: 'Dauer[s]', field: 'duration', enableColumnMenu: false, enableHiding: false},
+            {displayName: 'Schwierigkeitsgrad', field: 'diff_level', type: 'string', enableColumnMenu: false, enableHiding: false},
+            {displayName: 'Meine erreichte Punktzahl', field: 'lastscore', type: 'number', enableColumnMenu: false, enableHiding: false},
+            {displayName: 'Dauer[s]', field: 'lastduration', type: 'number', enableColumnMenu: false, enableHiding: false},
             {
                 displayName: 'Zuletzt am',
-                field: 'lastExec',
+                field: 'lastsolve',
+                type: 'date',
                 enableHiding: false,
                 enableColumnMenu: false,
                 filter: {condition: vm.dateTimeFilter},
@@ -123,17 +125,19 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
             },
             {
                 displayName: '',
+                type: 'object',
                 width: '40',
                 enableColumnMenu: false,
                 sortable: false,
                 enableSorting: false,
                 enableFiltering: false,
                 name: 'link ',
-                cellTemplate: '<div class="text-center" style="margin: 0px" ><button clipboard on-copied="grid.appScope.overview.success()" on-error="grid.appScope.overview.fail(err)" class="glyphicon glyphicon-plus" ng-click="grid.appScope.overview.copyLink(grid, row)"></button></div>',
+                cellTemplate: '<div class="text-center" style="margin: 0px" ><button clipboard on-copied="grid.appScope.overview.success()" on-error="grid.appScope.overview.fail(err)" class="glyphicon glyphicon-share-alt" ng-click="grid.appScope.overview.copyLink(grid, row)"></button></div>',
                 enableHiding: false
             },
             {
                 displayName: '',
+                type: 'object',
                 width: '40',
                 enableColumnMenu: false,
                 sortable: false,
@@ -145,6 +149,7 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
             },
             {
                 displayName: '',
+                type: 'object',
                 width: '40',
                 enableColumnMenu: false,
                 sortable: false,
