@@ -104,9 +104,9 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
 
         var def = [
             {field: '_id', displayName: 'id', type: 'string', visible: true, enableColumnMenu: false, enableHiding: false},
-            {displayName: 'Erzeuger', field: 'creator.name', type: 'string', enableColumnMenu: false, enableHiding: false},
+            {displayName: 'Ersteller', field: 'creator.name', type: 'string', enableColumnMenu: false, enableHiding: false},
             {
-                displayName: 'Erzeugungsdatum',
+                displayName: 'Erstell am',
                 field: 'created',
                 type: 'date',
                 enableHiding: false,
@@ -116,11 +116,11 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
                 filterCellFiltered: true
             },
             {displayName: 'Schwierigkeitsgrad', field: 'diff_level', type: 'string', enableColumnMenu: false, enableHiding: false},
-            {displayName: 'Meine erreichte Punktzahl', field: 'score', type: 'number', enableColumnMenu: false, enableHiding: false},
-            {displayName: 'Dauer[s]', field: 'duration', type: 'number', enableColumnMenu: false, enableHiding: false},
+            {displayName: 'Meine erreichte Punktzahl', field: 'lastscore', type: 'number', enableColumnMenu: false, enableHiding: false},
+            {displayName: 'Dauer[s]', field: 'lastduration', type: 'number', enableColumnMenu: false, enableHiding: false},
             {
                 displayName: 'Zuletzt am',
-                field: 'lastExec',
+                field: 'lastsolve',
                 type: 'date',
                 enableHiding: false,
                 enableColumnMenu: false,

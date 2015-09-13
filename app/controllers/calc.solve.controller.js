@@ -11,7 +11,10 @@ exports.solve = function(req, res){
     }).value();
 
     Q.all(promises).then(function(calculationSolves){
-        saveCalculationSetSolve(req.decoded.userId, req.body.calculationset, req.body.score, req.body.duration, calculationSolves).then(function(){
+        Q.all([
+            saveCalculationSetSolve(req.decoded.userId, req.body.calculationset, req.body.score, req.body.duration, calculationSolves),
+            updateCalculationSetInfo(req.decoded.userId, req.body.calculationset, req.body.score, req.body.duration)
+        ]).then(function(){
             res.json({ message: 'CalculationSetSolve successfully created'});
         }).catch(function(error){
             res.status(400).send({message: error.message});
