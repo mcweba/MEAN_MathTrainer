@@ -11,6 +11,9 @@ angular.module('mathApp.main', [])
 		AuthService.getUser()
 			.then(function(data) {
 				vm.user = data.data;
+                currentUser.name = data.data.name;
+                currentUser.userId = data.data.userId;
+                currentUser.role = data.data.role;
 			});	
 	});	
 
@@ -20,17 +23,12 @@ angular.module('mathApp.main', [])
 
 		AuthService.login(vm.loginData.username, vm.loginData.password)
 			.success(function(data) {
-				vm.processing = false;			
-
+				vm.processing = false;
 				if (data.success) {
-                    currentUser.name = data
-                    currentUser.userId = data
-                    currentUser.role = data
 					$location.path('/overview');
 				} else {
 					vm.error = data.message;
 				}
-				
 			});
 	};
 

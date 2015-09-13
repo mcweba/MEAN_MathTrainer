@@ -41,17 +41,18 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
         };
 
         vm.delete = function (grid, row) {
-            var rowToDeleteId = row.entity._id;
             var creatorId = row.entity.creator._id;
 
             if (creatorId !== currentUser.userId && currentUser.role !== "Admin") {
 
-                var title = "L&Ouml;schen nicht möglich"
-                var message = "Es können nur eigene, also von Ihnen erzeugte, Rechnunssets gelöscht werden";
+                var title = "LÃ¶schen nicht mÃ¶glich"
+                var message = "Es kÃ¶nnen nur eigene, also von Ihnen erzeugte, Rechnunssets gelÃ¶scht werden";
                 vm.open('lg', title, message);
-                return
+                return;
             }
-a
+
+            var rowToDeleteId = row.entity._id;
+            
             CalcService.deleteCalcSet(rowToDeleteId)
                 .success(function (data) {
                     vm.processing = false;
