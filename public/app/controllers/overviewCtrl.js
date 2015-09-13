@@ -103,23 +103,25 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
         vm.animationsEnabled = true;
 
         var def = [
-            {field: '_id', displayName: 'id', visible: true, enableColumnMenu: false, enableHiding: false},
-            {displayName: 'Erzeuger', field: 'creator.name',enableColumnMenu: false, enableHiding: false},
+            {field: '_id', displayName: 'id', type: 'string', visible: true, enableColumnMenu: false, enableHiding: false},
+            {displayName: 'Erzeuger', field: 'creator.name', type: 'string', enableColumnMenu: false, enableHiding: false},
             {
                 displayName: 'Erzeugungsdatum',
                 field: 'created',
+                type: 'date',
                 enableHiding: false,
                 enableColumnMenu: false,
                 filter: {condition: vm.dateFilter},
                 cellFilter: 'dateTimeFormaterCreated',
                 filterCellFiltered: true
             },
-            {displayName: 'Schwierigkeitsgrad', field: 'diff_level', enableColumnMenu: false, enableHiding: false},
-            {displayName: 'Meine erreichte Punktzahl', field: 'score', enableColumnMenu: false, enableHiding: false},
-            {displayName: 'Dauer[s]', field: 'duration', enableColumnMenu: false, enableHiding: false},
+            {displayName: 'Schwierigkeitsgrad', field: 'diff_level', type: 'string', enableColumnMenu: false, enableHiding: false},
+            {displayName: 'Meine erreichte Punktzahl', field: 'score', type: 'number', enableColumnMenu: false, enableHiding: false},
+            {displayName: 'Dauer[s]', field: 'duration', type: 'number', enableColumnMenu: false, enableHiding: false},
             {
                 displayName: 'Zuletzt am',
                 field: 'lastExec',
+                type: 'date',
                 enableHiding: false,
                 enableColumnMenu: false,
                 filter: {condition: vm.dateTimeFilter},
@@ -128,6 +130,7 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
             },
             {
                 displayName: '',
+                type: 'object',
                 width: '40',
                 enableColumnMenu: false,
                 sortable: false,
@@ -139,6 +142,7 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
             },
             {
                 displayName: '',
+                type: 'object',
                 width: '40',
                 enableColumnMenu: false,
                 sortable: false,
@@ -150,6 +154,7 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
             },
             {
                 displayName: '',
+                type: 'object',
                 width: '40',
                 enableColumnMenu: false,
                 sortable: false,

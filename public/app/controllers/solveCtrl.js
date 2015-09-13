@@ -112,8 +112,7 @@ angular.module('mathApp.solve', ['ui.bootstrap'])
                         "score": vm.score,
                         "duration": vm.duration,
                         "calculationset": vm.currentCalcSet._id,
-                        "calculationSolves": [vm.calculationSolves
-                        ]
+                        "calculationSolves": vm.calculationSolves
                     };
                     CalcService.submitCalcSetSolve(result);
                     // console.log('submitCalcSetSolve: ' + result);
