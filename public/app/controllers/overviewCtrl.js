@@ -51,12 +51,17 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
                 return;
             }
 
+
             var rowToDeleteId = row.entity._id;
-            
+
             CalcService.deleteCalcSet(rowToDeleteId)
                 .success(function (data) {
                     vm.processing = false;
-                    vm.gridOptions.data = data;
+                    CalcService.all()
+                        .success(function (data) {
+                            vm.processing = false;
+                            vm.gridOptions.data = data;
+                        });
                 });
         };
 
