@@ -46,7 +46,7 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
 
             if (creatorId !== currentUser.userId && currentUser.role !== "Admin") {
 
-                var title = "Löschen nicht möglich"
+                var title = "L&Ouml;schen nicht möglich"
                 var message = "Es können nur eigene, also von Ihnen erzeugte, Rechnunssets gelöscht werden";
                 vm.open('lg', title, message);
                 return
