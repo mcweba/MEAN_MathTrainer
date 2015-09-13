@@ -10,7 +10,6 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
                 vm.gridOptions.data = data;
             });
 
-
         vm.open = function (size, title, message) {
 
             var modalInstance = $modal.open({
@@ -32,7 +31,7 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
 
         vm.copyLink = function (grid, row) {
             var message = window.location.href.replace("overview", "solve") + '/' + row.entity._id;
-            var title = "Link zum Einladen..."
+            var title = "Link zum Einladen...";
             vm.open('lg', title, message);
         };
 
@@ -45,12 +44,11 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
 
             if (creatorId !== currentUser.userId && currentUser.role !== "Admin") {
 
-                var title = "Löschen nicht möglich"
+                var title = "Löschen nicht möglich";
                 var message = "Es können nur eigene, also von Ihnen erzeugte, Rechnunssets gelöscht werden";
                 vm.open('lg', title, message);
                 return;
             }
-
 
             var rowToDeleteId = row.entity._id;
 
@@ -77,7 +75,6 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
         };
 
         vm.dateTimeFilter = function (term, value, row, column) {
-
             if (!value) {
                 return true;
             } else {
@@ -252,7 +249,7 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
 angular.module('mathApp.overview').controller('ModalInstanceCtrl', function ($modalInstance) {
     var vm = this;
     vm.message = $modalInstance.message;
-    vm.title = $modalInstance.title
+    vm.title = $modalInstance.title;
     vm.ok = function () {
         $modalInstance.close();
     };
