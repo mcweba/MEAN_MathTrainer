@@ -23,6 +23,11 @@ angular.module('mathApp.main', [])
 				vm.processing = false;			
 
 				if (data.success) {
+
+					currenUser.name = data;
+					currenUser.userId = data;
+					currenUser.role = data;
+
 					$location.path('/overview');
 				} else {
 					vm.error = data.message;
