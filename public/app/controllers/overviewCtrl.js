@@ -1,4 +1,5 @@
 angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', 'ngAnimate', 'ui.bootstrap'])
+        .controller('overviewController', ['$modal', 'CalcService', '$location','dateTimeSourceFormat','dateTimeTargetFormat','dateTargetFormat', function ($modal, CalcService, $location,dateTimeSourceFormat,dateTimeTargetFormat,dateTargetFormat) {
     .controller('overviewController', ['$modal', 'CalcService', '$location', 'currentUser', 'dateTimeSourceFormat', 'dateTimeTargetFormat', 'dateTargetFormat', function ($modal, CalcService, $location, currentUser, dateTimeSourceFormat, dateTimeTargetFormat, dateTargetFormat) {
         var vm = this;
         var test = 'test';
@@ -30,26 +31,21 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
         };
 
         vm.copyLink = function (grid, row) {
-            var linkForCopy = window.location.href.replace("overview", "solve") + '/' + row.entity._id;
+            var linkForCopy = window.location.href.replace("overview","solve")  + '/' + row.entity._id;
             vm.open('lg', linkForCopy);
         };
 
         vm.start = function (grid, row) {
+            //console.log('Start...' + 'row.entity.id: ' + row.entity.id);
+            // Todo fixe id ist noch zu ersetzen zurzeit nur für Testzweck
+           // $location.path('/solve/' + '55ee7a40d258ad641d52598e');
             $location.path('/solve/' + row.entity._id);
         };
 
         vm.delete = function (grid, row) {
-
-
-            var userId = currentUser.userId
-
-            if (currentUser.role !== "Admin") {
-                return;
-            }
-
-
-            var rowToDeleteId = row.entity._id;
-
+            var rowToDeleteId =row.entity._id;
+            //var rowToDeleteCreaterId = row.entity._id;
+            //if (currentUser.id !== rowToDeleteCreaterId)
 
             CalcService.deleteCalcSet(rowToDeleteId)
                 .success(function (data) {
@@ -78,12 +74,12 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
                     return true;
                 }
 
-                var momentAsString = moment(value, dateTimeSourceFormat).format(dateTimeTargetFormat);
-                return isStringContainingTerm(momentAsString, term);
+                var momentAsString = moment(value, dateTimeSourceFormat ).format(dateTimeTargetFormat);
+                return isStringContainingTerm(momentAsString,term);
             }
         }
 
-        var isStringContainingTerm = function (momentAsString, term) {
+        var isStringContainingTerm = function (momentAsString,term){
             var index = term.indexOf("\\");
             while (index >= 0) {
                 term = term.replace("\\", "");
@@ -101,15 +97,15 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
                 }
 
                 var momentAsString = moment(value, dateTimeSourceFormat).format(dateTargetFormat);
-                return isStringContainingTerm(momentAsString, term);
+                return isStringContainingTerm(momentAsString,term);
             }
         }
 
         vm.animationsEnabled = true;
 
         var def = [
-            {displayName: 'id', field: '_id', visible: false, enableColumnMenu: false, enableHiding: false},
-            {displayName: 'Erzeuger', field: 'creator.name', enableColumnMenu: false, enableHiding: false},
+            {field: '_id', displayName: 'id', visible: true, enableColumnMenu: false, enableHiding: false},
+            {displayName: 'Erzeuger', field: 'creator.name',enableColumnMenu: false, enableHiding: false},
             {
                 displayName: 'Erzeugungsdatum',
                 field: 'created',
@@ -118,13 +114,6 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
                 filter: {condition: vm.dateFilter},
                 cellFilter: 'dateTimeFormaterCreated',
                 filterCellFiltered: true
-            },
-            {
-                displayName: 'ErzeugerId',
-                field: 'creator._id',
-                visible: true,
-                enableColumnMenu: false,
-                enableHiding: false
             },
             {displayName: 'Schwierigkeitsgrad', field: 'diff_level', enableColumnMenu: false, enableHiding: false},
             {displayName: 'Meine erreichte Punktzahl', field: 'score', enableColumnMenu: false, enableHiding: false},
@@ -180,7 +169,7 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
         };
     }
     ])
-    .filter('dateTimeFormaterCreated', function (dateTimeSourceFormat, dateTargetFormat) {
+    .filter('dateTimeFormaterCreated', function (dateTimeSourceFormat,dateTargetFormat) {
         return function (input) {
             if (!input) {
                 return '';
@@ -192,7 +181,7 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
             }
         };
     })
-    .filter('dateTimeFormaterLastExec', function (dateTimeSourceFormat, dateTimeTargetFormat) {
+    .filter('dateTimeFormaterLastExec', function (dateTimeSourceFormat,dateTimeTargetFormat) {
         return function (input) {
             if (!input) {
                 return '';
