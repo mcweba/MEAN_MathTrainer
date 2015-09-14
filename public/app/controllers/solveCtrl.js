@@ -41,6 +41,7 @@ angular.module('mathApp.solve', ['ui.bootstrap'])
                 vm.calculationSolves = [];
                 vm.duration = 0;
                 vm.durationTime = 0;
+                vm.points = 0;
                 vm.score = 0;
 
                 vm.currentCalcIndex = 1;
@@ -85,7 +86,7 @@ angular.module('mathApp.solve', ['ui.bootstrap'])
                         if (vm.currentCalcIndex < vm.calcCount + 1) {
                             var id = vm.currentCalcSet.calculations[vm.currentCalcIndex - 1]._id;
                             var isCalcTrue = vm.currentCalcSet.calculations[vm.currentCalcIndex - 1].result.toString() === vm.currentResult;
-                            var calcTime = new Date().getTime() - vm.start;
+                            var calcTime = Math.floor( (new Date().getTime() - vm.start)/1000);
                             vm.duration += calcTime;
                             if (isCalcTrue) {
                                 vm.score += 1;
@@ -99,7 +100,8 @@ angular.module('mathApp.solve', ['ui.bootstrap'])
                                 vm.started = false;
                                 vm.finished = true;
                                 vm.currentCalcIndex -= 1;
-                                vm.durationTime = Math.floor(vm.duration / 1000) + ' Sekunden';
+                                vm.points = Math.floor(100 / vm.calcCount * vm.score);
+                                vm.durationTime = vm.duration + ' Sekunden';
                             }
                         } else {
                             vm.ok();
@@ -109,7 +111,7 @@ angular.module('mathApp.solve', ['ui.bootstrap'])
 
                 vm.ok = function () {
                     var result = {
-                        "score": vm.score,
+                        "score": vm.points,
                         "duration": vm.duration,
                         "calculationset": vm.currentCalcSet._id,
                         "calculationSolves": vm.calculationSolves
