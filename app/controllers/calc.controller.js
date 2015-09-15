@@ -16,7 +16,7 @@ exports.create = function(req, res) {
 
     // wait for all promises to resolve or reject
     Q.all(promises).then(function(calculations){
-        saveCalculationSet(req.decoded.userId, req.body.diff_level, calculations).then(function(){
+        saveCalculationSet(req.decoded.userId, req.body.name, req.body.diff_level, calculations).then(function(){
             res.json({ message: 'CalculationSet successfully created'});
         }).catch(function(error){
             res.status(400).send({message: error.message});
@@ -94,6 +94,7 @@ exports.list = function(req, res) {
                 if(calcsetinfo) {
                     enrichedCalcsets.push({
                         '_id': calcset._id,
+                        'name': calcset.name,
                         'active': calcset.active,
                         'diff_level': calcset.diff_level,
                         'creator': calcset.creator,
@@ -114,11 +115,12 @@ exports.list = function(req, res) {
     });
 };
 
-var saveCalculationSet = function(creatorId, diff_level, calculations){
+var saveCalculationSet = function(creatorId, name, diff_level, calculations){
     var deferred = Q.defer();
 
     var calculationSet = new CalculationSet();
     calculationSet.creator = creatorId;
+    calculationSet.name = name;
     calculationSet.diff_level = diff_level;
     calculationSet.calculations = calculations;
     calculationSet.active = true;

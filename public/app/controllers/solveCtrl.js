@@ -82,7 +82,7 @@ angular.module('mathApp.solve', ['ui.bootstrap'])
                 };
 
                 vm.nextCalc = function (keyEvent) {
-                    if (keyEvent.which === 13) {
+                    if (keyEvent.which === 13 || keyEvent === true) {
                         if (vm.currentCalcIndex < vm.calcCount + 1) {
                             var id = vm.currentCalcSet.calculations[vm.currentCalcIndex - 1]._id;
                             var isCalcTrue = vm.currentCalcSet.calculations[vm.currentCalcIndex - 1].result.toString() === vm.currentResult;
@@ -102,6 +102,15 @@ angular.module('mathApp.solve', ['ui.bootstrap'])
                                 vm.currentCalcIndex -= 1;
                                 vm.points = Math.floor(100 / vm.calcCount * vm.score);
                                 vm.durationTime = vm.duration + ' Sekunden';
+
+                                var result = {
+                                    "score": vm.points,
+                                    "duration": vm.duration,
+                                    "calculationset": vm.currentCalcSet._id,
+                                    "calculationSolves": vm.calculationSolves
+                                };
+                                CalcService.submitCalcSetSolve(result);
+                                // console.log('submitCalcSetSolve: ' + result);
                             }
                         } else {
                             vm.ok();
@@ -110,16 +119,12 @@ angular.module('mathApp.solve', ['ui.bootstrap'])
                 };
 
                 vm.ok = function () {
-                    var result = {
-                        "score": vm.points,
-                        "duration": vm.duration,
-                        "calculationset": vm.currentCalcSet._id,
-                        "calculationSolves": vm.calculationSolves
-                    };
-                    CalcService.submitCalcSetSolve(result);
-                    // console.log('submitCalcSetSolve: ' + result);
-                    $modalInstance.close();
-                    $location.path('/overview');
+                    if ( vm.finished) {
+                        $modalInstance.close();
+                        $location.path('/overview');
+                    }else {
+                        vm.nextCalc(true);
+                    }
                 };
 
                 vm.cancel = function () {

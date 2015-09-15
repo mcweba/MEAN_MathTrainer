@@ -17,6 +17,7 @@ angular.module('mathApp.create', [])
         vm.isGenerateFeedback = false;
         vm.generateFeedback = '';
         vm.isSubmitFeedback = false;
+        vm.name = '';
 
         number1Max = vm.number1Max;
         number2Max = vm.number2Max;
@@ -197,6 +198,7 @@ angular.module('mathApp.create', [])
             vm.cleanSubmitFeedback();
             if(vm.calculations.length > 0) {
                 var result = {
+                    name: vm.name,
                     diff_level: vm.difficultLevels.indexOf(vm.selectedDifficultLevel) + 1,
                     calculations: vm.calculations
                 };
@@ -205,6 +207,7 @@ angular.module('mathApp.create', [])
                 CalcService.submitCalcSet(result)
                     .success(function (data) {
                         vm.calculations = [];
+                        vm.name = '';
                         console.log(data);
                         vm.isSubmitFeedback = true;
                         vm.submitFeedback = 'Rechnungen wurden erfolgreich an den Server gesendet.';
