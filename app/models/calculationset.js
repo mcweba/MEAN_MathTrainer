@@ -2,6 +2,7 @@ var mongoose     = require('mongoose');
 var Schema       = mongoose.Schema;
 
 var CalculationSetSchema  = new Schema({
+	name: {type: String},
 	created: {
 		type: Date,
 		default: Date.now
