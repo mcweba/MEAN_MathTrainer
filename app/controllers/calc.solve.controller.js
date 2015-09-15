@@ -79,9 +79,12 @@ var updateCalculationSetInfo = function(creatorId, calculationSetId, score, dura
         }
     });
     return deferred.promise;
-}
+};
 
 var createCalculationSolveId = function(calcId, creatorId, providedRes, duration, correct){
+
+    //todo load calc and get infos (number1, op, etc.)
+
     var deferred = Q.defer();
     var calcSolve = new CalculationSolve();
     calcSolve.calculation = calcId;
