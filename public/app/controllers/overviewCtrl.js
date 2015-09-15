@@ -10,7 +10,7 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
                 vm.gridOptions.data = data;
             });
 
-        vm.open = function (size, title, message, showOk, showCancel, cancelFunction, okFunktion) {
+        vm.open = function (size, title, message, showOk, showCancel, cancelFunction, okFunction) {
 
             var modalInstance = $modal.open({
                 animation: vm.animationsEnabled,
@@ -29,9 +29,8 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
                 if (modalInstance.modalResult === 'cancel') {
                     cancelFunction();
                 } else if (modalInstance.modalResult === 'ok') {
-                    okFunktion();
+                    okFunction();
                 }
-
             });
         };
 
@@ -43,7 +42,9 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
         vm.copyLink = function (grid, row) {
             var message = window.location.href.replace("overview", "solve") + '/' + row.entity._id;
             var title = "Link zum Einladen...";
-            vm.open('lg', title, message, true, false,function () {},function () {});
+            vm.open('lg', title, message, true, false, function () {
+            }, function () {
+            });
         };
 
         vm.start = function (grid, row) {
@@ -76,11 +77,8 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
 
             var title = "Möchten Sie das Rechungsset wirklich löschen";
             var message = "Ok um zu löschen, Abbrechen um ohne zu löschen weiterzufahren."
-            vm.open('lg', title, message, true, true,(function () {}), vm.okDeleteDialog);
-        };
-
-        vm.success = function () {
-            console.log('Copied!');
+            vm.open('lg', title, message, true, true, (function () {
+            }), vm.okDeleteDialog);
         };
 
         vm.fail = function (err) {
@@ -201,7 +199,7 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
                 enableSorting: false,
                 enableFiltering: false,
                 name: 'link ',
-                cellTemplate: '<div class="text-center" style="margin: 0px" ><button clipboard on-copied="grid.appScope.overview.success()" on-error="grid.appScope.overview.fail(err)" class="glyphicon glyphicon-share-alt" ng-click="grid.appScope.overview.copyLink(grid, row)"></button></div>',
+                cellTemplate: '<div class="text-center" style="margin: 0px" ><button  class="glyphicon glyphicon-share-alt" ng-click="grid.appScope.overview.copyLink(grid, row)"></button></div>',
                 enableHiding: false
             },
             {
