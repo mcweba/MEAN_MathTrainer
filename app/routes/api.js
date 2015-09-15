@@ -1,5 +1,6 @@
 var userCtrl = require('../../app/controllers/user.controller');
 var calcCtrl = require('../../app/controllers/calc.controller');
+var statisticsCtrl = require('../../app/controllers/statistics.controller');
 var calcSolveCtrl = require('../../app/controllers/calc.solve.controller');
 
 module.exports = function(app, express) {
@@ -31,6 +32,9 @@ module.exports = function(app, express) {
 
 	apiRouter.route('/calcsets/solve')
 		.post(calcSolveCtrl.solve);
+
+	apiRouter.route('/calcsetsolves')
+		.get(statisticsCtrl.list);
 
 	return apiRouter;
 };
