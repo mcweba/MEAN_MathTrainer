@@ -104,6 +104,8 @@
             </div>
 
             <div class="form-group">
+                <label>Bezeichnung</label>
+                <input ng-model="create.name" type="text" class="form-control" aria-describedby="sizing-addon2" value="{{create.name}}">
                 <label>Schwierigkeit</label>
                 <select ng-model="create.selectedDifficultLevel" ng-options="difficultLevel.name for difficultLevel in create.difficultLevels" class="form-control">
                 </select>
