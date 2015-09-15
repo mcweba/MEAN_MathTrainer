@@ -10,7 +10,7 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
                 vm.gridOptions.data = data;
             });
 
-        vm.open = function (size, title, message) {
+        vm.open = function (size, title, message, showOk, showCancel, cancelFunction, okFunktion) {
 
             var modalInstance = $modal.open({
                 animation: vm.animationsEnabled,
@@ -23,7 +23,18 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
 
             modalInstance.message = message;
             modalInstance.title = title
+            modalInstance.showOk = showOk;
+            modalInstance.showCancel = showCancel;
+            modalInstance.result.then(function () {
+                if (modalInstance.modalResult === 'cancel') {
+                    cancelFunction();
+                } else if (modalInstance.modalResult === 'ok') {
+                    okFunktion();
+                }
+
+            });
         };
+
 
         vm.toggleAnimation = function () {
             vm.animationsEnabled = !vm.animationsEnabled;
@@ -32,27 +43,23 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
         vm.copyLink = function (grid, row) {
             var message = window.location.href.replace("overview", "solve") + '/' + row.entity._id;
             var title = "Link zum Einladen...";
-            vm.open('lg', title, message);
+            vm.open('lg', title, message, true, false,function () {},function () {});
         };
 
         vm.start = function (grid, row) {
             $location.path('/solve/' + row.entity._id);
         };
 
-        vm.delete = function (grid, row) {
-            var creatorId = row.entity.creator._id;
-
-            if (creatorId !== currentUser.userId && currentUser.role !== "Admin") {
+        vm.okDeleteDialog = function () {
+            if (vm.creatorId !== currentUser.userId && currentUser.role !== "Admin") {
 
                 var title = "Löschen nicht möglich";
                 var message = "Es können nur eigene, also von Ihnen erzeugte, Rechnunssets gelöscht werden";
-                vm.open('lg', title, message);
+                vm.open('lg', title, message, true, false);
                 return;
             }
 
-            var rowToDeleteId = row.entity._id;
-
-            CalcService.deleteCalcSet(rowToDeleteId)
+            CalcService.deleteCalcSet(vm.calcSetDeleteId)
                 .success(function (data) {
                     vm.processing = false;
                     CalcService.all()
@@ -61,6 +68,15 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
                             vm.gridOptions.data = data;
                         });
                 });
+        }
+
+        vm.delete = function (grid, row) {
+            vm.creatorId = row.entity.creator._id;
+            vm.calcSetDeleteId = row.entity._id;
+
+            var title = "Möchten Sie das Rechungsset wirklich löschen";
+            var message = "Ok um zu löschen, Abbrechen um ohne zu löschen weiterzufahren."
+            vm.open('lg', title, message, true, true,(function () {}), vm.okDeleteDialog);
         };
 
         vm.success = function () {
@@ -250,7 +266,14 @@ angular.module('mathApp.overview').controller('ModalInstanceCtrl', function ($mo
     var vm = this;
     vm.message = $modalInstance.message;
     vm.title = $modalInstance.title;
+    vm.showCancel = $modalInstance.showCancel;
+    vm.showOk = $modalInstance.showOk;
     vm.ok = function () {
+        $modalInstance.modalResult = 'ok';
+        $modalInstance.close();
+    };
+    vm.cancel = function () {
+        $modalInstance.modalResult = 'cancel';
         $modalInstance.close();
     };
 });
