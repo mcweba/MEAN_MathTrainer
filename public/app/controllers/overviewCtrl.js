@@ -15,7 +15,7 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
             var modalInstance = $modal.open({
                 animation: vm.animationsEnabled,
                 templateUrl: 'myModalContent.html',
-                controller: 'ModalInstanceCtrl',
+                controller: ['$modalInstance', OverviewDialogController],
                 controllerAs: 'modalController',
                 size: size,
                 resolve: []
@@ -34,6 +34,21 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
             });
         };
 
+        function OverviewDialogController($modalInstance) {
+            var vm = this;
+            vm.message = $modalInstance.message;
+            vm.title = $modalInstance.title;
+            vm.showCancel = $modalInstance.showCancel;
+            vm.showOk = $modalInstance.showOk;
+            vm.ok = function () {
+                $modalInstance.modalResult = 'ok';
+                $modalInstance.close();
+            };
+            vm.cancel = function () {
+                $modalInstance.modalResult = 'cancel';
+                $modalInstance.close();
+            };
+        }
 
         vm.toggleAnimation = function () {
             vm.animationsEnabled = !vm.animationsEnabled;
@@ -42,7 +57,8 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
         vm.copyLink = function (grid, row) {
             var message = window.location.href.replace("overview", "solve") + '/' + row.entity._id;
             var title = "Link zum Einladen...";
-            vm.open('lg', title, message, true, false, function () {
+            var size = 'lg';
+            vm.open(size, title, message, true, false, function () {
             }, function () {
             });
         };
@@ -56,7 +72,8 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
 
                 var title = "Löschen nicht möglich";
                 var message = "Es können nur eigene, also von Ihnen erzeugte, Rechnunssets gelöscht werden";
-                vm.open('lg', title, message, true, false);
+                var size = 'lg';
+                vm.open(size, title, message, true, false);
                 return;
             }
 
@@ -259,19 +276,3 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
             }
         };
     });
-
-angular.module('mathApp.overview').controller('ModalInstanceCtrl', function ($modalInstance) {
-    var vm = this;
-    vm.message = $modalInstance.message;
-    vm.title = $modalInstance.title;
-    vm.showCancel = $modalInstance.showCancel;
-    vm.showOk = $modalInstance.showOk;
-    vm.ok = function () {
-        $modalInstance.modalResult = 'ok';
-        $modalInstance.close();
-    };
-    vm.cancel = function () {
-        $modalInstance.modalResult = 'cancel';
-        $modalInstance.close();
-    };
-});
