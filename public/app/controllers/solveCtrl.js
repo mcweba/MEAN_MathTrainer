@@ -82,7 +82,7 @@ angular.module('mathApp.solve', ['ui.bootstrap'])
                 };
 
                 vm.nextCalc = function (keyEvent) {
-                    if (keyEvent.which === 13 || keyEvent === true) {
+                    if (vm.currentResult !== '' && (keyEvent.which === 13 || keyEvent === true)) {
                         if (vm.currentCalcIndex < vm.calcCount + 1) {
                             var id = vm.currentCalcSet.calculations[vm.currentCalcIndex - 1]._id;
                             var isCalcTrue = vm.currentCalcSet.calculations[vm.currentCalcIndex - 1].result.toString() === vm.currentResult;
