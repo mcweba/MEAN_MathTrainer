@@ -4,7 +4,7 @@
 <div class="modal-body">
     <form name="form" class="css-form calc" novalidate ng-show="vm.started">
         <div>
-           {{vm.currentNb1()}} {{vm.currentOp()}} {{vm.currentNb2()}} =  <input ng-model="vm.currentResult" ng-keydown="vm.nextCalc($event)" type="text" name="solution" maxlength="4" size="4" style="text-align:center;" placeholder="?">
+           {{vm.currentNb1()}} {{vm.currentOp()}} {{vm.currentNb2()}} =  <input ng-model="vm.currentResult" ng-keydown="vm.nextCalc($event)" tabindex="1" type="text" maxlength="4" size="4" style="text-align:center" placeholder="?">
         </div>
     </form>
     <div class="panel panel-default" ng-show="vm.beforestart">
@@ -13,8 +13,8 @@
             Nach der Eingabe des Resultats klicke 'Enter' um die nächste Rechnung anzuzeigen. Viel Spass!
         </div>
         <p style="text-align: center">
-            <a class="btn btn-default" ng-click="vm.cancel()" role="button">Abbrechen</a>
-            <a class="btn btn-success" ng-click="vm.startCalc()" role="button">Beginnen</a>
+            <button class="btn btn-default" tabindex="3" ng-click="vm.cancel()">Beginnen</button>
+            <button class="btn btn-success" tabindex="3" ng-click="vm.startCalc()" autofocus>Beginnen</button>
         </p>
     </div>
     <div class="panel panel-default" ng-show="vm.finished">
@@ -31,13 +31,15 @@
         <div class="panel-body">
             <h4> Es wurde leider kein Rechnungset gefunden. </h4>
         </div>
-        <p style="text-align: center"><a class="btn btn-success" ng-click="vm.ok()" role="button">OK</a></p>
+        <p style="text-align: center">
+            <button class="btn btn-success" ng-click="vm.ok()" tabindex="1">OK</button>
+        </p>
     </div>
 </div>
 <div class="modal-footer modal-footer-custom" ng-show="vm.progress">
     <span class="col-xs-9 col-sm-9 modal-footer-progressbar">
         <progressbar max="vm.calcCount" value="vm.currentCalcIndex"><span style="color:white; white-space:nowrap;">{{vm.currentCalcIndex}} / {{vm.calcCount}}</span></progressbar>
     </span>
-    <button class="btn btn-default" ng-hide="vm.finished" ng-click="vm.cancel()">Cancel</button>
-    <button class="btn btn-primary" ng-click="vm.ok()">OK</button>
+    <button class="btn btn-default" tabindex="2" ng-hide="vm.finished" ng-click="vm.cancel()">Cancel</button>
+    <button class="btn btn-primary" tabindex="3" ng-click="vm.ok()">OK</button>
 </div>
