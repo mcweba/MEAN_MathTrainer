@@ -5,10 +5,14 @@ angular.module('mathApp.stats', ['ngTouch', 'ui.grid', 'ngAnimate', 'ui.bootstra
         var vm = this;
 
         StatisticsService.all().success(function(data){
-
             vm.gridOptions.data = data;
-           // console.log(JSON.stringify(data));
         });
+
+        vm.getDetail = function(calcsetsolve_id) {
+            StatisticsService.detail(calcsetsolve_id).success(function (data) {
+                vm.gridDetailOptions.data = data.calculationsolves;
+            });
+        };
 
         var def = [
             {
@@ -49,13 +53,68 @@ angular.module('mathApp.stats', ['ngTouch', 'ui.grid', 'ngAnimate', 'ui.bootstra
                 type: 'number',
                 enableColumnMenu: false,
                 enableHiding: false
+            },
+            {
+                displayName: 'Detail',
+                type: 'object',
+                width: '60',
+                enableColumnMenu: false,
+                sortable: false,
+                enableSorting: false,
+                enableFiltering: false,
+                name: 'link ',
+                cellTemplate: '<div class="text-center" style="margin: 0px" ><button  class="glyphicon glyphicon-search" ng-click="grid.appScope.stats.detail(grid, row)"></button></div>',
+                enableHiding: false
             }
         ];
+
+        vm.detail = function (grid, row) {
+            vm.getDetail(row.entity._id);
+        };
 
         vm.gridOptions = {
             enableHiding: false,
             enableFiltering: false,
             columnDefs: def
+        };
+
+        var defDetail = [
+            {
+                field: '_id',
+                displayName: 'id',
+                type: 'number',
+                visible: false,
+                enableColumnMenu: false,
+                enableHiding: false
+            },
+            {
+                displayName: 'Richtig',
+                field: 'correct',
+                type: 'boolean',
+                enableColumnMenu: false,
+                enableHiding: false
+            },
+            {
+                displayName: 'Dauer[s]',
+                field: 'duration',
+                type: 'number',
+                enableColumnMenu: false,
+                enableHiding: false
+            }
+            ,
+            {
+                displayName: 'Ergebnis',
+                field: 'providedRes',
+                type: 'number',
+                enableColumnMenu: false,
+                enableHiding: false
+            }
+        ];
+
+        vm.gridDetailOptions = {
+            enableHiding: false,
+            enableFiltering: false,
+            columnDefs: defDetail
         };
 
         vm.dateTimeFilter = function (term, value) {
