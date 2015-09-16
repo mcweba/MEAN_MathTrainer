@@ -61,7 +61,7 @@
 			<li><a href="/overview"><span class="glyphicon glyphicon-list"></span> Übersicht</a></li>
 			<li><a href="/create"><span class="glyphicon glyphicon-plus"></span> Erstellen</a></li>
 			<li><a href="/stats"><span class="glyphicon glyphicon-stats" aria-hidden="true"></span> Statistiken</a></li>
-			<li><a href="/users"><span class="glyphicon glyphicon-user"></span> Benutzer</a></li>
+			<li ng-show="main.user.role === 'admin'"><a href="/users"><span class="glyphicon glyphicon-user"></span> Benutzer</a></li>
 		</ul>
 		<ul class="nav navbar-nav navbar-right">
 			<li ng-if="!main.loggedIn"><a href="/login">Login</a></li>
