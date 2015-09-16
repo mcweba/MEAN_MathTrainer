@@ -24,7 +24,10 @@ angular.module('mathApp.stats', ['ngTouch', 'ui.grid', 'ngAnimate', 'ui.bootstra
                 field: 'created',
                 type: 'date',
                 enableColumnMenu: false,
-                enableHiding: false
+                enableHiding: false,
+                filter: {condition: vm.dateFilter},
+                cellFilter: 'dateTimeFormaterCreated',
+                filterCellFiltered: true
             },
             {
                 field: 'creator.name',
@@ -54,4 +57,51 @@ angular.module('mathApp.stats', ['ngTouch', 'ui.grid', 'ngAnimate', 'ui.bootstra
             enableFiltering: false,
             columnDefs: def
         };
-    }]);
+
+        vm.dateTimeFilter = function (term, value) {
+            if (!value) {
+                return true;
+            } else {
+                if (!moment(value, dateTimeSourceFormat).isValid()) {
+                    return true;
+                }
+
+                var momentAsString = moment(value, dateTimeSourceFormat).format(dateTimeTargetFormat);
+                return isStringContainingTerm(momentAsString, term);
+            }
+        };
+
+        var isStringContainingTerm = function (momentAsString, term) {
+            var index = term.indexOf("\\");
+            while (index >= 0) {
+                term = term.replace("\\", "");
+                index = term.indexOf("\\");
+            }
+            return momentAsString.indexOf(term) > -1;
+        };
+
+        vm.dateFilter = function (term, value) {
+            if (!value) {
+                return true;
+            } else {
+                if (!moment(value, dateTimeSourceFormat).isValid()) {
+                    return true;
+                }
+
+                var momentAsString = moment(value, dateTimeSourceFormat).format(dateTargetFormat);
+                return isStringContainingTerm(momentAsString, term);
+            }
+        };
+    }])
+    .filter('dateTimeFormaterCreated', function (dateTimeSourceFormat, dateTargetFormat) {
+        return function (input) {
+            if (!input) {
+                return '';
+            } else {
+                if (!moment(input, dateTimeSourceFormat).isValid()) {
+                    return input;
+                }
+                return moment(input, dateTimeSourceFormat).format(dateTargetFormat);
+            }
+        };
+    });
