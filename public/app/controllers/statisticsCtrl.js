@@ -103,7 +103,7 @@ angular.module('mathApp.stats', ['ngTouch', 'ui.grid', 'ngAnimate', 'ui.bootstra
             }
             ,
             {
-                displayName: 'Korrektes Ergebnis',
+                displayName: 'Ergebnis',
                 field: 'providedRes',
                 type: 'number',
                 enableColumnMenu: false,
