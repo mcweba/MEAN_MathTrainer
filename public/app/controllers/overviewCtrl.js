@@ -1,5 +1,5 @@
 angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', 'ngAnimate', 'ui.bootstrap'])
-    .controller('overviewController', ['$modal', 'CalcService', '$location', 'currentUser', 'dateTimeSourceFormat', 'dateTimeTargetFormat', 'dateTargetFormat', function ($modal, CalcService, $location, currentUser, dateTimeSourceFormat, dateTimeTargetFormat, dateTargetFormat) {
+    .controller('overviewController', ['$modal', 'CalcService', '$location', 'currentUser', 'dateTimeSourceFormat', 'dateTimeTargetFormat', 'dateTargetFormat', 'diff_levelMap', function ($modal, CalcService, $location, currentUser, dateTimeSourceFormat, dateTimeTargetFormat, dateTargetFormat, diff_levelMap) {
         var vm = this;
         var test = 'test';
         vm.mySelections = [];
@@ -105,6 +105,15 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
         vm.startTraining = function (grid, row) {
         };
 
+        vm.diff_levelCondition = function (term, value, row, column) {
+            if (!value) {
+                return true;
+            } else {
+                return isStringContainingTerm(diff_levelMap[value], term);
+            }
+        };
+
+
         vm.dateTimeFilter = function (term, value, row, column) {
             if (!value) {
                 return true;
@@ -117,6 +126,7 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
                 return isStringContainingTerm(momentAsString, term);
             }
         };
+
 
         var isStringContainingTerm = function (momentAsString, term) {
             var index = term.indexOf("\\");
@@ -179,7 +189,9 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
             {
                 displayName: 'Schwierigkeitsgrad',
                 field: 'diff_level',
+                cellFilter: 'diff_levelFilter:this',
                 type: 'string',
+                filter: {condition: vm.diff_levelCondition},
                 enableColumnMenu: false,
                 enableHiding: false
             },
@@ -248,6 +260,8 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
         vm.gridOptions = {
             enableHiding: false,
             enableFiltering: true,
+            enableHorizontalScrollbar: 0,
+            enableVerticalScrollbar: 2,
             columnDefs: def
         };
     }
@@ -275,4 +289,10 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
                 return moment(input, dateTimeSourceFormat).format(dateTimeTargetFormat);
             }
         };
-    });
+    })
+    .filter('diff_levelFilter', function (diff_levelMap) {
+        return function (value, scope) {
+            return diff_levelMap[scope.row.entity.diff_level]
+        };
+    })
+;
