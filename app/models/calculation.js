@@ -4,7 +4,7 @@ var Schema       = mongoose.Schema;
 var CalculationSchema  = new Schema({
     number1: {
         type: Number,
-        required: 'Operand is required'
+        required: 'Number 1 is required'
     },
     operator: {
         type: String,
@@ -13,7 +13,7 @@ var CalculationSchema  = new Schema({
     },
     number2: {
         type: Number,
-        required: 'Operand is required'
+        required: 'Number 2 is required'
     },
     result: {
         type: Number,

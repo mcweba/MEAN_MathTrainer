@@ -93,18 +93,27 @@ angular.module('mathApp.stats', ['ngTouch', 'ui.grid', 'ngAnimate', 'ui.bootstra
                 type: 'boolean',
                 enableColumnMenu: false,
                 enableHiding: false
-            },
+            }
+            ,
             {
-                displayName: 'Dauer[s]',
-                field: 'duration',
+                displayName: 'Rechnung',
+                field: 'calcAsString',
+                type: 'string',
+                enableColumnMenu: false,
+                enableHiding: false
+            }
+            ,
+            {
+                displayName: 'Mein Resultat',
+                field: 'providedRes',
                 type: 'number',
                 enableColumnMenu: false,
                 enableHiding: false
             }
             ,
             {
-                displayName: 'Ergebnis',
-                field: 'providedRes',
+                displayName: 'Dauer[s]',
+                field: 'duration',
                 type: 'number',
                 enableColumnMenu: false,
                 enableHiding: false

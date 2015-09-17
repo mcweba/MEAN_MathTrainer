@@ -10,6 +10,10 @@ var CalculationSolveSchema  = new Schema({
         type: Schema.ObjectId,
         ref: 'User'
     },
+    calcAsString: {
+        type: String,
+        required: 'CalcAsString is required'
+    },
     providedRes: {
         type: Number,
         required: 'Provided result is required'
