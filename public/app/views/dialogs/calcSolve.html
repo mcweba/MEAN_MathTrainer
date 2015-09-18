@@ -19,12 +19,13 @@
     </div>
     <div class="panel panel-default" ng-show="vm.finished">
         <div class="panel-body">
-            <h2>Ergebnis </h2>
-            <h3>Punkzahl: {{vm.points}} </h3>
-            <h3>Zeit: {{vm.durationTime}} </h3>
-            <h3>Richtig: {{vm.score}} </h3>
-            <h3>Falsch: {{vm.calcCount - vm.score}} </h3>
-            <h3>Total: {{vm.calcCount}} </h3>
+            <ul class="list-group">
+                <li class="list-group-item">Erreichte Punktzahl <span class="badge itemcount-badge">{{vm.points}}%</span></li>
+                <li class="list-group-item">Benötigte Zeit <span class="badge itemcount-badge">{{vm.durationTime}}</span></li>
+                <li class="list-group-item">Richtig <span class="badge itemcount-badge badge-success">{{vm.score}}</span></li>
+                <li class="list-group-item">Falsch <span class="badge itemcount-badge badge-danger">{{vm.calcCount - vm.score}}</span></li>
+                <li class="list-group-item">Total <span class="badge itemcount-badge badge-default">{{vm.calcCount}}</span></li>
+            </ul>
         </div>
     </div>
     <div class="panel panel-default" ng-show="vm.undefinedCalc">
