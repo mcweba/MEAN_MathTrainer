@@ -6,7 +6,6 @@ var _ = require('lodash');
 var Q = require('q');
 
 exports.create = function(req, res) {
-
     // prepare promises to get or create calculations
     var promises = [];
     _(req.body.calculations).forEach(function(calculation){
@@ -51,8 +50,8 @@ exports.delete = function(req, res){
             return;
         }
 
-        if(req.decoded.userId != calcset.creator){
-            res.status(403).send({message: 'Only the creator of the CalculationSet has the permission to delete'});
+        if(req.decoded.role != 'admin' && req.decoded.userId != calcset.creator){
+            res.status(403).send({message: 'Only the creator or an admin has the permission to delete'});
             return;
         }
 
@@ -64,23 +63,32 @@ exports.delete = function(req, res){
             }
 
             if(!_.isEmpty(calcsetsolve)){
-                res.status(403).send({message: 'Only CalculationSets which never have been solved can be deleted'});
-                return;
+                calcset.active = false;
+                calcset.save(function(err){
+                    if(err){
+                        var error = new Error(err);
+                        res.status(400).send({message: error.message});
+                        return;
+                    } else {
+                        res.json({ message: 'CalculationSet successfully deactived (but not deleted)'});
+                        return;
+                    }
+                });                
+            } else {
+                CalculationSet.findByIdAndRemove({_id: calcset._id}, function(err){
+                    if(err){
+                        res.status(400).send({message: error.message});
+                    } else {
+                        res.json({ message: 'CalculationSet successfully removed'});
+                    }
+                });
             }
-
-            CalculationSet.findByIdAndRemove({_id: calcset._id}, function(err){
-                if(err){
-                    res.status(400).send({message: error.message});
-                } else {
-                    res.json({ message: 'CalculationSet successfully removed'});
-                }
-            });
         });
     });
 };
 
 exports.list = function(req, res) {
-    CalculationSet.find({}).select('-calculations').populate('creator', 'name').exec(function(err, calcsets) {
+    CalculationSet.find({active:true}).select('-calculations').populate('creator', 'name').exec(function(err, calcsets) {
         if (err){
             var error = new Error(err);
             res.status(400).send({message: error.message});
