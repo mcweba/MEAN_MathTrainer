@@ -3,8 +3,8 @@ var CalculationSetSolve = require('../models/calculationsetsolve');
 
 exports.calculationSetSolveList = function(req, res) {
     CalculationSetSolve.find({})
-        .select('-calculationsolves')
-        .populate('creator', 'name')
+        .select('-calculationsolves -__v')
+        .populate('creator', 'name -_id')
         .populate('calculationset', 'name')
         .exec(function(err, calcsetsolves) {
         if (err){
@@ -18,9 +18,10 @@ exports.calculationSetSolveList = function(req, res) {
 
 exports.calculationSetSolveDetail = function(req, res) {
     CalculationSetSolve.findById(req.params.calcsetsolve_id)
-        .populate('calculationsolves')
-        .populate('creator', 'name')
-        .populate('calculationset', 'name')
+        .select('-__v')
+        .populate('calculationsolves', '-_id -__v -creator -calculation')
+        .populate('creator', 'name -_id')
+        .populate('calculationset', 'name -_id')
         .exec(function(err, calcsetsolve) {
         if (err){
             var error = new Error(err);
