@@ -27,7 +27,10 @@ exports.create = function(req, res) {
 };
 
 exports.get = function(req, res){
-    CalculationSet.findById(req.params.calcset_id).populate({path: 'calculations'}).exec(function(err, calcset) {
+    CalculationSet.findById(req.params.calcset_id)
+    .select('-__v -creator')
+    .populate('calculations', '-__v')
+    .exec(function(err, calcset) {
         if (err){
             var error = new Error(err);
             res.status(400).send({message: error.message});
