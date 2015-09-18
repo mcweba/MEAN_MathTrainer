@@ -21,4 +21,6 @@ var CalculationSchema  = new Schema({
     }
 });
 
+CalculationSchema.index({number1: 1, number2: 1, operator: 1});
+
 module.exports = mongoose.model('Calculation', CalculationSchema);
