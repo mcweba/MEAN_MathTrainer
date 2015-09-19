@@ -1,11 +1,12 @@
 angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', 'ngAnimate', 'ui.bootstrap'])
-    .controller('overviewController', ['$filter','$modal', 'CalcService', '$location', 'currentUser', 'dateTimeSourceFormat', 'dateTimeTargetFormat', 'dateTargetFormat', 'diff_levelMap', function ($filter,$modal, CalcService, $location, currentUser, dateTimeSourceFormat, dateTimeTargetFormat, dateTargetFormat, diff_levelMap) {
+    .controller('overviewController', ['$filter', '$modal', 'CalcService', '$location', 'currentUser', 'dateTimeSourceFormat', 'dateTimeTargetFormat', 'dateTargetFormat', 'diff_levelMap', function ($filter, $modal, CalcService, $location, currentUser, dateTimeSourceFormat, dateTimeTargetFormat, dateTargetFormat, diff_levelMap) {
+
         var vm = this;
         var test = 'test';
         vm.mySelections = [];
 
-        vm.globalFilter = function(entry){
-            if (currentUser.role !== "Admin" && entry.active === false){
+        vm.globalFilter = function (entry) {
+            if (currentUser.role !== "Admin" && entry.active === false) {
                 return false;
             }
             return true;
@@ -90,7 +91,8 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
                     CalcService.all()
                         .success(function (data) {
                             vm.processing = false;
-                            vm.gridOptions.data =  $filter('filter')(data, vm.globalFilter);;
+                            vm.gridOptions.data = $filter('filter')(data, vm.globalFilter);
+                            ;
                         });
                 });
         };
@@ -169,6 +171,13 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
                 enableHiding: false
             },
             {
+                field: 'name',
+                displayName: 'Bezeichnung',
+                type: 'string',
+                enableColumnMenu: false,
+                enableHiding: false
+            },
+            {
                 field: 'creator.name',
                 displayName: 'Ersteller',
                 type: 'string',
@@ -187,6 +196,7 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
                 displayName: 'Erstellt am',
                 field: 'created',
                 type: 'date',
+                width: '120',
                 enableHiding: false,
                 enableColumnMenu: false,
                 filter: {condition: vm.dateFilter},
@@ -203,7 +213,7 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
                 enableHiding: false
             },
             {
-                displayName: 'Meine erreichte Punktzahl',
+                displayName: 'Meine Punktzahl',
                 field: 'lastscore',
                 type: 'number',
                 enableColumnMenu: false,
@@ -213,6 +223,7 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
                 displayName: 'Dauer[s]',
                 field: 'lastduration',
                 type: 'number',
+                width: '80',
                 enableColumnMenu: false,
                 enableHiding: false
             },
@@ -220,6 +231,7 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
                 displayName: 'Zuletzt am',
                 field: 'lastsolve',
                 type: 'date',
+                width: '140',
                 enableHiding: false,
                 enableColumnMenu: false,
                 filter: {condition: vm.dateTimeFilter},
@@ -235,7 +247,7 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
                 enableSorting: false,
                 enableFiltering: false,
                 name: 'link ',
-                cellTemplate: '<div class="text-center" style="margin: 0px" ><button  class="glyphicon glyphicon-share-alt" ng-click="grid.appScope.overview.copyLink(grid, row)"></button></div>',
+                cellTemplate: '<div class="text-center" style="margin: 0px" ><button role="button" rel="tooltip" title = "Link kopieren" class="glyphicon glyphicon-share-alt" ng-click="grid.appScope.overview.copyLink(grid, row)"></button></div>',
                 enableHiding: false
             },
             {
@@ -247,7 +259,7 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
                 enableSorting: false,
                 enableFiltering: false,
                 name: 'start ',
-                cellTemplate: '<div  class="text-center" style="margin: 0px" ><button class="glyphicon glyphicon-hourglass" ng-click="grid.appScope.overview.start(grid, row)"></button></div>',
+                cellTemplate: '<div  class="text-center" style="margin: 0px" ><button role="button" rel="tooltip" title = "Beginnen" class="glyphicon glyphicon-hourglass" ng-click="grid.appScope.overview.start(grid, row)"></button></div>',
                 enableHiding: false
             },
             {
@@ -259,7 +271,7 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
                 enableSorting: false,
                 enableFiltering: false,
                 name: 'delete ',
-                cellTemplate: '<div  class="text-center" style="margin: 0px" ><button class="glyphicon glyphicon-remove" ng-click="grid.appScope.overview.delete(grid, row)"></button></div>',
+                cellTemplate: '<div  class="text-center" style="margin: 0px" ><button role="button" rel="tooltip" title = "Löschen" class="glyphicon glyphicon-remove" ng-click="grid.appScope.overview.delete(grid, row)"></button></div>',
                 enableHiding: false
             }
         ];
@@ -270,7 +282,7 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
             enableHorizontalScrollbar: 0,
             enableVerticalScrollbar: 2,
             columnDefs: def,
-            filterOptions :  vm.globalFilter
+            filterOptions: vm.globalFilter
         };
     }
     ])
@@ -303,3 +315,4 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
             return diff_levelMap[scope.row.entity.diff_level]
         };
     });
+
