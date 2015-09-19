@@ -1,13 +1,20 @@
 angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', 'ngAnimate', 'ui.bootstrap'])
-    .controller('overviewController', ['$modal', 'CalcService', '$location', 'currentUser', 'dateTimeSourceFormat', 'dateTimeTargetFormat', 'dateTargetFormat', 'diff_levelMap', function ($modal, CalcService, $location, currentUser, dateTimeSourceFormat, dateTimeTargetFormat, dateTargetFormat, diff_levelMap) {
+    .controller('overviewController', ['$filter','$modal', 'CalcService', '$location', 'currentUser', 'dateTimeSourceFormat', 'dateTimeTargetFormat', 'dateTargetFormat', 'diff_levelMap', function ($filter,$modal, CalcService, $location, currentUser, dateTimeSourceFormat, dateTimeTargetFormat, dateTargetFormat, diff_levelMap) {
         var vm = this;
         var test = 'test';
         vm.mySelections = [];
 
+        vm.globalFilter = function(entry){
+            if (currentUser.role !== "Admin" && entry.active === false){
+                return false;
+            }
+            return true;
+        }
+
         CalcService.all()
             .success(function (data) {
                 vm.processing = false;
-                vm.gridOptions.data = data;
+                vm.gridOptions.data = $filter('filter')(data, vm.globalFilter);
             });
 
         vm.open = function (size, title, message, showOk, showCancel, cancelFunction, okFunction) {
@@ -83,7 +90,7 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
                     CalcService.all()
                         .success(function (data) {
                             vm.processing = false;
-                            vm.gridOptions.data = data;
+                            vm.gridOptions.data =  $filter('filter')(data, vm.globalFilter);;
                         });
                 });
         }
@@ -262,7 +269,8 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
             enableFiltering: true,
             enableHorizontalScrollbar: 0,
             enableVerticalScrollbar: 2,
-            columnDefs: def
+            columnDefs: def,
+            filterOptions :  vm.globalFilter
         };
     }
     ])
@@ -294,5 +302,4 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
         return function (value, scope) {
             return diff_levelMap[scope.row.entity.diff_level]
         };
-    })
-;
+    });
