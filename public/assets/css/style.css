@@ -60,3 +60,29 @@ header .navbar 		{
 .modal-footer-progressbar {
 	padding-top: 7px;
 }
+
+/* BADGES
+=========== */
+.itemcount-badge {
+    font-size: 1.1em;
+}
+
+.badge-danger {
+    background-color: #d43f3a !important;
+}
+
+.badge-success {
+    background-color: #398439 !important;
+}
+
+.badge-default {
+    background-color: #777 !important;
+}
+
+.badge-label {
+    margin-right: 10px;
+}
+
+.badge {
+    margin-right: 5px;
+}

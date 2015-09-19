@@ -22,4 +22,6 @@ var CalculationSetSchema  = new Schema({
     calculations: [{type: mongoose.Schema.Types.ObjectId, ref: 'Calculation'}]
 });
 
+CalculationSetSchema.index({active: 1});
+
 module.exports = mongoose.model('CalculationSet', CalculationSetSchema);

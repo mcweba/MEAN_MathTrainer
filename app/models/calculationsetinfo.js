@@ -24,4 +24,6 @@ var CalculationSetInfoSchema  = new Schema({
 	}
 });
 
+CalculationSetInfoSchema.index({creator: 1, calculationset: 1});
+
 module.exports = mongoose.model('CalculationSetInfo', CalculationSetInfoSchema);

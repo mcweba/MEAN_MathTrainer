@@ -1,3 +1,4 @@
+var Calculation = require('../models/calculation');
 var CalculationSolve = require('../models/calculationsolve');
 var CalculationSetSolve = require('../models/calculationsetsolve');
 var CalculationSetInfo = require('../models/calculationsetinfo');
@@ -82,22 +83,35 @@ var updateCalculationSetInfo = function(creatorId, calculationSetId, score, dura
 };
 
 var createCalculationSolveId = function(calcId, creatorId, providedRes, duration, correct){
-
-    //todo load calc and get infos (number1, op, etc.)
-
     var deferred = Q.defer();
-    var calcSolve = new CalculationSolve();
-    calcSolve.calculation = calcId;
-    calcSolve.creator = creatorId;
-    calcSolve.providedRes = providedRes;
-    calcSolve.duration = duration;
-    calcSolve.correct = correct;
-    calcSolve.save(function(error, c) {
-        if (error) {
-            deferred.reject(new Error(error));
-        } else {
-            deferred.resolve(c._id);
+
+    Calculation.findById(calcId).exec(function(err, calculation) {
+        if (err){
+            var error = new Error(err);
+            res.status(400).send({message: error.message});
+            return;
         }
+
+        if(!calculation){
+            res.status(404).send({message: 'Calculation with id ' + calcId + ' could not been found'});
+            return;
+        }
+
+        var calcSolve = new CalculationSolve();
+        calcSolve.calculation = calcId;
+        calcSolve.creator = creatorId;
+        calcSolve.calcAsString = calculation.number1 + " " + calculation.operator + " " + calculation.number2 + " = " + calculation.result;
+        calcSolve.providedRes = providedRes;
+        calcSolve.duration = duration;
+        calcSolve.correct = correct;
+        calcSolve.save(function(error, c) {
+            if (error) {
+                deferred.reject(new Error(error));
+            } else {
+                deferred.resolve(c._id);
+            }
+        });
+
     });
     return deferred.promise;
 };

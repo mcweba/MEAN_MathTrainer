@@ -75,7 +75,7 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
         };
 
         vm.okDeleteDialog = function () {
-            if (vm.creatorId !== currentUser.userId && currentUser.role !== "Admin") {
+            if (vm.creatorId !== currentUser.userId && currentUser.role !== "admin") {
 
                 var title = "Löschen nicht möglich";
                 var message = "Es können nur eigene, also von Ihnen erzeugte, Rechnunssets gelöscht werden";
@@ -93,14 +93,14 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
                             vm.gridOptions.data =  $filter('filter')(data, vm.globalFilter);;
                         });
                 });
-        }
+        };
 
         vm.delete = function (grid, row) {
             vm.creatorId = row.entity.creator._id;
             vm.calcSetDeleteId = row.entity._id;
 
-            var title = "Möchten Sie das Rechungsset wirklich löschen";
-            var message = "Ok um zu löschen, Abbrechen um ohne zu löschen weiterzufahren."
+            var title = "Rechungsset löschen?";
+            var message = "Möchten Sie das Rechnungsset wirklich löschen?";
             vm.open('lg', title, message, true, true, (function () {
             }), vm.okDeleteDialog);
         };
