@@ -175,14 +175,17 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
                 displayName: 'Bezeichnung',
                 type: 'string',
                 enableColumnMenu: false,
-                enableHiding: false
+                enableHiding: false,
+                width: "*",
+                minWidth: 100
             },
             {
                 field: 'creator.name',
                 displayName: 'Ersteller',
                 type: 'string',
                 enableColumnMenu: false,
-                enableHiding: false
+                enableHiding: false,
+                width: "10%"
             },
             {
                 field: 'creator._id',
@@ -196,7 +199,7 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
                 displayName: 'Erstellt am',
                 field: 'created',
                 type: 'date',
-                width: '120',
+                width: "8%",
                 enableHiding: false,
                 enableColumnMenu: false,
                 filter: {condition: vm.dateFilter},
@@ -210,12 +213,14 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
                 type: 'string',
                 filter: {condition: vm.diff_levelCondition},
                 enableColumnMenu: false,
+                width: "13%",
                 enableHiding: false
             },
             {
                 displayName: 'Meine Punktzahl',
                 field: 'lastscore',
                 type: 'number',
+                width: "10%",
                 enableColumnMenu: false,
                 enableHiding: false
             },
@@ -223,7 +228,7 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
                 displayName: 'Dauer[s]',
                 field: 'lastduration',
                 type: 'number',
-                width: '80',
+                width: "8%",
                 enableColumnMenu: false,
                 enableHiding: false
             },
@@ -231,7 +236,7 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
                 displayName: 'Zuletzt am',
                 field: 'lastsolve',
                 type: 'date',
-                width: '140',
+                width: "12%",
                 enableHiding: false,
                 enableColumnMenu: false,
                 filter: {condition: vm.dateTimeFilter},
@@ -259,7 +264,7 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
                 enableSorting: false,
                 enableFiltering: false,
                 name: 'start ',
-                cellTemplate: '<div  class="text-center" style="margin: 0px" ><button role="button" rel="tooltip" title = "Beginnen" class="glyphicon glyphicon-hourglass" ng-click="grid.appScope.overview.start(grid, row)"></button></div>',
+                cellTemplate: '<div  class="text-center" style="margin: 0px" ><button role="button" rel="tooltip" title = "Aufgaben lösen" class="glyphicon glyphicon-hourglass" ng-click="grid.appScope.overview.start(grid, row)"></button></div>',
                 enableHiding: false
             },
             {
@@ -272,6 +277,17 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
                 enableFiltering: false,
                 name: 'delete ',
                 cellTemplate: '<div  class="text-center" style="margin: 0px" ><button role="button" rel="tooltip" title = "Löschen" class="glyphicon glyphicon-remove" ng-click="grid.appScope.overview.delete(grid, row)"></button></div>',
+                enableHiding: false
+            },
+            {
+                displayName: '',
+                type: 'object',
+                width: '18',
+                enableColumnMenu: false,
+                sortable: false,
+                enableSorting: false,
+                enableFiltering: false,
+                name: 'scrollbar ',
                 enableHiding: false
             }
         ];

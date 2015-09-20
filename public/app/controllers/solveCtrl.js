@@ -78,7 +78,7 @@ angular.module('mathApp.solve', ['ui.bootstrap'])
                             "duration": duration,
                             "correct": correct
                         }
-                    )
+                    );
                 };
 
                 vm.nextCalc = function (keyEvent) {

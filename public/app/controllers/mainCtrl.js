@@ -37,5 +37,4 @@ angular.module('mathApp.main', [])
 		vm.user = '';
 		$location.path('/login');
 	};
-
 }]);

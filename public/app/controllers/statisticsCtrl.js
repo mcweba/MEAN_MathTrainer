@@ -1,14 +1,14 @@
 angular.module('mathApp.stats', ['ngTouch', 'ui.grid', 'ngAnimate', 'ui.bootstrap'])
 
-    .controller('statisticsController', ['StatisticsService', function(StatisticsService) {
+    .controller('statisticsController', ['StatisticsService', function (StatisticsService) {
 
         var vm = this;
 
-        StatisticsService.all().success(function(data){
+        StatisticsService.all().success(function (data) {
             vm.gridOptions.data = data;
         });
 
-        vm.getDetail = function(calcsetsolve_id) {
+        vm.getDetail = function (calcsetsolve_id) {
             StatisticsService.detail(calcsetsolve_id).success(function (data) {
                 vm.gridDetailOptions.data = data.calculationsolves;
             });
@@ -93,24 +93,21 @@ angular.module('mathApp.stats', ['ngTouch', 'ui.grid', 'ngAnimate', 'ui.bootstra
                 type: 'boolean',
                 enableColumnMenu: false,
                 enableHiding: false
-            }
-            ,
+            },
             {
                 displayName: 'Rechnung',
                 field: 'calcAsString',
                 type: 'string',
                 enableColumnMenu: false,
                 enableHiding: false
-            }
-            ,
+            },
             {
                 displayName: 'Mein Resultat',
                 field: 'providedRes',
                 type: 'number',
                 enableColumnMenu: false,
                 enableHiding: false
-            }
-            ,
+            },
             {
                 displayName: 'Dauer[s]',
                 field: 'duration',
