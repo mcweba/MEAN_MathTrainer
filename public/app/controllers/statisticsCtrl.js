@@ -39,6 +39,10 @@ angular.module('mathApp.stats', ['ngTouch', 'ui.grid', 'ngAnimate', 'ui.bootstra
             vm.gridOptions.data = data;
         });
 
+        StatisticsService.calculations().success(function (data) {
+            vm.gridCalulationsOptions.data = data;
+        });
+
         vm.getDetail = function (calcsetsolve_id, calculationsetName) {
             StatisticsService.detail(calcsetsolve_id).success(function (data) {
                 vm.gridDetailOptions.data = data.calculationsolves;
@@ -87,7 +91,6 @@ angular.module('mathApp.stats', ['ngTouch', 'ui.grid', 'ngAnimate', 'ui.bootstra
                 return isStringContainingTerm(momentAsString, term);
             }
         };
-
 
         var def = [
             {
@@ -161,6 +164,38 @@ angular.module('mathApp.stats', ['ngTouch', 'ui.grid', 'ngAnimate', 'ui.bootstra
             }
         ];
 
+        var defCalulations = [
+            {
+                field: '_id',
+                displayName: 'id',
+                type: 'number',
+                visible: false,
+                enableColumnMenu: false,
+                enableHiding: false
+            },
+            {
+                displayName: 'Anzahl gelöst',
+                field: 'count',
+                type: 'number',
+                enableColumnMenu: false,
+                enableHiding: false
+            },
+            {
+                displayName: 'Durch. Dauer[s]',
+                field: 'avgDuration',
+                type: 'number',
+                enableColumnMenu: false,
+                enableHiding: false
+            },
+            {
+                displayName: 'Anteil richig gelöst',
+                field: 'overallSuccess',
+                type: 'number',
+                enableColumnMenu: false,
+                enableHiding: false
+            }
+        ];
+
         vm.detail = function (grid, row) {
             vm.getDetail(row.entity._id, row.entity.calculationset.name);
         };
@@ -169,6 +204,14 @@ angular.module('mathApp.stats', ['ngTouch', 'ui.grid', 'ngAnimate', 'ui.bootstra
             enableHiding: false,
             enableFiltering: true,
             columnDefs: def,
+            enableHorizontalScrollbar: 0,
+            enableVerticalScrollbar: 2
+        };
+
+        vm.gridCalulationsOptions = {
+            enableHiding: false,
+            enableFiltering: true,
+            columnDefs: defCalulations,
             enableHorizontalScrollbar: 0,
             enableVerticalScrollbar: 2
         };
