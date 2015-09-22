@@ -210,7 +210,7 @@ angular.module('mathApp.create', [])
                         vm.name = '';
                         console.log(data);
                         vm.isSubmitFeedback = true;
-                        vm.submitFeedback = 'Rechnungen wurden erfolgreich an den Server gesendet.';
+                        vm.submitFeedback = 'Rechnungen wurden erfolgreich erstellt.';
                     });
             }
         };
