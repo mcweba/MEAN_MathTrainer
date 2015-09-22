@@ -39,5 +39,8 @@ module.exports = function(app, express) {
 	apiRouter.route('/calcsetsolves/:calcsetsolve_id')
 		.get(statisticsCtrl.calculationSetSolveDetail);
 
+	apiRouter.route('/calculationsolves')
+		.get(statisticsCtrl.calculationsolvesList);
+
 	return apiRouter;
 };
