@@ -14,7 +14,7 @@
         </div>
         <p style="text-align: center">
             <button class="btn btn-default" tabindex="3" ng-click="vm.cancel()">Abbrechen</button>
-            <button class="btn btn-success" tabindex="3" ng-click="vm.startCalc()" autofocus>Beginnen</button>
+            <button class="btn btn-primary" tabindex="3" ng-click="vm.startCalc()" autofocus>Beginnen</button>
         </p>
     </div>
     <div class="panel panel-default" ng-show="vm.finished">
@@ -38,9 +38,9 @@
     </div>
 </div>
 <div class="modal-footer modal-footer-custom" ng-show="vm.progress">
-    <span class="col-xs-9 col-sm-9 modal-footer-progressbar">
+    <span class="col-xs-8 col-sm-8 modal-footer-progressbar">
         <progressbar max="vm.calcCount" value="vm.currentCalcIndex"><span style="color:white; white-space:nowrap;">{{vm.currentCalcIndex}} / {{vm.calcCount}}</span></progressbar>
     </span>
-    <button class="btn btn-default" tabindex="2" ng-hide="vm.finished" ng-click="vm.cancel()">Cancel</button>
+    <button class="btn btn-default" tabindex="2" ng-hide="vm.finished" ng-click="vm.cancel()">Abbrechen</button>
     <button class="btn btn-primary" tabindex="3" ng-click="vm.ok()">OK</button>
 </div>
