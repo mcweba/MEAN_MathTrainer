@@ -23,7 +23,7 @@ exports.get = function(req, res) {
 exports.create = function(req, res) {
     var user = new User();
     user.name = req.body.name;
-    user.username = req.body.username;
+    user.username = req.body.username.toLowerCase();
     user.password = req.body.password;
     user.role = req.body.role;
 
@@ -31,11 +31,11 @@ exports.create = function(req, res) {
         if (err) {
             // check for duplicate entries
             if (err.code == 11000)
-                return res.json({ success: false, message: 'A user with that username already exists. '});
+                return res.json({ success: false, message: 'Ein Benutzer mit diesem Benutzernamen existiert bereits'});
             else
                 return res.send(err);
         }
-        res.json({ message: 'User created!' });
+        res.json({ message: 'Benutzer erfolgreich erstellt' });
     });
 };
 
@@ -45,7 +45,7 @@ exports.delete = function(req, res) {
     }, function(err, user) {
         if (err) res.send(err);
 
-        res.json({ message: 'Successfully deleted' });
+        res.json({ message: 'Benutzer erfolgreich gelöscht' });
     });
 };
 
@@ -55,23 +55,25 @@ exports.update = function(req, res) {
         if (err) res.send(err);
 
         if (req.body.name) user.name = req.body.name;
-        if (req.body.username) user.username = req.body.username;
+        if (req.body.username) user.username = req.body.username.toLowerCase();
         if (req.body.password) user.password = req.body.password;
         if (req.body.role) user.role = req.body.role;
 
         user.save(function(err) {
             if (err) res.send(err);
 
-            res.json({ message: 'User updated!' });
+            res.json({ message: 'Benutzer erfolgreich mutiert' });
         });
     });
 };
 
 exports.authenticate = function(req, res) {
-    User.findOne({
-        username: req.body.username
-    }).select('name username password role').exec(function(err, user) {
-
+    var username = req.body.username;
+    if(username){
+        username = username.toLowerCase();
+    }
+    User.findOne({username: username})
+        .select('name username password role').exec(function(err, user) {
         if (err) throw err;
 
         if (!user) {
@@ -93,12 +95,12 @@ exports.authenticate = function(req, res) {
                     userId: user._id,
                     role: user.role
                 }, secretKey, {
-                    expiresInMinutes: 1440 // expires in 24 hours
+                    expiresInMinutes: 1440 // expires after 24 hours
                 });
 
                 res.json({
                     success: true,
-                    message: 'Enjoy your token!',
+                    message: 'Viel Spass mit ihrem Token!',
                     token: token
                 });
             }
@@ -113,7 +115,7 @@ exports.verifyToken = function(req, res, next) {
             if (err) {
                 res.status(403).send({
                     success: false,
-                    message: 'Failed to authenticate token.'
+                    message: 'Authentifizieren des Tokens fehlgeschlagen'
                 });
             } else {
                 req.decoded = decoded;
@@ -123,7 +125,7 @@ exports.verifyToken = function(req, res, next) {
     } else {
         res.status(403).send({
             success: false,
-            message: 'No token provided.'
+            message: 'Es wurde kein Token mitgeschickt'
         });
     }
 };

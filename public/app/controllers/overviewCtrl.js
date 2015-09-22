@@ -181,7 +181,7 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
             },
             {
                 field: 'creator.name',
-                displayName: 'Ersteller',
+                displayName: 'Erstellt von',
                 type: 'string',
                 enableColumnMenu: false,
                 enableHiding: false,
@@ -207,7 +207,7 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
                 filterCellFiltered: true
             },
             {
-                displayName: 'Schwierigkeitsgrad',
+                displayName: 'Schwierigkeit',
                 field: 'diff_level',
                 cellFilter: 'diff_levelFilter:this',
                 type: 'string',
@@ -219,19 +219,19 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
                         { value: '3', label: diff_levelMap[3]} ]
                 },
                 enableColumnMenu: false,
-                width: "13%",
+                width: "10%",
                 enableHiding: false
             },
             {
-                displayName: 'Meine Punktzahl',
+                displayName: 'Mein Ergebnis [%]',
                 field: 'lastscore',
                 type: 'number',
-                width: "10%",
+                width: "15%",
                 enableColumnMenu: false,
                 enableHiding: false
             },
             {
-                displayName: 'Dauer[s]',
+                displayName: 'Dauer [s]',
                 field: 'lastduration',
                 type: 'number',
                 width: "8%",
