@@ -43,9 +43,9 @@ angular.module('mathApp.stats', ['ngTouch', 'ui.grid', 'ngAnimate', 'ui.bootstra
             StatisticsService.detail(calcsetsolve_id).success(function (data) {
                 vm.gridDetailOptions.data = data.calculationsolves;
                 var title = 'Rechnungsset';
-                if(calculationsetName !== undefined){
+                if (calculationsetName !== undefined) {
                     title += " - " + calculationsetName;
-                    }
+                }
                 var size = 'lg';
                 vm.open(size, title, vm.gridDetailOptions);
             });
@@ -109,6 +109,17 @@ angular.module('mathApp.stats', ['ngTouch', 'ui.grid', 'ngAnimate', 'ui.bootstra
                 name: 'link ',
                 cellTemplate: '<div class="text-center" style="margin: 0px" ><button  class="glyphicon glyphicon-search" ng-click="grid.appScope.stats.detail(grid, row)"></button></div>',
                 enableHiding: false
+            },
+            {
+                displayName: '',
+                type: 'object',
+                width: '18',
+                enableColumnMenu: false,
+                sortable: false,
+                enableSorting: false,
+                enableFiltering: false,
+                name: 'scrollbar ',
+                enableHiding: false
             }
         ];
 
@@ -119,7 +130,9 @@ angular.module('mathApp.stats', ['ngTouch', 'ui.grid', 'ngAnimate', 'ui.bootstra
         vm.gridOptions = {
             enableHiding: false,
             enableFiltering: false,
-            columnDefs: def
+            columnDefs: def,
+            enableHorizontalScrollbar: 0,
+            enableVerticalScrollbar: 2,
         };
 
         var defDetail = [
@@ -136,6 +149,8 @@ angular.module('mathApp.stats', ['ngTouch', 'ui.grid', 'ngAnimate', 'ui.bootstra
                 field: 'correct',
                 type: 'boolean',
                 enableColumnMenu: false,
+                cellTemplate: '<div class="ui-grid-cell-contents" ng-show="row.entity.correct===true"><span class="glyphicon glyphicon-thumbs-up" style="color:green"></span></div>' +
+                '<div class="ui-grid-cell-contents" ng-show="row.entity.correct===false"><span class="glyphicon glyphicon-thumbs-down" style="color:red"></span></div>',
                 enableHiding: false
             },
             {
@@ -158,13 +173,26 @@ angular.module('mathApp.stats', ['ngTouch', 'ui.grid', 'ngAnimate', 'ui.bootstra
                 type: 'number',
                 enableColumnMenu: false,
                 enableHiding: false
+            },
+            {
+                displayName: '',
+                type: 'object',
+                width: '18',
+                enableColumnMenu: false,
+                sortable: false,
+                enableSorting: false,
+                enableFiltering: false,
+                name: 'scrollbar ',
+                enableHiding: false
             }
         ];
 
         vm.gridDetailOptions = {
             enableHiding: false,
             enableFiltering: false,
-            columnDefs: defDetail
+            columnDefs: defDetail,
+            enableHorizontalScrollbar: 0,
+            enableVerticalScrollbar: 2,
         };
 
         vm.dateTimeFilter = function (term, value) {
