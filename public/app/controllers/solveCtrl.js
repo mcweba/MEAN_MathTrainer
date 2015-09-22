@@ -31,7 +31,9 @@ angular.module('mathApp.solve', ['ui.bootstrap'])
 
                 vm.calcCount = vm.currentCalcSet.calculations.length;
 
-
+                if(vm.currentCalcSet.name !== undefined){
+                    vm.name = ' - ' + vm.currentCalcSet.name;
+                }
                 vm.beforestart = true;
                 vm.started = false;
                 vm.finished = false;
