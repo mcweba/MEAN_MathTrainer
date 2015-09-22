@@ -26,6 +26,16 @@
                 <li class="list-group-item">Falsch <span class="badge itemcount-badge badge-danger">{{vm.calcCount - vm.score}}</span></li>
                 <li class="list-group-item">Total <span class="badge itemcount-badge badge-default">{{vm.calcCount}}</span></li>
             </ul>
+            <div ng-show="vm.isWrongCalc">
+                <h5> Falsch gelöste Aufgaben </h5>
+                <div style="max-height:200px;" class="table-responsive">
+                    <table class="table table-striped table-bordered table-hover">
+                        <tr ng-repeat="calculation in vm.wrongCalculations">
+                            <td>{{ calculation.number1 }} {{calculation.operator}} {{calculation.number2}}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
     <div class="panel panel-default" ng-show="vm.undefinedCalc">

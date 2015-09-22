@@ -45,10 +45,12 @@ angular.module('mathApp.solve', ['ui.bootstrap'])
                     vm.undefinedCalc = false;
                     vm.currentResult = '';
                     vm.calculationSolves = [];
+                    vm.wrongCalculations = [];
                     vm.duration = 0;
                     vm.durationTime = 0;
                     vm.points = 0;
                     vm.score = 0;
+                    vm.isWrongCalc = false;
 
                     vm.currentCalcIndex = 1;
 
@@ -95,6 +97,15 @@ angular.module('mathApp.solve', ['ui.bootstrap'])
                         );
                     };
 
+                    vm.addWrongCalc = function (number1,number2, operator){
+                        vm.wrongCalculations.push({
+                                "number1": number1,
+                                "number2": number2,
+                                "operator": operator
+                            }
+                        );
+                    };
+
                     vm.nextCalc = function (keyEvent) {
                         if (vm.currentResult !== '' && (keyEvent.which === 13 || keyEvent === true)) {
                             vm.setFocusCurrentCalc();
@@ -105,6 +116,12 @@ angular.module('mathApp.solve', ['ui.bootstrap'])
                                 vm.duration += calcTime;
                                 if (isCalcTrue) {
                                     vm.score += 1;
+                                }else{
+                                    vm.isWrongCalc = true;
+                                    var number1 = vm.currentCalcSet.calculations[vm.currentCalcIndex - 1].number1;
+                                    var number2 = vm.currentCalcSet.calculations[vm.currentCalcIndex - 1].number2;
+                                    var operator = vm.currentCalcSet.calculations[vm.currentCalcIndex - 1].operator;
+                                    vm.addWrongCalc(number1, number2, operator)
                                 }
                                 vm.addCalc(id, vm.currentResult, calcTime, isCalcTrue);
                                 vm.currentCalcIndex += 1;
