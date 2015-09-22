@@ -1,16 +1,53 @@
 angular.module('mathApp.stats', ['ngTouch', 'ui.grid', 'ngAnimate', 'ui.bootstrap'])
 
-    .controller('statisticsController', ['StatisticsService', function (StatisticsService) {
+    .controller('statisticsController', ['StatisticsService', '$modal', function (StatisticsService, $modal) {
 
         var vm = this;
+
+        vm.open = function (size, title, gridDetailOptions) {
+
+            var modalInstance = $modal.open({
+                animation: true,
+                templateUrl: 'myModalContent.html',
+                controller: ['$modalInstance', OverviewDialogController],
+                controllerAs: 'modalController',
+                size: size,
+                resolve: []
+            });
+
+            modalInstance.gridDetailOptions = gridDetailOptions;
+            modalInstance.title = title;
+            modalInstance.result.then(function () {
+                if (modalInstance.modalResult === 'ok') {
+                }
+            });
+        };
+
+        function OverviewDialogController($modalInstance) {
+            var vm = this;
+            vm.gridDetailOptions = $modalInstance.gridDetailOptions;
+            vm.title = $modalInstance.title;
+            vm.showCancel = $modalInstance.showCancel;
+            vm.showOk = $modalInstance.showOk;
+            vm.ok = function () {
+                $modalInstance.modalResult = 'ok';
+                $modalInstance.close();
+            };
+        }
 
         StatisticsService.all().success(function (data) {
             vm.gridOptions.data = data;
         });
 
-        vm.getDetail = function (calcsetsolve_id) {
+        vm.getDetail = function (calcsetsolve_id, calculationsetName) {
             StatisticsService.detail(calcsetsolve_id).success(function (data) {
                 vm.gridDetailOptions.data = data.calculationsolves;
+                var title = 'Rechnungsset';
+                if(calculationsetName !== undefined){
+                    title += " - " + calculationsetName;
+                    }
+                var size = 'lg';
+                vm.open(size, title, vm.gridDetailOptions);
             });
         };
 
@@ -76,7 +113,7 @@ angular.module('mathApp.stats', ['ngTouch', 'ui.grid', 'ngAnimate', 'ui.bootstra
         ];
 
         vm.detail = function (grid, row) {
-            vm.getDetail(row.entity._id);
+            vm.getDetail(row.entity._id, row.entity.calculationset.name);
         };
 
         vm.gridOptions = {
@@ -95,7 +132,7 @@ angular.module('mathApp.stats', ['ngTouch', 'ui.grid', 'ngAnimate', 'ui.bootstra
                 enableHiding: false
             },
             {
-                displayName: 'Richtig',
+                displayName: 'Ergebnis',
                 field: 'correct',
                 type: 'boolean',
                 enableColumnMenu: false,
