@@ -1,5 +1,5 @@
 angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', 'ngAnimate', 'ui.bootstrap'])
-    .controller('overviewController', ['$filter', '$modal', 'CalcService', '$location', 'currentUser', 'dateTimeSourceFormat', 'dateTimeTargetFormat', 'dateTargetFormat', 'diff_levelMap', function ($filter, $modal, CalcService, $location, currentUser, dateTimeSourceFormat, dateTimeTargetFormat, dateTargetFormat, diff_levelMap) {
+    .controller('overviewController', ['$filter', '$modal', 'CalcService', '$location', 'currentUser', 'dateTimeSourceFormat', 'dateTimeTargetFormat', 'dateTargetFormat', 'diff_levelMap','uiGridConstants', function ($filter, $modal, CalcService, $location, currentUser, dateTimeSourceFormat, dateTimeTargetFormat, dateTargetFormat, diff_levelMap,uiGridConstants) {
 
         var vm = this;
         var test = 'test';
@@ -211,7 +211,13 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
                 field: 'diff_level',
                 cellFilter: 'diff_levelFilter:this',
                 type: 'string',
-                filter: {condition: vm.diff_levelCondition},
+                filter: {
+                    type: uiGridConstants.filter.SELECT,
+                    selectOptions: [
+                        { value: '1', label: diff_levelMap[1] },
+                        { value: '2', label: diff_levelMap[2] },
+                        { value: '3', label: diff_levelMap[3]} ]
+                },
                 enableColumnMenu: false,
                 width: "13%",
                 enableHiding: false
