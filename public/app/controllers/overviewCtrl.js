@@ -1,5 +1,5 @@
 angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', 'ngAnimate', 'ui.bootstrap'])
-    .controller('overviewController', ['$filter', '$modal', 'CalcService', '$location', 'currentUser', 'dateTimeSourceFormat', 'dateTimeTargetFormat', 'dateTargetFormat', 'diff_levelMap','uiGridConstants', function ($filter, $modal, CalcService, $location, currentUser, dateTimeSourceFormat, dateTimeTargetFormat, dateTargetFormat, diff_levelMap,uiGridConstants) {
+    .controller('overviewController', ['$filter', '$modal', 'CalcService', '$location', 'currentUser', 'dateTimeSourceFormat', 'dateTimeTargetFormat', 'dateTargetFormat', 'diff_levelMap', 'uiGridConstants', function ($filter, $modal, CalcService, $location, currentUser, dateTimeSourceFormat, dateTimeTargetFormat, dateTargetFormat, diff_levelMap, uiGridConstants) {
 
         var vm = this;
         var test = 'test';
@@ -30,7 +30,7 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
             });
 
             modalInstance.message = message;
-            modalInstance.title = title
+            modalInstance.title = title;
             modalInstance.showOk = showOk;
             modalInstance.showCancel = showCancel;
             modalInstance.result.then(function () {
@@ -214,9 +214,9 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
                 filter: {
                     type: uiGridConstants.filter.SELECT,
                     selectOptions: [
-                        { value: '1', label: diff_levelMap[1] },
-                        { value: '2', label: diff_levelMap[2] },
-                        { value: '3', label: diff_levelMap[3]} ]
+                        {value: '1', label: diff_levelMap[1]},
+                        {value: '2', label: diff_levelMap[2]},
+                        {value: '3', label: diff_levelMap[3]}]
                 },
                 enableColumnMenu: false,
                 width: "13%",
@@ -258,7 +258,7 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
                 enableSorting: false,
                 enableFiltering: false,
                 name: 'link ',
-                cellTemplate: '<div class="text-center" style="margin: 0px" ><button role="button" rel="tooltip" title = "Link kopieren" class="glyphicon glyphicon-share-alt" ng-click="grid.appScope.overview.copyLink(grid, row)"></button></div>',
+                cellTemplate: '<div class="ui-grid-cell-contents" ><button type="button" class="btn btn-xs btn-info"  rel="tooltip" title = "Link kopieren"  ng-click="grid.appScope.overview.copyLink(grid, row)"><span style="vertical-align:middle" class="glyphicon glyphicon-share-alt"></span></button></div>',
                 enableHiding: false
             },
             {
@@ -270,7 +270,7 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
                 enableSorting: false,
                 enableFiltering: false,
                 name: 'start ',
-                cellTemplate: '<div  class="text-center" style="margin: 0px" ><button role="button" rel="tooltip" title = "Aufgaben lösen" class="glyphicon glyphicon-hourglass" ng-click="grid.appScope.overview.start(grid, row)"></button></div>',
+                cellTemplate: '<div  class="ui-grid-cell-contents" ><button type="button" class="btn btn-xs btn-success" rel="tooltip" title = "Aufgaben lösen" ng-click="grid.appScope.overview.start(grid, row)"> <span style="vertical-align:middle" class="glyphicon glyphicon-hourglass"></span></button></div>',
                 enableHiding: false
             },
             {
@@ -282,7 +282,7 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
                 enableSorting: false,
                 enableFiltering: false,
                 name: 'delete ',
-                cellTemplate: '<div  class="text-center" style="margin: 0px" ><button role="button" rel="tooltip" title = "Löschen" class="glyphicon glyphicon-remove" ng-click="grid.appScope.overview.delete(grid, row)"></button></div>',
+                cellTemplate: '<div class="ui-grid-cell-contents" ><button type="button" class="btn btn-xs btn-danger"  rel="tooltip" title = "Löschen"  ng-click="grid.appScope.overview.delete(grid, row)"><span style="vertical-align:middle" class="glyphicon glyphicon-remove"></span></button></div>',
                 enableHiding: false
             },
             {
