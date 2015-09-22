@@ -12,5 +12,9 @@ angular.module('mathApp.statisticsService', [])
 		return $http.get('/api/calcsetsolves/' + calcsetsolve_id);
 	};
 
+	statisticsService.calculations = function() {
+		return $http.get('/api/calculationsolves/');
+	};
+
 	return statisticsService;
 }]);
