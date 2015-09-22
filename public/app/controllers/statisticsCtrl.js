@@ -1,6 +1,6 @@
 angular.module('mathApp.stats', ['ngTouch', 'ui.grid', 'ngAnimate', 'ui.bootstrap'])
 
-    .controller('statisticsController', ['StatisticsService', '$modal', function (StatisticsService, $modal) {
+    .controller('statisticsController', ['StatisticsService', '$modal','dateTimeSourceFormat', 'dateTimeTargetFormat', 'dateTargetFormat', function (StatisticsService, $modal,dateTimeSourceFormat, dateTimeTargetFormat, dateTargetFormat) {
 
         var vm = this;
 
@@ -50,6 +50,44 @@ angular.module('mathApp.stats', ['ngTouch', 'ui.grid', 'ngAnimate', 'ui.bootstra
                 vm.open(size, title, vm.gridDetailOptions);
             });
         };
+
+
+        vm.dateTimeFilter = function (term, value, row, column) {
+            if (!value) {
+                return true;
+            } else {
+                if (!moment(value, dateTimeSourceFormat).isValid()) {
+                    return true;
+                }
+
+                var momentAsString = moment(value, dateTimeSourceFormat).format(dateTimeTargetFormat);
+                return isStringContainingTerm(momentAsString, term);
+            }
+        };
+
+
+        var isStringContainingTerm = function (momentAsString, term) {
+            var index = term.indexOf("\\");
+            while (index >= 0) {
+                term = term.replace("\\", "");
+                index = term.indexOf("\\");
+            }
+            return momentAsString.indexOf(term) > -1;
+        };
+
+        vm.dateFilter = function (term, value, row, column) {
+            if (!value) {
+                return true;
+            } else {
+                if (!moment(value, dateTimeSourceFormat).isValid()) {
+                    return true;
+                }
+
+                var momentAsString = moment(value, dateTimeSourceFormat).format(dateTargetFormat);
+                return isStringContainingTerm(momentAsString, term);
+            }
+        };
+
 
         var def = [
             {
@@ -129,10 +167,10 @@ angular.module('mathApp.stats', ['ngTouch', 'ui.grid', 'ngAnimate', 'ui.bootstra
 
         vm.gridOptions = {
             enableHiding: false,
-            enableFiltering: false,
+            enableFiltering: true,
             columnDefs: def,
             enableHorizontalScrollbar: 0,
-            enableVerticalScrollbar: 2,
+            enableVerticalScrollbar: 2
         };
 
         var defDetail = [
@@ -231,6 +269,18 @@ angular.module('mathApp.stats', ['ngTouch', 'ui.grid', 'ngAnimate', 'ui.bootstra
             }
         };
     }])
+    .filter('dateTimeFormaterCreated', function (dateTimeSourceFormat, dateTargetFormat) {
+        return function (input) {
+            if (!input) {
+                return '';
+            } else {
+                if (!moment(input, dateTimeSourceFormat).isValid()) {
+                    return input;
+                }
+                return moment(input, dateTimeSourceFormat).format(dateTargetFormat);
+            }
+        };
+    })
     .filter('dateTimeFormaterCreated', function (dateTimeSourceFormat, dateTargetFormat) {
         return function (input) {
             if (!input) {

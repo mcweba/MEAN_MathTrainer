@@ -5,17 +5,10 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
         var test = 'test';
         vm.mySelections = [];
 
-        vm.globalFilter = function (entry) {
-            if (currentUser.role !== "Admin" && entry.active === false) {
-                return false;
-            }
-            return true;
-        }
-
         CalcService.all()
             .success(function (data) {
                 vm.processing = false;
-                vm.gridOptions.data = $filter('filter')(data, vm.globalFilter);
+                vm.gridOptions.data = data;
             });
 
         vm.open = function (size, title, message, showOk, showCancel, cancelFunction, okFunction) {
@@ -91,8 +84,7 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
                     CalcService.all()
                         .success(function (data) {
                             vm.processing = false;
-                            vm.gridOptions.data = $filter('filter')(data, vm.globalFilter);
-                            ;
+                            vm.gridOptions.data =data;
                         });
                 });
         };
@@ -304,8 +296,7 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
             enableHorizontalScrollbar: 0,
             enableVerticalScrollbar: 2,
             columnDefs: def,
-            filterOptions: vm.globalFilter
-        };
+               };
     }
     ])
     .filter('dateTimeFormaterCreated', function (dateTimeSourceFormat, dateTargetFormat) {
