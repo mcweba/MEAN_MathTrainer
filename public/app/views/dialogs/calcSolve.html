@@ -36,6 +36,14 @@
             <button class="btn btn-success" ng-click="vm.ok()" tabindex="1">OK</button>
         </p>
     </div>
+    <div class="panel panel-default" ng-hide="vm.isCalcActive">
+        <div class="panel-body">
+            <h4> Rechnungset ist inaktive und kann nicht mehr gelöst werden. </h4>
+        </div>
+        <p style="text-align: center">
+            <button class="btn btn-success" ng-click="vm.ok()" tabindex="1">OK</button>
+        </p>
+    </div>
 </div>
 <div class="modal-footer modal-footer-custom" ng-show="vm.progress">
     <span class="col-xs-9 col-sm-9 modal-footer-progressbar">
