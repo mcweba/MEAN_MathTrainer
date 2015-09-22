@@ -18,7 +18,7 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
                 vm.gridOptions.data = $filter('filter')(data, vm.globalFilter);
             });
 
-        vm.open = function (size, title, message, showOk, showCancel, cancelFunction, okFunction) {
+        vm.open = function (size, title, message, messageAddition, showOk, showCancel, cancelFunction, okFunction) {
 
             var modalInstance = $modal.open({
                 animation: vm.animationsEnabled,
@@ -30,6 +30,7 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
             });
 
             modalInstance.message = message;
+            modalInstance.messageAddition = messageAddition;
             modalInstance.title = title;
             modalInstance.showOk = showOk;
             modalInstance.showCancel = showCancel;
@@ -45,6 +46,7 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
         function OverviewDialogController($modalInstance) {
             var vm = this;
             vm.message = $modalInstance.message;
+            vm.messageAddition = $modalInstance.messageAddition;
             vm.title = $modalInstance.title;
             vm.showCancel = $modalInstance.showCancel;
             vm.showOk = $modalInstance.showOk;
@@ -63,10 +65,11 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
         };
 
         vm.copyLink = function (grid, row) {
-            var message = window.location.href.replace("overview", "solve") + '/' + row.entity._id;
-            var title = "Link zum Einladen...";
+            var message = 'Sie können den folgenden Internetlink kopieren und versenden, um direkt zum Lösen des Rechnungssets zu gelangen:';
+            var messageAddition = window.location.href.replace("overview", "solve") + '/' + row.entity._id;
+            var title = "Internetlink zum Rechnungsset";
             var size = 'lg';
-            vm.open(size, title, message, true, false, function () {
+            vm.open(size, title, message, messageAddition, true, false, function () {
             }, function () {
             });
         };
@@ -81,7 +84,7 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
                 var title = "Löschen nicht möglich";
                 var message = "Es können nur eigene, also von Ihnen erzeugte, Rechnunssets gelöscht werden";
                 var size = 'lg';
-                vm.open(size, title, message, true, false);
+                vm.open(size, title, message, null, true, false);
                 return;
             }
 
@@ -103,7 +106,7 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
 
             var title = "Rechungsset löschen?";
             var message = "Möchten Sie das Rechnungsset wirklich löschen?";
-            vm.open('lg', title, message, true, true, (function () {
+            vm.open('lg', title, message, null, true, true, (function () {
             }), vm.okDeleteDialog);
         };
 
