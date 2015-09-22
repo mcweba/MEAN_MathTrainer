@@ -135,6 +135,7 @@ angular.module('mathApp.stats', ['ngTouch', 'ui.grid', 'ngAnimate', 'ui.bootstra
                 displayName: 'Ergebnis',
                 field: 'correct',
                 type: 'boolean',
+                cellFilter: 'result_Filter:this',
                 enableColumnMenu: false,
                 enableHiding: false
             },
@@ -212,5 +213,10 @@ angular.module('mathApp.stats', ['ngTouch', 'ui.grid', 'ngAnimate', 'ui.bootstra
                 }
                 return moment(input, dateTimeSourceFormat).format(dateTargetFormat);
             }
+        };
+    })
+    .filter('result_Filter', function (stats_resultMap) {
+        return function (value, scope) {
+            return stats_resultMap[scope.row.entity.correct]
         };
     });
