@@ -82,3 +82,13 @@ header .navbar 		{
 .badge-label {
     margin-right: 10px;
 }
+
+.well-messageAddition {
+	margin-top:	15px;
+	font-weight: bold;
+	text-align: center;
+}
+
+.page-header-nomargin {
+	margin-top:	0px;
+}
