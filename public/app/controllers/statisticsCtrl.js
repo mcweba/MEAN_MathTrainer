@@ -34,6 +34,13 @@ angular.module('mathApp.stats', ['ngTouch', 'ui.grid', 'ngAnimate', 'ui.bootstra
                 filterCellFiltered: true
             },
             {
+                field: 'calculationset.name',
+                displayName: 'Bezeichnung',
+                type: 'string',
+                enableColumnMenu: false,
+                enableHiding: false
+            },
+            {
                 field: 'creator.name',
                 displayName: 'Name',
                 type: 'string',
