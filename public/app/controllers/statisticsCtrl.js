@@ -55,7 +55,6 @@ angular.module('mathApp.stats', ['ngTouch', 'ui.grid', 'ngAnimate', 'ui.bootstra
             });
         };
 
-
         vm.dateTimeFilter = function (term, value, row, column) {
             if (!value) {
                 return true;
@@ -68,7 +67,6 @@ angular.module('mathApp.stats', ['ngTouch', 'ui.grid', 'ngAnimate', 'ui.bootstra
                 return isStringContainingTerm(momentAsString, term);
             }
         };
-
 
         var isStringContainingTerm = function (momentAsString, term) {
             var index = term.indexOf("\\");
@@ -166,10 +164,10 @@ angular.module('mathApp.stats', ['ngTouch', 'ui.grid', 'ngAnimate', 'ui.bootstra
 
         var defCalulations = [
             {
-                field: '_id',
-                displayName: 'id',
-                type: 'number',
-                visible: false,
+                field: 'calculation',
+                displayName: 'Rechnung',
+                type: 'text',
+                visible: true,
                 enableColumnMenu: false,
                 enableHiding: false
             },

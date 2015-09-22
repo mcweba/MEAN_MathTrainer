@@ -16,5 +16,8 @@ angular.module('mathApp.statisticsService', [])
 		return $http.get('/api/calculationsolves/');
 	};
 
+
+
+
 	return statisticsService;
 }]);
