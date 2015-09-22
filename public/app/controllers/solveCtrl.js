@@ -1,6 +1,6 @@
 angular.module('mathApp.solve', ['ui.bootstrap'])
 
-    .controller('solveController', ['$modal', '$location', function($modal, $location) {
+    .controller('solveController', ['$modal', '$location', '$timeout', function($modal, $location, $timeout) {
 
         var vm = this;
 
@@ -57,6 +57,14 @@ angular.module('mathApp.solve', ['ui.bootstrap'])
                         vm.progress = true;
                         vm.beforestart = false;
                         vm.start = new Date().getTime();
+                        vm.setFocusCurrentCalc();
+                    };
+
+                    vm.setFocusCurrentCalc = function(){
+                        $timeout(function () {
+                            var currentCalcElement = angular.element( document.querySelector( '#currentCalc' ) );
+                            currentCalcElement[0].focus();
+                        });
                     };
 
                     vm.currentNb1 = function () {
@@ -89,6 +97,7 @@ angular.module('mathApp.solve', ['ui.bootstrap'])
 
                     vm.nextCalc = function (keyEvent) {
                         if (vm.currentResult !== '' && (keyEvent.which === 13 || keyEvent === true)) {
+                            vm.setFocusCurrentCalc();
                             if (vm.currentCalcIndex < vm.calcCount + 1) {
                                 var id = vm.currentCalcSet.calculations[vm.currentCalcIndex - 1]._id;
                                 var isCalcTrue = vm.currentCalcSet.calculations[vm.currentCalcIndex - 1].result.toString() === vm.currentResult;

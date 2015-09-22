@@ -4,7 +4,7 @@
 <div class="modal-body">
     <form name="form" class="css-form calc" novalidate ng-show="vm.started">
         <div>
-           {{vm.currentNb1()}} {{vm.currentOp()}} {{vm.currentNb2()}} =  <input ng-model="vm.currentResult" ng-keydown="vm.nextCalc($event)" tabindex="1" type="text" maxlength="4" size="4" style="text-align:center" placeholder="?">
+           {{vm.currentNb1()}} {{vm.currentOp()}} {{vm.currentNb2()}} =  <input ng-model="vm.currentResult" id="currentCalc" ng-keydown="vm.nextCalc($event)" tabindex="1" type="text" maxlength="4" size="4" style="text-align:center" placeholder="?">
         </div>
     </form>
     <div class="panel panel-default" ng-show="vm.beforestart">
@@ -14,7 +14,7 @@
         </div>
         <p style="text-align: center">
             <button class="btn btn-default" tabindex="3" ng-click="vm.cancel()">Abbrechen</button>
-            <button class="btn btn-primary" tabindex="3" ng-click="vm.startCalc()" autofocus>Beginnen</button>
+            <button class="btn btn-primary" tabindex="4" ng-click="vm.startCalc()" autofocus>Beginnen</button>
         </p>
     </div>
     <div class="panel panel-default" ng-show="vm.finished">
