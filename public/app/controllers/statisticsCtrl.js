@@ -107,7 +107,7 @@ angular.module('mathApp.stats', ['ngTouch', 'ui.grid', 'ngAnimate', 'ui.bootstra
                 enableSorting: false,
                 enableFiltering: false,
                 name: 'link ',
-                cellTemplate: '<div class="text-center" style="margin: 0px" ><button  class="glyphicon glyphicon-search" ng-click="grid.appScope.stats.detail(grid, row)"></button></div>',
+                cellTemplate: '<div class="text-center" style="margin: 0px" ><button class="btn btn-xs btn-success glyphicon glyphicon-search" rel="tooltip" title = "Detail" ng-click="grid.appScope.stats.detail(grid, row)"></button></div>',
                 enableHiding: false
             },
             {
@@ -148,6 +148,7 @@ angular.module('mathApp.stats', ['ngTouch', 'ui.grid', 'ngAnimate', 'ui.bootstra
                 displayName: 'Ergebnis',
                 field: 'correct',
                 type: 'boolean',
+                cellFilter: 'result_Filter:this',
                 enableColumnMenu: false,
                 cellTemplate: '<div class="ui-grid-cell-contents" ng-show="row.entity.correct===true"><span class="glyphicon glyphicon-thumbs-up" style="color:green"></span></div>' +
                 '<div class="ui-grid-cell-contents" ng-show="row.entity.correct===false"><span class="glyphicon glyphicon-thumbs-down" style="color:red"></span></div>',
@@ -240,5 +241,10 @@ angular.module('mathApp.stats', ['ngTouch', 'ui.grid', 'ngAnimate', 'ui.bootstra
                 }
                 return moment(input, dateTimeSourceFormat).format(dateTargetFormat);
             }
+        };
+    })
+    .filter('result_Filter', function (stats_resultMap) {
+        return function (value, scope) {
+            return stats_resultMap[scope.row.entity.correct]
         };
     });
