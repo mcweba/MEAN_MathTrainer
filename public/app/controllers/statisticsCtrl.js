@@ -107,7 +107,7 @@ angular.module('mathApp.stats', ['ngTouch', 'ui.grid', 'ngAnimate', 'ui.bootstra
                 enableSorting: false,
                 enableFiltering: false,
                 name: 'link ',
-                cellTemplate: '<div class="text-center" style="margin: 0px" ><button  class="glyphicon glyphicon-search" ng-click="grid.appScope.stats.detail(grid, row)"></button></div>',
+                cellTemplate: '<div class="text-center" style="margin: 0px" ><button class="btn btn-xs btn-success glyphicon glyphicon-search" rel="tooltip" title = "Detail" ng-click="grid.appScope.stats.detail(grid, row)"></button></div>',
                 enableHiding: false
             }
         ];
