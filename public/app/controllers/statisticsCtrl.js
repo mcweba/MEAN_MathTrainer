@@ -1,6 +1,6 @@
 angular.module('mathApp.stats', ['ngTouch', 'ui.grid', 'ngAnimate', 'ui.bootstrap'])
 
-    .controller('statisticsController', ['StatisticsService', '$modal','dateTimeSourceFormat', 'dateTimeTargetFormat', 'dateTargetFormat', function (StatisticsService, $modal,dateTimeSourceFormat, dateTimeTargetFormat, dateTargetFormat) {
+    .controller('statisticsController', ['StatisticsService', '$modal','dateTimeSourceFormat', 'dateTimeTargetFormat', 'dateTargetFormat', 'uiGridConstants', 'stats_resultMap', function (StatisticsService, $modal,dateTimeSourceFormat, dateTimeTargetFormat, dateTargetFormat, uiGridConstants, stats_resultMap) {
 
         var vm = this;
 
@@ -231,6 +231,12 @@ angular.module('mathApp.stats', ['ngTouch', 'ui.grid', 'ngAnimate', 'ui.bootstra
                 field: 'correct',
                 type: 'boolean',
                 cellFilter: 'result_Filter:this',
+                filter: {
+                    type: uiGridConstants.filter.SELECT,
+                    selectOptions: [
+                        {value: true, label: stats_resultMap[true]},
+                        {value: false, label: stats_resultMap[false]}]
+                },
                 enableColumnMenu: false,
                 cellTemplate: '<div class="ui-grid-cell-contents" ng-show="row.entity.correct===true"><span class="glyphicon glyphicon-thumbs-up" style="color:green"></span></div>' +
                 '<div class="ui-grid-cell-contents" ng-show="row.entity.correct===false"><span class="glyphicon glyphicon-thumbs-down" style="color:red"></span></div>',
@@ -272,10 +278,10 @@ angular.module('mathApp.stats', ['ngTouch', 'ui.grid', 'ngAnimate', 'ui.bootstra
 
         vm.gridDetailOptions = {
             enableHiding: false,
-            enableFiltering: false,
+            enableFiltering: true,
             columnDefs: defDetail,
             enableHorizontalScrollbar: 0,
-            enableVerticalScrollbar: 2,
+            enableVerticalScrollbar: 2
         };
 
         vm.dateTimeFilter = function (term, value) {
