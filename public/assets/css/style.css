@@ -92,3 +92,8 @@ header .navbar 		{
 .page-header-nomargin {
 	margin-top:	0px;
 }
+
+.modal-subtitle {
+	color: darkgray;
+	margin-top: 3px;
+}

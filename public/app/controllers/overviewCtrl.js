@@ -234,7 +234,7 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
                 enableHiding: false
             },
             {
-                displayName: 'Zuletzt am',
+                displayName: 'Zuletzt gelöst am',
                 field: 'lastsolve',
                 type: 'date',
                 width: "12%",

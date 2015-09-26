@@ -4,7 +4,7 @@ angular.module('mathApp.stats', ['ngTouch', 'ui.grid', 'ngAnimate', 'ui.bootstra
 
         var vm = this;
 
-        vm.open = function (size, title, gridDetailOptions) {
+        vm.open = function (size, title, subtitle, gridDetailOptions) {
 
             var modalInstance = $modal.open({
                 animation: true,
@@ -17,6 +17,7 @@ angular.module('mathApp.stats', ['ngTouch', 'ui.grid', 'ngAnimate', 'ui.bootstra
 
             modalInstance.gridDetailOptions = gridDetailOptions;
             modalInstance.title = title;
+            modalInstance.subtitle = subtitle;
             modalInstance.result.then(function () {
                 if (modalInstance.modalResult === 'ok') {
                 }
@@ -27,6 +28,7 @@ angular.module('mathApp.stats', ['ngTouch', 'ui.grid', 'ngAnimate', 'ui.bootstra
             var vm = this;
             vm.gridDetailOptions = $modalInstance.gridDetailOptions;
             vm.title = $modalInstance.title;
+            vm.subtitle = $modalInstance.subtitle;
             vm.showCancel = $modalInstance.showCancel;
             vm.showOk = $modalInstance.showOk;
             vm.ok = function () {
@@ -46,12 +48,13 @@ angular.module('mathApp.stats', ['ngTouch', 'ui.grid', 'ngAnimate', 'ui.bootstra
         vm.getDetail = function (calcsetsolve_id, calculationsetName) {
             StatisticsService.detail(calcsetsolve_id).success(function (data) {
                 vm.gridDetailOptions.data = data.calculationsolves;
-                var title = 'Rechnungsset';
+                var title = 'Details von Rechnungsset';
+                var subtitle = "Gelöst durch " + data.creator.name + " am " + moment(data.created, dateTimeSourceFormat).format(dateTimeTargetFormat);
                 if (calculationsetName !== undefined) {
                     title += " - " + calculationsetName;
                 }
                 var size = 'lg';
-                vm.open(size, title, vm.gridDetailOptions);
+                vm.open(size, title, subtitle, vm.gridDetailOptions);
             });
         };
 
@@ -118,20 +121,20 @@ angular.module('mathApp.stats', ['ngTouch', 'ui.grid', 'ngAnimate', 'ui.bootstra
             },
             {
                 field: 'creator.name',
-                displayName: 'Name',
+                displayName: 'Gelöst von',
                 type: 'string',
                 enableColumnMenu: false,
                 enableHiding: false
             },
             {
-                displayName: 'Meine erreichte Punktzahl',
+                displayName: 'Ergebnis [%]',
                 field: 'score',
                 type: 'number',
                 enableColumnMenu: false,
                 enableHiding: false
             },
             {
-                displayName: 'Dauer[s]',
+                displayName: 'Dauer [s]',
                 field: 'duration',
                 type: 'number',
                 enableColumnMenu: false,
@@ -186,7 +189,7 @@ angular.module('mathApp.stats', ['ngTouch', 'ui.grid', 'ngAnimate', 'ui.bootstra
                 enableHiding: false
             },
             {
-                displayName: 'Anteil richig gelöst',
+                displayName: 'Korrekt gelöst [%]',
                 field: 'overallSuccess',
                 type: 'number',
                 enableColumnMenu: false,
@@ -241,7 +244,7 @@ angular.module('mathApp.stats', ['ngTouch', 'ui.grid', 'ngAnimate', 'ui.bootstra
                 enableHiding: false
             },
             {
-                displayName: 'Mein Resultat',
+                displayName: 'Erfasstes Resultat',
                 field: 'providedRes',
                 type: 'number',
                 enableColumnMenu: false,
