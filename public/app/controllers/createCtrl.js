@@ -40,7 +40,6 @@ angular.module('mathApp.create', [])
         vm.selectedDifficultLevel = vm.difficultLevels[0];
 
         vm.calculations =[
-            // example  {n1: 4, op: '*', n2: 3, res: 12}
             ];
 
         vm.preCalculations = "";
@@ -118,9 +117,24 @@ angular.module('mathApp.create', [])
             }
         };
 
+        vm.isDivisionValid = true;
+        vm.validateDivision = function (nb1, nb2){
+            vm.isDivisionValid = true;
+            if(nb2 <= 0){
+                vm.isDivisionValid = false;
+                return;
+            }
+            var res1 = nb1 / nb2;
+            var res2 = Math.floor(res1);
+            if(res1 !== res2){
+                vm.isDivisionValid = false;
+            }
+        };
+
         vm.addCalculation = function(){
             vm.cleanSubmitFeedback();
             var invalidCalcs = "";
+            var hasInvalidDivision = false;
             var prePosition = 0;
             var lastChar = vm.preCalculations.substring(vm.preCalculations.length-1,vm.preCalculations.length);
             if(vm.preCalculations.length > 0 & lastChar != separator){
@@ -154,9 +168,11 @@ angular.module('mathApp.create', [])
                             vm.calculations.push({n1: number1, op:'*', n2: number2, res: number1 * number2});
                         }
                         if(operator === "/"){
-                            if(number2 > 0) {
+                            vm.validateDivision(number1, number2);
+                            if(vm.isDivisionValid){
                                 vm.calculations.push({n1: number1, op: '/', n2: number2, res: number1 / number2});
                             }else{
+                                hasInvalidDivision = true;
                                 invalidCalcs += pattern + separator;
                             }
                         }
@@ -168,19 +184,19 @@ angular.module('mathApp.create', [])
                 }
             }
             if(invalidCalcs.length > 0){
-                var invalid = "Invalid: ";
+                var invalid = "Ungültig: ";
                 if(vm.preCalculations.substring(0,invalid.length) === invalid){
                     vm.preCalculations = invalidCalcs;
                 }else{
                     vm.preCalculations = invalid + invalidCalcs;
                 }
+                if(hasInvalidDivision){
+                    vm.preCalculations += "\rDivision durch Null und Divisionen welche Rest ergeben sind ungültig.";
+                }
             }else
             {
                 vm.preCalculations = "";
             }
-
-           // console.log(vm.preCalculations);
-            console.log(vm.calculations);
         };
 
         vm.deleteCalc = function(idx) {
@@ -188,13 +204,6 @@ angular.module('mathApp.create', [])
         };
 
         vm.submit = function() {
-            /*   {
-             diff_level: '1',
-             calculations: [
-             {n1: 4, op: '*', n2: 3, res: 12},
-             {n1: 7, op: '+', n2: 1, res: 8}
-             ]
-             }*/
             vm.cleanSubmitFeedback();
             if(vm.calculations.length > 0) {
                 var result = {
@@ -208,7 +217,6 @@ angular.module('mathApp.create', [])
                     .success(function (data) {
                         vm.calculations = [];
                         vm.name = '';
-                        console.log(data);
                         vm.isSubmitFeedback = true;
                         vm.submitFeedback = 'Rechnungen wurden erfolgreich erstellt.';
                     });
