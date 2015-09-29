@@ -125,7 +125,6 @@ angular.module('mathApp.solve', ['ui.bootstrap'])
                                 }
                                 vm.addCalc(id, vm.currentResult, calcTime, isCalcTrue);
                                 vm.currentCalcIndex += 1;
-                                console.log('Result: ' + vm.currentResult);
                                 vm.currentResult = '';
                                 vm.start = new Date().getTime();
                                 if (vm.currentCalcIndex === vm.calcCount + 1) {
@@ -142,7 +141,6 @@ angular.module('mathApp.solve', ['ui.bootstrap'])
                                         "calculationSolves": vm.calculationSolves
                                     };
                                     CalcService.submitCalcSetSolve(result);
-                                    // console.log('submitCalcSetSolve: ' + result);
                                 }
                             } else {
                                 vm.ok();

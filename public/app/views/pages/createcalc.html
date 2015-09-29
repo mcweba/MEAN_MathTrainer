@@ -14,7 +14,6 @@
             <label>Wertebereich 1. Zahl</label>
             <div class="panel panel-default">
                 <div class="panel-body">
-
                     <div class="col-md-6">
                         <div class="input-group">
                             <span class="input-group-addon" id="sizing-addon1">Min</span>
@@ -29,13 +28,11 @@
                     </div>
                 </div>
             </div>
-
             <div class="form-group">
                 <label>Operator</label>
                 <select ng-model="create.selectedOption" ng-options="option.name for option in create.options" class="form-control">
                 </select>
             </div>
-
             <label>Wertebereich 2. Zahl</label>
             <div class="panel panel-default">
                 <div class="panel-body" >
@@ -89,7 +86,6 @@
         <div class="panel-body">
             <div class="row" style="margin: 0px">
                 <div>
-                    <!--   Rechnungen -->
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             Rechnungen
@@ -110,11 +106,8 @@
                             </div>
                         </div>
                     </div>
-                    <!-- End  Rechnungen -->
                 </div>
-
             </div>
-
             <div class="form-group">
                 <label>Bezeichnung</label>
                 <input ng-model="create.name" type="text" class="form-control" aria-describedby="sizing-addon2" value="{{create.name}}">
@@ -122,12 +115,10 @@
                 <select ng-model="create.selectedDifficultLevel" ng-options="difficultLevel.name for difficultLevel in create.difficultLevels" class="form-control">
                 </select>
             </div>
-
             <button ng-click="create.submit()" type="submit" class="btn pull-right btn-success">Speichern</button>
         </div>
         <div class="row show-hide-message" ng-show="create.isSubmitFeedback">
             <div class="col-md-12">
-
                 <div class="alert alert-success">
                     {{ create.submitFeedback }}
                 </div>
