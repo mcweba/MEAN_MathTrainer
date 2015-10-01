@@ -1,5 +1,5 @@
 # MathTrainer
-This is the MathTrainer app... 
+This is the MathTrainer app.
 
 ## Development
 npm install
