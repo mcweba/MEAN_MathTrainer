@@ -48,8 +48,8 @@ angular.module('mathApp.stats', ['ngTouch', 'ui.grid', 'ngAnimate', 'ui.bootstra
         vm.getDetail = function (calcsetsolve_id, calculationsetName) {
             StatisticsService.detail(calcsetsolve_id).success(function (data) {
                 vm.gridDetailOptions.data = data.calculationsolves;
-                var title = 'Details von Rechnungsset';
-                var subtitle = "Gelöst durch " + data.creator.name + " am " + moment(data.created, dateTimeSourceFormat).format(dateTimeTargetFormat);
+                var title = 'Details of arithmetic set';
+                var subtitle = "solved by " + data.creator.name + " on " + moment(data.created, dateTimeSourceFormat).format(dateTimeTargetFormat);
                 if (calculationsetName !== undefined) {
                     title += " - " + calculationsetName;
                 }
@@ -103,7 +103,7 @@ angular.module('mathApp.stats', ['ngTouch', 'ui.grid', 'ngAnimate', 'ui.bootstra
                 enableHiding: false
             },
             {
-                displayName: 'Erstellt',
+                displayName: 'Created',
                 field: 'created',
                 type: 'date',
                 enableColumnMenu: false,
@@ -114,27 +114,27 @@ angular.module('mathApp.stats', ['ngTouch', 'ui.grid', 'ngAnimate', 'ui.bootstra
             },
             {
                 field: 'calculationset.name',
-                displayName: 'Bezeichnung',
+                displayName: 'Description',
                 type: 'string',
                 enableColumnMenu: false,
                 enableHiding: false
             },
             {
                 field: 'creator.name',
-                displayName: 'Gelöst von',
+                displayName: 'Solved by',
                 type: 'string',
                 enableColumnMenu: false,
                 enableHiding: false
             },
             {
-                displayName: 'Ergebnis [%]',
+                displayName: 'Score [%]',
                 field: 'score',
                 type: 'number',
                 enableColumnMenu: false,
                 enableHiding: false
             },
             {
-                displayName: 'Dauer [s]',
+                displayName: 'Duration [s]',
                 field: 'duration',
                 type: 'number',
                 enableColumnMenu: false,
@@ -168,28 +168,28 @@ angular.module('mathApp.stats', ['ngTouch', 'ui.grid', 'ngAnimate', 'ui.bootstra
         var defCalulations = [
             {
                 field: 'calculation',
-                displayName: 'Rechnung',
+                displayName: 'Arithmetic',
                 type: 'text',
                 visible: true,
                 enableColumnMenu: false,
                 enableHiding: false
             },
             {
-                displayName: 'Anzahl gelöst',
+                displayName: '# solves',
                 field: 'count',
                 type: 'number',
                 enableColumnMenu: false,
                 enableHiding: false
             },
             {
-                displayName: 'Durch. Dauer[s]',
+                displayName: 'Avg. Duration[s]',
                 field: 'avgDuration',
                 type: 'number',
                 enableColumnMenu: false,
                 enableHiding: false
             },
             {
-                displayName: 'Korrekt gelöst [%]',
+                displayName: 'correctly solved [%]',
                 field: 'overallSuccess',
                 type: 'number',
                 enableColumnMenu: false,
@@ -227,7 +227,7 @@ angular.module('mathApp.stats', ['ngTouch', 'ui.grid', 'ngAnimate', 'ui.bootstra
                 enableHiding: false
             },
             {
-                displayName: 'Ergebnis',
+                displayName: 'Score',
                 field: 'correct',
                 type: 'boolean',
                 cellFilter: 'result_Filter:this',
@@ -243,21 +243,21 @@ angular.module('mathApp.stats', ['ngTouch', 'ui.grid', 'ngAnimate', 'ui.bootstra
                 enableHiding: false
             },
             {
-                displayName: 'Rechnung',
+                displayName: 'Arithmetic',
                 field: 'calcAsString',
                 type: 'string',
                 enableColumnMenu: false,
                 enableHiding: false
             },
             {
-                displayName: 'Erfasstes Resultat',
+                displayName: 'Provided Result',
                 field: 'providedRes',
                 type: 'number',
                 enableColumnMenu: false,
                 enableHiding: false
             },
             {
-                displayName: 'Dauer[s]',
+                displayName: 'Duration[s]',
                 field: 'duration',
                 type: 'number',
                 enableColumnMenu: false,

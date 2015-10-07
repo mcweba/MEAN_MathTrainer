@@ -58,9 +58,9 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
         };
 
         vm.copyLink = function (grid, row) {
-            var message = 'Sie können den folgenden Internetlink kopieren und versenden, um direkt zum Lösen des Rechnungssets zu gelangen:';
+            var message = 'You can copy this URL and share it, to get directly to the arithmetic set solve dialog:';
             var messageAddition = window.location.href.replace("overview", "solve") + '/' + row.entity._id;
-            var title = "Internetlink zum Rechnungsset";
+            var title = "URL to arithmetic set";
             var size = 'lg';
             vm.open(size, title, message, messageAddition, true, false, function () {
             }, function () {
@@ -74,8 +74,8 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
         vm.okDeleteDialog = function () {
             if (vm.creatorId !== currentUser.userId && currentUser.role !== "admin") {
 
-                var title = "Löschen nicht möglich";
-                var message = "Es können nur eigene, also von Ihnen erzeugte, Rechnunssets gelöscht werden";
+                var title = "Delete not permitted";
+                var message = "You're only allowed to delete your own arithmetic sets";
                 var size = 'lg';
                 vm.open(size, title, message, null, true, false);
                 return;
@@ -96,8 +96,8 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
             vm.creatorId = row.entity.creator._id;
             vm.calcSetDeleteId = row.entity._id;
 
-            var title = "Rechungsset löschen?";
-            var message = "Möchten Sie das Rechnungsset wirklich löschen?";
+            var title = "Delete arithmetic set?";
+            var message = "Do you really want to delete this arithmetic set?";
             vm.open('lg', title, message, null, true, true, (function () {
             }), vm.okDeleteDialog);
         };
@@ -167,7 +167,7 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
             },
             {
                 field: 'name',
-                displayName: 'Bezeichnung',
+                displayName: 'Description',
                 type: 'string',
                 enableColumnMenu: false,
                 enableHiding: false,
@@ -176,7 +176,7 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
             },
             {
                 field: 'creator.name',
-                displayName: 'Erstellt von',
+                displayName: 'Created by',
                 type: 'string',
                 enableColumnMenu: false,
                 enableHiding: false,
@@ -191,7 +191,7 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
                 enableHiding: false
             },
             {
-                displayName: 'Erstellt am',
+                displayName: 'Created on',
                 field: 'created',
                 type: 'date',
                 width: "8%",
@@ -202,7 +202,7 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
                 filterCellFiltered: true
             },
             {
-                displayName: 'Schwierigkeit',
+                displayName: 'Difficulty',
                 field: 'diff_level',
                 cellFilter: 'diff_levelFilter:this',
                 type: 'string',
@@ -218,7 +218,7 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
                 enableHiding: false
             },
             {
-                displayName: 'Mein Ergebnis [%]',
+                displayName: 'My score [%]',
                 field: 'lastscore',
                 type: 'number',
                 width: "15%",
@@ -226,7 +226,7 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
                 enableHiding: false
             },
             {
-                displayName: 'Dauer [s]',
+                displayName: 'Duration [s]',
                 field: 'lastduration',
                 type: 'number',
                 width: "8%",
@@ -234,7 +234,7 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
                 enableHiding: false
             },
             {
-                displayName: 'Zuletzt gelöst am',
+                displayName: 'Last solved on',
                 field: 'lastsolve',
                 type: 'date',
                 width: "12%",
@@ -253,7 +253,7 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
                 enableSorting: false,
                 enableFiltering: false,
                 name: 'link ',
-                cellTemplate: '<div class="ui-grid-cell-contents" ><button type="button" class="btn btn-xs btn-info"  rel="tooltip" title = "Link kopieren"  ng-click="grid.appScope.overview.copyLink(grid, row)"><span style="vertical-align:middle" class="glyphicon glyphicon-share-alt"></span></button></div>',
+                cellTemplate: '<div class="ui-grid-cell-contents" ><button type="button" class="btn btn-xs btn-info"  rel="tooltip" title = "Share URL"  ng-click="grid.appScope.overview.copyLink(grid, row)"><span style="vertical-align:middle" class="glyphicon glyphicon-share-alt"></span></button></div>',
                 enableHiding: false
             },
             {
@@ -265,7 +265,7 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
                 enableSorting: false,
                 enableFiltering: false,
                 name: 'start ',
-                cellTemplate: '<div  class="ui-grid-cell-contents" ><button type="button" class="btn btn-xs btn-success" rel="tooltip" title = "Aufgaben lösen" ng-click="grid.appScope.overview.start(grid, row)"> <span style="vertical-align:middle" class="glyphicon glyphicon-hourglass"></span></button></div>',
+                cellTemplate: '<div  class="ui-grid-cell-contents" ><button type="button" class="btn btn-xs btn-success" rel="tooltip" title = "Solve arithmetics" ng-click="grid.appScope.overview.start(grid, row)"> <span style="vertical-align:middle" class="glyphicon glyphicon-hourglass"></span></button></div>',
                 enableHiding: false
             },
             {
@@ -277,7 +277,7 @@ angular.module('mathApp.overview', ['ngTouch', 'ui.grid', 'angular-clipboard', '
                 enableSorting: false,
                 enableFiltering: false,
                 name: 'delete ',
-                cellTemplate: '<div class="ui-grid-cell-contents" ><button type="button" class="btn btn-xs btn-danger"  rel="tooltip" title = "Löschen"  ng-click="grid.appScope.overview.delete(grid, row)"><span style="vertical-align:middle" class="glyphicon glyphicon-remove"></span></button></div>',
+                cellTemplate: '<div class="ui-grid-cell-contents" ><button type="button" class="btn btn-xs btn-danger"  rel="tooltip" title = "Delete"  ng-click="grid.appScope.overview.delete(grid, row)"><span style="vertical-align:middle" class="glyphicon glyphicon-remove"></span></button></div>',
                 enableHiding: false
             },
             {

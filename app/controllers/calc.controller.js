@@ -73,7 +73,7 @@ exports.delete = function(req, res){
                         res.status(400).send({message: error.message});
                         return;
                     } else {
-                        res.json({ message: 'CalculationSet successfully deactived (but not deleted)'});
+                        res.json({ message: 'CalculationSet successfully deactivated (but not deleted)'});
                         return;
                     }
                 });                

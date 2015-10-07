@@ -1,5 +1,5 @@
 <div class="modal-header">
-    <h3 class="modal-title">Aufgaben lösen {{vm.name}}</h3>
+    <h3 class="modal-title">Solve arithmetics {{vm.name}}</h3>
 </div>
 <div class="modal-body">
     <form name="form" class="css-form calc" novalidate ng-show="vm.started">
@@ -9,25 +9,25 @@
     </form>
     <div class="panel panel-default" ng-show="vm.beforestart">
         <div class="panel-body">
-            Klicke auf 'Beginnen' um die erste Rechnung anzuzeigen. Sobald die erste Rechnung sichtbar ist, beginnt die Zeitmessung.
-            Nach der Eingabe des Resultats klicke 'Enter' um die nächste Rechnung anzuzeigen. Viel Spass!
+            Click on 'Start' to show the first arithmetic. As soon as the first arithmetic is visible, the time measurement begins.
+            After entering your result, klick 'Enter' to show the next arithmetic. Good luck!
         </div>
         <p style="text-align: center">
-            <button class="btn btn-default" tabindex="3" ng-click="vm.cancel()">Abbrechen</button>
-            <button class="btn btn-primary" tabindex="4" ng-click="vm.startCalc()" autofocus>Beginnen</button>
+            <button class="btn btn-default" tabindex="3" ng-click="vm.cancel()">Cancel</button>
+            <button class="btn btn-primary" tabindex="4" ng-click="vm.startCalc()" autofocus>Start</button>
         </p>
     </div>
     <div class="panel panel-default" ng-show="vm.finished">
         <div class="panel-body">
             <ul class="list-group">
-                <li class="list-group-item">Erreichte Punktzahl <span class="badge itemcount-badge">{{vm.points}}%</span></li>
-                <li class="list-group-item">Benötigte Zeit <span class="badge itemcount-badge">{{vm.durationTime}}</span></li>
-                <li class="list-group-item">Richtig <span class="badge itemcount-badge badge-success">{{vm.score}}</span></li>
-                <li class="list-group-item">Falsch <span class="badge itemcount-badge badge-danger">{{vm.calcCount - vm.score}}</span></li>
+                <li class="list-group-item">Your score <span class="badge itemcount-badge">{{vm.points}}%</span></li>
+                <li class="list-group-item">Duration <span class="badge itemcount-badge">{{vm.durationTime}}</span></li>
+                <li class="list-group-item">Correct <span class="badge itemcount-badge badge-success">{{vm.score}}</span></li>
+                <li class="list-group-item">Wrong <span class="badge itemcount-badge badge-danger">{{vm.calcCount - vm.score}}</span></li>
                 <li class="list-group-item">Total <span class="badge itemcount-badge badge-default">{{vm.calcCount}}</span></li>
             </ul>
             <div ng-show="vm.isWrongCalc">
-                <h5> Falsch gelöste Aufgaben </h5>
+                <h5> Not correctly solved arithmetics </h5>
                 <div style="max-height:200px;" class="table-responsive">
                     <table class="table table-striped table-bordered table-hover">
                         <tr ng-repeat="calculation in vm.wrongCalculations">
@@ -40,7 +40,7 @@
     </div>
     <div class="panel panel-default" ng-show="vm.undefinedCalc">
         <div class="panel-body">
-            <h4> Es wurde leider kein Rechnungset gefunden. </h4>
+            <h4> No arithmetics could be found. </h4>
         </div>
         <p style="text-align: center">
             <button class="btn btn-success" ng-click="vm.ok()" tabindex="1">OK</button>
@@ -48,7 +48,7 @@
     </div>
     <div class="panel panel-default" ng-hide="vm.isCalcActive">
         <div class="panel-body">
-            <h4> Rechnungset ist inaktive und kann nicht mehr gelöst werden. </h4>
+            <h4>Arithmetics are inactive and cannot be solved anymore. </h4>
         </div>
         <p style="text-align: center">
             <button class="btn btn-success" ng-click="vm.ok()" tabindex="1">OK</button>
@@ -59,6 +59,6 @@
     <span class="col-xs-8 col-sm-8 modal-footer-progressbar">
         <progressbar max="vm.calcCount" value="vm.currentCalcIndex"><span style="color:white; white-space:nowrap;">{{vm.currentCalcIndex}} / {{vm.calcCount}}</span></progressbar>
     </span>
-    <button class="btn btn-default" tabindex="2" ng-hide="vm.finished" ng-click="vm.cancel()">Abbrechen</button>
+    <button class="btn btn-default" tabindex="2" ng-hide="vm.finished" ng-click="vm.cancel()">Cancel</button>
     <button class="btn btn-primary" tabindex="3" ng-click="vm.ok()">OK</button>
 </div>

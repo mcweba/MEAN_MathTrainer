@@ -132,7 +132,7 @@ angular.module('mathApp.solve', ['ui.bootstrap'])
                                     vm.finished = true;
                                     vm.currentCalcIndex -= 1;
                                     vm.points = Math.floor(100 / vm.calcCount * vm.score);
-                                    vm.durationTime = vm.duration + ' Sekunden';
+                                    vm.durationTime = vm.duration + ' seconds';
 
                                     var result = {
                                         "score": vm.points,

@@ -35,7 +35,7 @@ exports.create = function(req, res) {
             else
                 return res.send(err);
         }
-        res.json({ message: 'Benutzer erfolgreich erstellt' });
+        res.json({ message: 'User successfully created' });
     });
 };
 
@@ -45,7 +45,7 @@ exports.delete = function(req, res) {
     }, function(err, user) {
         if (err) res.send(err);
 
-        res.json({ message: 'Benutzer erfolgreich gelöscht' });
+        res.json({ message: 'User successfully deleted' });
     });
 };
 
@@ -62,7 +62,7 @@ exports.update = function(req, res) {
         user.save(function(err) {
             if (err) res.send(err);
 
-            res.json({ message: 'Benutzer erfolgreich mutiert' });
+            res.json({ message: 'User successfully modified' });
         });
     });
 };
@@ -79,7 +79,7 @@ exports.authenticate = function(req, res) {
         if (!user) {
             res.json({
                 success: false,
-                message: 'Anmeldung fehlgeschlagen. Benutzername nicht bekannt.'
+                message: 'Login failed. Username unknown'
             });
         } else if (user) {
 
@@ -87,7 +87,7 @@ exports.authenticate = function(req, res) {
             if (!validPassword) {
                 res.json({
                     success: false,
-                    message: 'Anmeldung fehlgeschlagen. Passwort falsch.'
+                    message: 'Login failed. Password wrong'
                 });
             } else {
                 var token = jwt.sign({
@@ -100,7 +100,7 @@ exports.authenticate = function(req, res) {
 
                 res.json({
                     success: true,
-                    message: 'Viel Spass mit ihrem Token!',
+                    message: 'Enjoy your token!',
                     token: token
                 });
             }
@@ -115,7 +115,7 @@ exports.verifyToken = function(req, res, next) {
             if (err) {
                 res.status(403).send({
                     success: false,
-                    message: 'Authentifizieren des Tokens fehlgeschlagen'
+                    message: 'Failed to authenticate the token'
                 });
             } else {
                 req.decoded = decoded;
@@ -125,7 +125,7 @@ exports.verifyToken = function(req, res, next) {
     } else {
         res.status(403).send({
             success: false,
-            message: 'Es wurde kein Token mitgeschickt'
+            message: 'No token has been provided'
         });
     }
 };

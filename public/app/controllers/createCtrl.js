@@ -30,9 +30,9 @@ angular.module('mathApp.create', [])
         ];
 
         vm.difficultLevels =[
-            {name: 'Einfach'},
-            {name: 'Mittel'},
-            {name: 'Schwer'}
+            {name: 'Simple'},
+            {name: 'Moderate'},
+            {name: 'Difficult'}
         ];
 
         vm.selectedOption = vm.options[0];
@@ -92,7 +92,7 @@ angular.module('mathApp.create', [])
             vm.isGenerateFeedback = false;
             vm.generateFeedback = '';
             if(vm.quantity > 0 & vm.number2Max < 1 & vm.selectedOption.name === "/"){
-                vm.generateFeedback = "Division durch 0 ist nicht erlaubt, bitte Wertebereich der 2. Zahl anpassen.";
+                vm.generateFeedback = "Division by 0 is not permitted, please change range for 2nd number.";
                 vm.preCalculations = '';
                 vm.isGenerateFeedback = true;
             }else{
@@ -184,14 +184,14 @@ angular.module('mathApp.create', [])
                 }
             }
             if(invalidCalcs.length > 0){
-                var invalid = "Ungültig: ";
+                var invalid = "Invalid: ";
                 if(vm.preCalculations.substring(0,invalid.length) === invalid){
                     vm.preCalculations = invalidCalcs;
                 }else{
                     vm.preCalculations = invalid + invalidCalcs;
                 }
                 if(hasInvalidDivision){
-                    vm.preCalculations += "\rDivision durch Null und Divisionen welche Rest ergeben sind ungültig.";
+                    vm.preCalculations += "\rDivision by 0 and divisions not resulting in integers are invalid.";
                 }
             }else
             {
@@ -218,7 +218,7 @@ angular.module('mathApp.create', [])
                         vm.calculations = [];
                         vm.name = '';
                         vm.isSubmitFeedback = true;
-                        vm.submitFeedback = 'Rechnungen wurden erfolgreich erstellt.';
+                        vm.submitFeedback = 'Arithmetics successfully created.';
                     });
             }
         };

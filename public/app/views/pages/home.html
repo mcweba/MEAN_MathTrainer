@@ -1,13 +1,13 @@
 <div class="jumbotron text-center">
-	<h1>Willkommen im MathTrainer</h1>
+	<h1>Welcome to Math Trainer</h1>
 
 	<div ng-if="!main.loggedIn">
-		<p>Melden Sie sich an, um zu den Rechnungen zu gelangen</p>
-		<a href="/login" class="btn btn-primary">Anmelden</a>
+		<p>Please log in first</p>
+		<a href="/login" class="btn btn-primary">Login</a>
 	</div>
 
 	<div ng-if="main.loggedIn">
-		<p>Sie sind bereits angemeldet. Klicken Sie auf Übersicht um zu den Rechnungen zu gelangen</p>
-		<a href="/overview" class="btn btn-primary">Übersicht</a>
+		<p>You're already logged in. Klick on Overview to get to the arithmetics</p>
+		<a href="/overview" class="btn btn-primary">Overview</a>
 	</div>
 </div> 

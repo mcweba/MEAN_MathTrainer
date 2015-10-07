@@ -14,8 +14,8 @@ angular.module('mathApp', [
     .constant('dateTimeSourceFormat', 'YYYY-MM-DD HH:mm:ss.SSS')
     .constant('dateTimeTargetFormat', 'DD.MM.YYYY HH:mm')
     .constant('dateTargetFormat', 'DD.MM.YYYY')
-    .constant('diff_levelMap', {'1': 'Einfach', '2': 'Mittel', '3': 'Schwer'})
-    .constant('stats_resultMap', {true: 'Richtig', false: 'Falsch'})
+    .constant('diff_levelMap', {'1': 'Simple', '2': 'Moderate', '3': 'Difficult'})
+    .constant('stats_resultMap', {true: 'Correct', false: 'Wrong'})
         .value('currentUser', {name: {}, userId: {}, role: {}})
         .config(function ($httpProvider) {
             // attach auth interceptor to http requests
