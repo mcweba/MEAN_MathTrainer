@@ -2,7 +2,7 @@
 This is the MathTrainer app.
 
 ## Requirements
-MongoDB, NodeJs
+MongoDB, NodeJs 
 
 ## Development
 npm install
